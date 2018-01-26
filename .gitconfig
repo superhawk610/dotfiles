@@ -1,0 +1,7 @@
+[user]
+	email = superhawk610@gmail.com
+	name = Aaron Ross
+[core]
+	editor = vim
+[push]
+	default = simple

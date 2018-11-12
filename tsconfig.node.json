@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "outDir": "ts-built",
+    "rootDir": "src",
+    "jsx": "react",
+    "inlineSourceMap": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["**/*"],
+  "exclude": ["node_modules"]
+}

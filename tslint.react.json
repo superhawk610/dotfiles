@@ -1,5 +1,8 @@
 {
   "extends": ["tslint:latest", "tslint-react"],
+  "linterOptions": {
+    "exclude": ["**/node_modules/**"]
+  },
   "rules": {
     "quotemark": [true, "single", "jsx-double"],
     "semicolon": [true, "always", "ignore-bound-class-methods"],

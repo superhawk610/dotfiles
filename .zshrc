@@ -71,12 +71,14 @@ alias gpl='git pull'
 alias gpob='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 alias gr='git rebase'
 alias grc='git rebase --continue'
+alias grs='git rebase --skip'
 alias grh='git reset --hard HEAD'
 alias gbd='git branch -D'
 alias gcp='git cherry-pick'
 alias gs='git status'
 alias gl='git log'
 alias gcf='git for-each-ref --format="%(refname:short)" refs/heads | fzf | xargs git checkout'
+unalias gp
 
 # elixir
 alias iexm='iex -S mix'
@@ -88,4 +90,10 @@ alias gcbh='git rev-parse --abbrev-ref HEAD | rg -or \$1 "^(\d{7,10})-" | sed "s
 # --- path --- #
 
 export PATH=$PATH:~/.local/bin
+export PATH=$PATH:~/Library/Python/3.7/bin
 
+# --- overrides --- #
+
+# terraform 0.13 is broken with previously generated states
+# so we need to set it back to 0.12 (at least for now)
+export PATH="/usr/local/opt/terraform@0.12/bin:$PATH"

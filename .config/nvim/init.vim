@@ -1,4 +1,4 @@
-
+" Plug
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
@@ -65,6 +65,10 @@ endif
 " display Coc info in statusline
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+" enable tab completion for filenames
+set wildmode=longest,list,full
+set wildmenu
+
 let mapleader = ' '
 
 " reload config
@@ -74,12 +78,20 @@ noremap <Leader>r :source $MYVIMRC<CR>
 nnoremap <C-n> :nohl<CR>
 
 " shift line up/down
+"" Windows
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
 inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+"" Mac
+nnoremap ∆ :m .+1<CR>==
+nnoremap ˚ :m .-2<CR>==
+inoremap ∆ <Esc>:m .+1<CR>==gi
+inoremap ˚ <Esc>:m .-2<CR>==gi
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
 
 " emulate VS Code bindings
 nmap <silent> <Leader>P :History<CR>

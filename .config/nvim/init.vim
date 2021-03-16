@@ -112,10 +112,15 @@ if exists('g:vscode')
   nnoremap <Leader><Leader><Leader> <Cmd>call VSCodeNotify('workbench.action.openSettingsJson')<CR>
 
   if s:onWSL() " on windows (WSL)
-    nnoremap <Leader>o <Cmd>call VSCodeNotify('workbench.action.files.openFolder')<CR>
+    nnoremap <Leader>o <Cmd>call VSCodeNotify('workbench.action.files.openFile')<CR>
+    nnoremap <Leader>O <Cmd>call VSCodeNotify('workbench.action.files.openFolder')<CR>
   else         " on MacOS
     nnoremap <Leader>o <Cmd>call VSCodeNotify('workbench.action.files.openFileFolder')<CR>
   endif
+  
+  " calva (clojure)
+  nnoremap <Leader>cC <Cmd>call VSCodeNotify('calva.jackIn')<CR>
+  nmap <Leader>cr :w<CR><Cmd>call VSCodeNotify('calva.loadFile')<CR>
 else
   " emulate VS Code bindings
   nmap <silent> <Leader>P :History<CR>

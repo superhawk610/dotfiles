@@ -92,7 +92,7 @@ let mapleader = ' '
 
 " vscode.neovim
 function s:onWSL()
-  system("grep -qEi \"(Microsoft|WSL)\" /proc/version")
+  let _ = system("grep -qEi \"(Microsoft|WSL)\" /proc/version")
   return v:shell_error == 0
 endfunction
 

@@ -1,69 +1,37 @@
-# --- zsh config --- #
+export ZSH_DISABLE_COMPFIX=true
+export ZSH="/Users/ARos62/.oh-my-zsh"
+# ZSH_THEME="starship" (set at end of .zshrc)
 
-# configure oh-my-zsh
-export ZSH="/Users/aaronross/.oh-my-zsh"
+plugins=(
+  wd
+  git
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  zsh-vim-mode
+  asdf
+)
 
-# set theme
-ZSH_THEME="spaceship"
-
-# configure some extra goodies
-
-## WIP prompt
-### defaults
-SPACESHIP_WIP_PREFIX="${SPACESHIP_WIP_PREFIX="$SPACESHIP_PROMPT_DEFAULT_PREFIX"}"
-SPACESHIP_WIP_SUFFIX="${SPACESHIP_WIP_SUFFIX="$SPACESHIP_PROMPT_DEFAULT_SUFFIX"}"
-SPACESHIP_WIP_SYMBOL="${SPACESHIP_WIP_SYMBOL="🚧 "}"
-SPACESHIP_WIP_TEXT="${SPACESHIP_WIP_TEXT="WIP!!! "}"
-SPACESHIP_WIP_COLOR="${SPACESHIP_WIP_COLOR="red"}"
-
-## overrides
-SPACESHIP_WIP_PREFIX=""
-SPACESHIP_WIP_SUFFIX=""
-SPACESHIP_WIP_TEXT="WIP "
-
-spaceship_wip() {
-  [[ $SPACESHIP_WIP_SHOW == false ]] && return
-
-  spaceship::is_git || return
-  spaceship::exists work_in_progress || return
-
-  if [[ $(work_in_progress) == "WIP!!" ]]; then
-    # Display WIP section
-    spaceship::section \
-      "$SPACESHIP_WIP_COLOR" \
-      "$SPACESHIP_WIP_PREFIX" \
-      "$SPACESHIP_WIP_SYMBOL" \
-      "$SPACESHIP_WIP_TEXT" \
-      "$SPACESHIP_WIP_SUFFIX"
-  fi
-}
-
-# setup the prompt!
-# SPACESHIP_PROMPT_ORDER=(user host dir git wip package node elixir rust golang ruby venv pyenv line_sep char)
-SPACESHIP_PROMPT_ORDER=(user host dir git wip package node elixir rust line_sep char)
-SPACESHIP_ELIXIR_SYMBOL="🔮 "
-SPACESHIP_CHAR_SYMBOL="➜ "
-
-# enable some plugins...
-plugins=(git wd asdf zsh-syntax-highlighting zsh-autosuggestions)
-
-# let's get this party started!
 source $ZSH/oh-my-zsh.sh
 
-# --- utilities --- #
+# alias
 
-source ~/.zshcolors
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# --- aliases --- #
-
-# general
+## general
+alias c='clear'
+alias r='source ~/.zshrc'
 alias ls='exa'
 alias cat='bat'
-alias config='vim ~/.zshrc'
-alias reload='source ~/.zshrc'
+alias cfg='nvim ~/.zshrc'
+alias vcfg='nvim ~/.config/nvim/init.vim'
 
-# git
+## yarn
+alias ya='yarn add'
+alias yad='yarn add -D'
+alias yai='yarn add --ignore-engines --ignore-optional'
+alias yadi='yarn add -D --ignore-engines --ignore-optional'
+alias yaid='yarn add -D --ignore-engines --ignore-optional'
+alias yr='yarn remove'
+
+## git
 alias gc='git checkout'
 alias gcb='git checkout -b'
 alias gpu='git push'
@@ -77,23 +45,47 @@ alias gbd='git branch -D'
 alias gcp='git cherry-pick'
 alias gs='git status'
 alias gl='git log'
+alias glp='git log --pretty=oneline --abbrev-commit'
 alias gcf='git for-each-ref --format="%(refname:short)" refs/heads | fzf | xargs git checkout'
+alias gcfr='git for-each-ref --format="%(refname:short)" refs/remotes | fzf | sed -e s#^origin/## | xargs git checkout'
 unalias gp
 
-# elixir
-alias iexm='iex -S mix'
-alias phx='iex -S mix phx.server'
+# docker
+alias dc='docker-compose'
 
-# househappy
-alias gcbh='git rev-parse --abbrev-ref HEAD | rg -or \$1 "^(\d{7,10})-" | sed "s/$/] /" | sed "s/^/[#/" | tr -d "\n" | pbcopy; echo "Copied to clipboard!"'
-
-# --- path --- #
-
+# path
 export PATH=$PATH:~/.local/bin
-export PATH=$PATH:~/Library/Python/3.7/bin
+export PATH=$PATH:~/Library/Python/3.8/bin
+export PATH=$PATH:~/code/squid_toolkit
 
-# --- overrides --- #
+# editor
+export EDITOR=nvim
 
-# terraform 0.13 is broken with previously generated states
-# so we need to set it back to 0.12 (at least for now)
-export PATH="/usr/local/opt/terraform@0.12/bin:$PATH"
+# clojure
+export LEIN_USE_BOOTCLASSPATH=no # fix for ultra
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# python
+alias venv='[ -d .venv ] && source .venv/bin/activate || echo ".venv not found"'
+
+# spicetify (customize Spotify)
+export PATH=$PATH:~/spicetify-cli
+
+# doom emacs
+export PATH=$PATH:~/.emacs.d/bin
+
+# ruby
+export PATH=$PATH:~/.gem/ruby/2.6.0/bin
+
+# starship (prompt)
+eval "$(starship init zsh)"

@@ -105,9 +105,12 @@ if exists('g:vscode')
   nnoremap <Leader>Q <Cmd>call VSCodeNotify('workbench.action.closeAllEditors')<CR>
   nnoremap <Leader>p <Cmd>call VSCodeNotify('workbench.action.quickOpen')<CR>
   nnoremap <Leader>P <Cmd>call VSCodeNotify('workbench.action.showCommands')<CR>
-  nnoremap <Leader>f <Cmd>call VSCodeNotify('workbench.action.findInFiles')<CR>
+  nnoremap <Leader>F <Cmd>call VSCodeNotify('workbench.action.findInFiles')<CR>
+  nnoremap <Leader>ff <Cmd>call VSCodeNotify('workbench.action.findInFiles')<CR>
+  nnoremap <Leader>fq <Cmd>call VSCodeNotify('workbench.action.closeFolder')<CR>
   nnoremap <Leader><Leader>q <Cmd>call VSCodeNotify('workbench.action.closeOtherEditors')<CR>
   nnoremap <Leader><Leader>r <Cmd>call VSCodeNotify('workbench.action.closeEditorsToTheRight')<CR>
+  nnoremap <Leader><Leader>R <Cmd>call VSCodeNotify('workbench.action.reloadWindow')<CR>
   nnoremap <Leader><Leader>c <Cmd>call VSCodeNotify('copyRelativeFilePath')<CR>
   nnoremap <Leader><Leader><Leader> <Cmd>call VSCodeNotify('workbench.action.openSettingsJson')<CR>
 

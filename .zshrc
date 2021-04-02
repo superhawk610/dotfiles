@@ -1,5 +1,5 @@
 export ZSH_DISABLE_COMPFIX=true
-export ZSH="/Users/ARos62/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 # ZSH_THEME="starship" (set at end of .zshrc)
 
 plugins=(
@@ -7,7 +7,6 @@ plugins=(
   git
   zsh-syntax-highlighting
   zsh-autosuggestions
-  zsh-vim-mode
   asdf
 )
 
@@ -55,14 +54,17 @@ alias dc='docker-compose'
 
 # path
 export PATH=$PATH:~/.local/bin
-export PATH=$PATH:~/Library/Python/3.8/bin
-export PATH=$PATH:~/code/squid_toolkit
+# export PATH=$PATH:~/Library/Python/3.8/bin
 
 # editor
 export EDITOR=nvim
 
 # clojure
-export LEIN_USE_BOOTCLASSPATH=no # fix for ultra
+# export LEIN_USE_BOOTCLASSPATH=no # fix for ultra
+
+# java
+export PATH="~/.jenv/bin:$PATH"
+eval "$(jenv init -)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -78,14 +80,9 @@ export NVM_DIR="$HOME/.nvm"
 # python
 alias venv='[ -d .venv ] && source .venv/bin/activate || echo ".venv not found"'
 
-# spicetify (customize Spotify)
-export PATH=$PATH:~/spicetify-cli
-
-# doom emacs
-export PATH=$PATH:~/.emacs.d/bin
-
 # ruby
-export PATH=$PATH:~/.gem/ruby/2.6.0/bin
+# export PATH=$PATH:~/.gem/ruby/2.6.0/bin
 
 # starship (prompt)
 eval "$(starship init zsh)"
+

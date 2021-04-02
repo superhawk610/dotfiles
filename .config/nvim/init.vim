@@ -1,20 +1,25 @@
 " Plug
-call plug#begin('~/.vim/plugged')
+let in_vscode = exists('g:vscode') " switch to 1 to install/update
+let plug_dir = in_vscode ? '~/.vim/plugged-vscode' : '~/.vim/plugged'
+call plug#begin(plug_dir)
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+if !in_vscode
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'tpope/vim-fugitive'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+
+  Plug 'psliwka/vim-smoothie'
+endif
+
 Plug 'tpope/vim-commentary'
-Plug 'psliwka/vim-smoothie'
-
-" nav
 Plug 'justinmk/vim-sneak'
-if exists('g:vscode')
+
+if in_vscode
   Plug 'asvetliakov/vim-easymotion' " use VSCode text decoration instead of editing buffer
 else
   Plug 'easymotion/vim-easymotion'  " use the standard plugin when running `nvim`
@@ -27,19 +32,32 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 
 call plug#end()
-" --------------------
 
-" install deps
-" ---
+" --------------------
+"
+" --- install deps
+"
 " vim-plug
-" fzf
+" fzf (should be installed by :PlugInstall)
 " rg
 "
-" nested deps
-" ---
+" --- nested deps
+"
 " coc (:CocInstall X)
 " - coc-json
 " - coc-tsserver
+"
+" --- usage
+"
+" VSCode's neovim integration requires a tweaked version
+" of vim-easymotion, which is incompatible with the standard
+" version used by terminal nvim. To support this, vim-plug
+" maintains two distinct plugin directories, one for VSCode
+" and another for terminal nvim. When installing for the
+" first time, run the full setup (:PlugInstall and :CocInstall)
+" and then manually switch `plug_dir` and install again.
+"
+" --------------------
 
 filetype plugin indent on
 syntax enable
@@ -78,7 +96,9 @@ else
 endif
 
 " display Coc info in statusline
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+if !in_vscode
+  set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+endif
 
 " enable tab completion for filenames
 set wildmode=longest,list,full
@@ -97,7 +117,7 @@ function s:onWSL()
   return v:shell_error == 0
 endfunction
 
-if exists('g:vscode')
+if in_vscode
   nnoremap <Leader>n <Cmd>call VSCodeNotify('workbench.action.files.newUntitledFile')<CR>
   nnoremap <Leader>N <Cmd>call VSCodeNotify('workbench.action.newWindow')<CR>
   nnoremap <Leader>w <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>

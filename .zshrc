@@ -12,15 +12,29 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# alias
+# path
+export PATH=$PATH:~/.local/bin
+export PATH=$PATH:~/scripts
+export PATH=$PATH:~/Library/Python/3.9/bin
+
+# editor
+export EDITOR=nvim
+
+# alias -----------------------
 
 ## general
 alias c='clear'
-alias r='source ~/.zshrc'
+alias r='source /etc/zprofile && source ~/.zshrc' # source zprofile first to reset $PATH
+alias R='exec zsh'
 alias ls='exa'
 alias cat='bat'
 alias cfg='nvim ~/.zshrc'
 alias vcfg='nvim ~/.config/nvim/init.vim'
+
+## elixir
+alias iexm='iex -S mix'
+alias phx='iex -S mix phx.server'
+alias mdg='mix deps.get'
 
 ## yarn
 alias ya='yarn add'
@@ -49,15 +63,24 @@ alias gcf='git for-each-ref --format="%(refname:short)" refs/heads | fzf | xargs
 alias gcfr='git for-each-ref --format="%(refname:short)" refs/remotes | fzf | sed -e s#^origin/## | xargs git checkout'
 unalias gp
 
+# python
+alias pip='python3 -m pip'
+alias pip3='python3 -m pip'
+alias venv='[ -d .venv ] && source .venv/bin/activate || echo ".venv not found"'
+
 # docker
 alias dc='docker-compose'
 
-# path
-export PATH=$PATH:~/.local/bin
-# export PATH=$PATH:~/Library/Python/3.8/bin
+# extended initialization -----
 
-# editor
-export EDITOR=nvim
+if [ -d "$HOME/.zshrc.d" ]
+then
+  for f in ~/.zshrc.d/*; do
+    source $f
+  done
+fi
+
+# setup -----------------------
 
 # clojure
 # export LEIN_USE_BOOTCLASSPATH=no # fix for ultra
@@ -66,22 +89,22 @@ export EDITOR=nvim
 export PATH="~/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# ruby
+# export PATH=$PATH:~/.gem/ruby/2.6.0/bin
+
+# p10k
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# nvm (disabled in favor of asdf)
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# python
-alias venv='[ -d .venv ] && source .venv/bin/activate || echo ".venv not found"'
-
-# ruby
-# export PATH=$PATH:~/.gem/ruby/2.6.0/bin
+# direnv
+eval "$(direnv hook zsh)"
 
 # starship (prompt)
 eval "$(starship init zsh)"

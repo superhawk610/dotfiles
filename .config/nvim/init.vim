@@ -16,8 +16,14 @@ if !in_vscode
   Plug 'psliwka/vim-smoothie'
 endif
 
+Plug 'cespare/vim-toml'
+Plug 'elixir-editors/vim-elixir'
+Plug 'kana/vim-textobj-user'
+Plug 'amiralies/vim-textobj-elixir'
+
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
+Plug 'machakann/vim-highlightedyank'
 
 if in_vscode
   Plug 'asvetliakov/vim-easymotion' " use VSCode text decoration instead of editing buffer
@@ -100,6 +106,16 @@ if !in_vscode
   set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 endif
 
+if !in_vscode
+  " use light grey max width marker
+  highlight ColorColumn ctermbg=234 " Grey11
+
+  " set the max width to 80 for Markdown files
+  au Filetype markdown setlocal
+        \ textwidth=80
+        \ colorcolumn=79
+endif
+
 " enable tab completion for filenames
 set wildmode=longest,list,full
 set wildmenu
@@ -155,10 +171,17 @@ else
   " lazy write/quit
   nmap <Leader>w :w<CR>
   nmap <Leader>q :q<CR>
-endif
 
-" reload config
-noremap <Leader>r :source $MYVIMRC<CR>
+  " reload config
+  noremap <Leader>r :source $MYVIMRC<CR>
+
+  " tab switching
+  nnoremap <C-t> :tabnew<CR>
+  nnoremap <C-h> :tabprevious<CR>
+  nnoremap <C-j> :tabprevious<CR>
+  nnoremap <C-k> :tabnext<CR>
+  nnoremap <C-l> :tabnext<CR>
+endif
 
 " clear search highlighting
 nnoremap <C-n> :nohl<CR>
@@ -178,4 +201,7 @@ inoremap ∆ <Esc>:m .+1<CR>==gi
 inoremap ˚ <Esc>:m .-2<CR>==gi
 vnoremap ∆ :m '>+1<CR>gv=gv
 vnoremap ˚ :m '<-2<CR>gv=gv
+
+"" reference
+"" xterm 256 colors: https://vim.fandom.com/wiki/Xterm256_color_names_for_console_Vim
 

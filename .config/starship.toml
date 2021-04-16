@@ -1,0 +1,36 @@
+format = """
+$shlvl\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+${custom.git-wip}\
+$docker_context\
+$package\
+$elixir\
+$erlang\
+$golang\
+$nodejs\
+$python\
+$ruby\
+$rust\
+$memory_usage\
+$aws\
+$env_var\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
+
+[custom.git-wip]
+command = "echo WIP"
+when = "git log -n 1 2>/dev/null | grep -q -c '\\-\\-wip\\-\\-'"
+symbol = "🚧 "
+style = "bold yellow"
+description = "Display a warning if the latest commit in the current git repo is WIP."
+

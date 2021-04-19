@@ -14,6 +14,10 @@ if !in_vscode
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
   Plug 'psliwka/vim-smoothie'
+
+  " improved Markdown support (better syntax highlighting/folding)
+  Plug 'godlygeek/tabular'
+  Plug 'plasticboy/vim-markdown'
 endif
 
 Plug 'cespare/vim-toml'
@@ -114,6 +118,19 @@ if !in_vscode
   au Filetype markdown setlocal
         \ textwidth=80
         \ colorcolumn=79
+        \ conceallevel=2
+
+  " enable fenced code block syntax highlighting
+  let g:vim_markdown_fenced_languages = [
+        \ 'elixir',
+        \ 'ts=typescript', 
+        \ 'typescript', 
+        \ 'js=javascript', 
+        \ 'javascript',
+        \ ]
+
+  " disable header folding
+  let g:vim_markdown_folding_disabled = 1
 endif
 
 " enable tab completion for filenames

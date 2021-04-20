@@ -28,6 +28,8 @@ Plug 'amiralies/vim-textobj-elixir'
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
 Plug 'machakann/vim-highlightedyank'
+Plug 'tommcdo/vim-ninja-feet' " motions from cursor to start/end
+                              " of text object
 
 if in_vscode
   Plug 'asvetliakov/vim-easymotion' " use VSCode text decoration instead of editing buffer
@@ -73,10 +75,10 @@ filetype plugin indent on
 syntax enable
 
 " display line numbers
-set number relativenumber
+set number
 highlight clear LineNr
 highlight clear SignColumn
-highlight LineNr ctermfg=cyan ctermbg=black
+highlight LineNr ctermfg=242 ctermbg=black
 highlight CursorLineNr ctermfg=yellow ctermbg=233
 
 " use 2 spaces for tabs

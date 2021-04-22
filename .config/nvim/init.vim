@@ -24,6 +24,7 @@ Plug 'cespare/vim-toml'
 Plug 'elixir-editors/vim-elixir'
 Plug 'kana/vim-textobj-user'
 Plug 'amiralies/vim-textobj-elixir'
+Plug 'kevinoid/vim-jsonc' " JSON w/ comments
 
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
@@ -129,6 +130,8 @@ if !in_vscode
         \ 'typescript', 
         \ 'js=javascript', 
         \ 'javascript',
+        \ 'json',
+        \ 'jsonc'
         \ ]
 
   " disable header folding

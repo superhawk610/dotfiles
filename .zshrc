@@ -30,6 +30,7 @@ alias ls='exa'
 alias cat='bat'
 alias cfg='nvim ~/.zshrc'
 alias vcfg='nvim ~/.config/nvim/init.vim'
+alias ul='ultralist'
 
 ## elixir
 alias iexm='iex -S mix'

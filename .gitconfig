@@ -1,15 +1,18 @@
 [user]
-  email = superhawk610@gmail.com
-  name = Aaron Ross
+	email = superhawk610@gmail.com
+	name = Aaron Ross
 
 [core]
-  editor = vim
-  pager = delta
+	editor = nvim
+	pager = delta
 
 [push]
-  default = simple
+	default = simple
 
 [delta]
-  line-numbers = true
-  side-by-side = true
+	line-numbers = true
+	side-by-side = true
 
+[pull]
+	ff = only
+	rebase = false

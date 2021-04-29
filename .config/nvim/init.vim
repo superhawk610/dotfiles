@@ -7,6 +7,9 @@ if !in_vscode
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
 
+  Plug 'autoload/onedark.vim' " required for airline theme
+  Plug 'joshdick/onedark.vim'
+
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -14,10 +17,13 @@ if !in_vscode
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
   Plug 'psliwka/vim-smoothie'
+  Plug 'folke/which-key.nvim'
 
   " improved Markdown support (better syntax highlighting/folding)
   Plug 'godlygeek/tabular'
   Plug 'plasticboy/vim-markdown'
+
+  Plug 'sheerun/vim-polyglot'
 endif
 
 Plug 'cespare/vim-toml'
@@ -46,6 +52,14 @@ Plug 'tpope/vim-surround'
 
 call plug#end()
 
+" configure Lua plugins
+
+if !in_vscode
+lua << EOF
+  require("which-key").setup {}
+EOF
+endif
+
 " --------------------
 "
 " --- install deps
@@ -70,10 +84,32 @@ call plug#end()
 " first time, run the full setup (:PlugInstall and :CocInstall)
 " and then manually switch `plug_dir` and install again.
 "
+" --- tips & tricks
+"
+"  # Beautify JSON using an external tool (jq)
+"
+"  this command will pass the current line to `jq` and overwrite
+"  the current line with the output (formatting the JSON as a result)
+"
+"      :.!jq .
+"
+"  you can accomplish the same thing with the entire file by using
+"
+"      :%!jq .
+"
 " --------------------
 
 filetype plugin indent on
 syntax enable
+colorscheme onedark
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'onedark'
+
+" set timeout for which-key & friends
+" (also sets how long vim will wait between
+" keypresses and still consider it to be
+" a single input/motion)
+set timeoutlen=750
 
 " display line numbers
 set number
@@ -123,16 +159,19 @@ if !in_vscode
         \ colorcolumn=79
         \ conceallevel=2
 
+  " this is enabled by default for all languages
+  " by vim-markdown, leaving it here for reference
+  "
   " enable fenced code block syntax highlighting
-  let g:vim_markdown_fenced_languages = [
-        \ 'elixir',
-        \ 'ts=typescript', 
-        \ 'typescript', 
-        \ 'js=javascript', 
-        \ 'javascript',
-        \ 'json',
-        \ 'jsonc'
-        \ ]
+  " let g:vim_markdown_fenced_languages = [
+  "       \ 'elixir',
+  "       \ 'ts=typescript', 
+  "       \ 'typescript', 
+  "       \ 'js=javascript', 
+  "       \ 'javascript',
+  "       \ 'json',
+  "       \ 'jsonc'
+  "       \ ]
 
   " disable header folding
   let g:vim_markdown_folding_disabled = 1

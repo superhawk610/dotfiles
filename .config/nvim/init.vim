@@ -242,6 +242,10 @@ else
   nnoremap <C-j> :tabprevious<CR>
   nnoremap <C-k> :tabnext<CR>
   nnoremap <C-l> :tabnext<CR>
+
+  " save/load views (remember folds)
+  nnoremap <Leader>zw :mkview<CR>
+  nnoremap <Leader>zo :loadview<CR>
 endif
 
 " clear search highlighting

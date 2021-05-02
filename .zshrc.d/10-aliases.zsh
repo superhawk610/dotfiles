@@ -42,6 +42,27 @@ alias glp='git log --pretty=oneline --abbrev-commit'
 alias gcf='git for-each-ref --format="%(refname:short)" refs/heads | fzf | xargs git checkout'
 alias gcfr='git for-each-ref --format="%(refname:short)" refs/remotes | fzf | sed -e s#^origin/## | xargs git checkout'
 
+gh_clone() {
+  case "$#" in
+    1)
+      local repo=$1
+      ;;
+
+    2)
+      local user=$1
+      local repo=$2
+      local repo="$user/$repo"
+      ;;
+
+    *)
+      echo "Usage: gh_clone [user] [repo]"
+      echo "       gh_clone [user/repo]"
+      return 1
+      ;;
+  esac
+  git clone "git@github.com:$repo"
+}
+
 # python
 alias pip='python3 -m pip'
 alias pip3='python3 -m pip'

@@ -49,6 +49,9 @@ if on_mac; then
   eval "$(direnv hook zsh)"
 fi
 
+# elixir
+export ERL_AFLAGS="-kernel shell_history enabled"
+
 # starship (prompt)
 eval "$(starship init zsh)"
 

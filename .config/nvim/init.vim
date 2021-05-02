@@ -12,11 +12,14 @@ if !in_vscode
   Plug 'autoload/onedark.vim' " required for airline theme
   Plug 'joshdick/onedark.vim'
   Plug 'ryanoasis/vim-devicons'
+  Plug 'ap/vim-css-color' " display CSS hex values w/ colored background
 
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
+  Plug 'airblade/vim-rooter' " change CWD to project root when opening file
+
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
   Plug 'psliwka/vim-smoothie'
@@ -100,6 +103,17 @@ endif
 "
 "      :%!jq .
 "
+" --- fzf
+" 
+"  # Opening search results in a new tab/split
+"
+"  while hovering over a search result from fzf (:Files), you can use
+"  the following key combos to open it in a new tab or split
+"
+"      <C-t> new tab
+"      <C-x> horizontal split (:sp)
+"      <C-v> vertical split (:vsp)
+"
 " --------------------
 
 function! GetVersion()
@@ -152,12 +166,10 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " a single input/motion)
 set timeoutlen=750
 
-" display line numbers
-set number
-highlight clear LineNr
-highlight clear SignColumn
-highlight LineNr ctermfg=242 ctermbg=black
-highlight CursorLineNr ctermfg=yellow ctermbg=233
+set number      " display line numbers
+set ignorecase
+set smartcase   " search is only case-sensitive when query contains uppercase
+set scrolloff=4 " start scrolling when 4 lines away from top/bottom of window
 
 " use 2 spaces for tabs
 set expandtab     " use 2 spaces when pressing <Tab>
@@ -267,6 +279,7 @@ else
   " emulate VS Code bindings
   nmap <silent> <Leader>P :History<CR>
   nmap <silent> <Leader>p :Files<CR>
+  nmap <silent> <Leader>g :GFiles<CR>
   nmap <silent> <Leader>f :Rg<CR>
   nmap <silent> <Leader>n :new<CR>
 

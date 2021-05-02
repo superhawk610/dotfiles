@@ -1,5 +1,5 @@
 " Plug
-let in_vscode = exists('g:vscode') " switch to 1 to install/update
+let in_vscode = exists('g:vscode') " negate to install/update VSCode plugins
 let plug_dir = in_vscode ? '~/.vim/plugged-vscode' : '~/.vim/plugged'
 call plug#begin(plug_dir)
 
@@ -22,12 +22,12 @@ if !in_vscode
 
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
-  Plug 'psliwka/vim-smoothie'
-  Plug 'folke/which-key.nvim'
+  Plug 'psliwka/vim-smoothie' " smooth scrolling
 
   " improved Markdown support (better syntax highlighting/folding)
   Plug 'godlygeek/tabular'
   Plug 'plasticboy/vim-markdown'
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
   Plug 'sheerun/vim-polyglot'
 endif
@@ -57,14 +57,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 
 call plug#end()
-
-" configure Lua plugins
-
-if !in_vscode
-lua << EOF
-  require("which-key").setup {}
-EOF
-endif
 
 " --------------------
 "
@@ -297,9 +289,19 @@ else
   nnoremap <C-k> :tabnext<CR>
   nnoremap <C-l> :tabnext<CR>
 
+  " buffer switching 
+  nnoremap <Leader>B :Buffers<CR>
+  nnoremap <Leader>bb :Buffers<CR>
+  nnoremap <Leader>bq :bd<CR>
+  nnoremap gb :bnext<CR>
+  nnoremap gB :bprev<CR>
+
   " save/load views (remember folds)
   nnoremap <Leader>zw :mkview<CR>
   nnoremap <Leader>zo :loadview<CR>
+
+  " markdown preview
+  nmap <C-p> <Plug>MarkdownPreviewToggle
 endif
 
 " clear search highlighting

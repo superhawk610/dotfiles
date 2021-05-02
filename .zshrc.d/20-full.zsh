@@ -25,8 +25,10 @@ unalias gp # set by oh-my-zsh
 # export LEIN_USE_BOOTCLASSPATH=no # fix for ultra
 
 # java
-export PATH="~/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+if on_mac; then
+  export PATH="~/.jenv/bin:$PATH"
+  eval "$(jenv init -)"
+fi
 
 # ruby
 # export PATH=$PATH:~/.gem/ruby/2.6.0/bin
@@ -43,7 +45,9 @@ eval "$(jenv init -)"
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # direnv
-eval "$(direnv hook zsh)"
+if on_mac; then
+  eval "$(direnv hook zsh)"
+fi
 
 # starship (prompt)
 eval "$(starship init zsh)"

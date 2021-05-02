@@ -21,6 +21,10 @@ alias yaid='yarn add -D --ignore-engines --ignore-optional'
 alias yr='yarn remove'
 
 ## git
+alias gaa='git add -A'
+alias gcm='git commit -m'
+alias gca='git commit --amend'
+alias gcan='git commit --amend --no-edit'
 alias gc='git checkout'
 alias gcb='git checkout -b'
 alias gpu='git push'

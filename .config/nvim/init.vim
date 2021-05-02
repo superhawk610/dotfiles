@@ -4,11 +4,14 @@ let plug_dir = in_vscode ? '~/.vim/plugged-vscode' : '~/.vim/plugged'
 call plug#begin(plug_dir)
 
 if !in_vscode
+  Plug 'mhinz/vim-startify'
+
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
 
   Plug 'autoload/onedark.vim' " required for airline theme
   Plug 'joshdick/onedark.vim'
+  Plug 'ryanoasis/vim-devicons'
 
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
@@ -99,11 +102,49 @@ endif
 "
 " --------------------
 
+function! GetVersion()
+  redir => s
+  silent! version
+  redir END
+  return matchstr(s, 'NVIM v\zs[^\n]*')
+endfunction
+
 filetype plugin indent on
 syntax enable
+
+" configure splash screen
+let g:startify_custom_header = [
+      \ '                                                                      ',
+      \ '                                                                      ',
+      \ '          ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗          ',
+      \ '          ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║          ',
+      \ '          ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║          ',
+      \ '          ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║          ',
+      \ '          ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║          ',
+      \ '          ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝          ',
+      \ '                                       '. GetVersion(). '             ',
+      \ '                                                                      ',
+      \ ]
+
+let g:startify_lists = [
+      \ { 'type': 'bookmarks', 'header': ['  Bookmarks']           },
+      \ { 'type': 'dir',       'header': ['  Files in '. getcwd()] },
+      \ ]
+
+let g:startify_bookmarks = [
+      \ { 'v': '~/.config/nvim/init.vim' },
+      \ { 'z': '~/.zshrc'                },
+      \ { 'c': '~/code'                  },
+      \ ]
+
+" configure color scheme
 colorscheme onedark
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'onedark'
+
+" enable airline tabs
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 " set timeout for which-key & friends
 " (also sets how long vim will wait between

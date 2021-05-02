@@ -27,6 +27,12 @@ $status\
 $shell\
 $character"""
 
+[status]
+style = "dimmed cyan"
+format = "[$symbol $status]($style) "
+map_symbol = false
+disabled = false
+
 [custom.git-wip]
 command = "echo WIP"
 when = "git log -n 1 2>/dev/null | grep -q -c '\\-\\-wip\\-\\-'"

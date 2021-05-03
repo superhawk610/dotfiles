@@ -4,7 +4,8 @@ export ZSH_DISABLE_COMPFIX=true
 
 if [ "$OSTYPE" = "linux-gnu" ]; then
   export OS="linux"
-elif [ "$OSTYPE" = "darwin" ]; then
+# Mac's OS string sometimes contains a trailing version
+elif echo "$OSTYPE" | grep -q -E "^darwin"; then
   export OS="mac"
 else
   export OS="unknown"

@@ -11,9 +11,11 @@ alias ls='exa'
 alias cat='bat'
 
 ## ultralist
-alias ul='ultralist l'
+alias ul='ultralist'
+alias ull='ultralist list'
 alias ule='ultralist edit'
 alias ula='ultralist add'
+alias ulc='ultralist complete'
 alias ulab='ultralist add +backlog'
 
 ## git

@@ -28,8 +28,6 @@ if !in_vscode
   Plug 'godlygeek/tabular'
   Plug 'plasticboy/vim-markdown'
   Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
-
-  Plug 'sheerun/vim-polyglot'
 endif
 
 Plug 'cespare/vim-toml'

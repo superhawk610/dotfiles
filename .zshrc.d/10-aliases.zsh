@@ -44,25 +44,51 @@ alias glp='git log --pretty=oneline --abbrev-commit'
 alias gcf='git for-each-ref --format="%(refname:short)" refs/heads | fzf | xargs git checkout'
 alias gcfr='git for-each-ref --format="%(refname:short)" refs/remotes | fzf | sed -e s#^origin/## | xargs git checkout'
 
-gh_clone() {
+# get a git URL for the specified repo
+#
+# $1: command name
+# $2: username or username/repo
+# $3: repo or blank
+gh_repo_input() {
+  local user repo
   case "$#" in
-    1)
-      local repo=$1
+    2)
+      repo=$2
       ;;
 
-    2)
-      local user=$1
-      local repo=$2
-      local repo="$user/$repo"
+    3)
+      user=$2
+      repo=$3
+      repo="$user/$repo"
       ;;
 
     *)
-      echo "Usage: gh_clone [user] [repo]"
-      echo "       gh_clone [user/repo]"
-      return 1
+      echo "Usage: $1 [user] [repo]"
+      echo "       $1 [user/repo]"
+      exit 1
       ;;
   esac
-  git clone "git@github.com:$repo"
+  echo "git@github.com:$repo"
+}
+
+gh_clone() {
+  local repo
+  repo=$(gh_repo_input "gh_clone" $@)
+  if [[ $? -eq 0 ]]; then
+    git clone $repo
+  else
+    echo $repo # should contain usage text
+  fi
+}
+
+gh_add_origin() {
+  local repo
+  repo=$(gh_repo_input "gh_add_origin" $@)
+  if [[ $? -eq 0 ]]; then
+    git remote add origin $repo
+  else
+    echo $repo # should contain usage text
+  fi
 }
 
 # python

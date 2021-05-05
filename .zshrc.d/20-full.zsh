@@ -17,6 +17,7 @@ alias ule='ultralist edit'
 alias ula='ultralist add'
 alias ulc='ultralist complete'
 alias ulab='ultralist add +backlog'
+alias ulgc='ultralist archive c && ultralist archive gc'
 
 ## git
 unalias gp # set by oh-my-zsh

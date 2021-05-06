@@ -8,6 +8,7 @@ if !in_vscode
 
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
+  Plug 'edkolev/tmuxline.vim'
 
   Plug 'autoload/onedark.vim' " required for airline theme
   Plug 'joshdick/onedark.vim'
@@ -149,6 +150,11 @@ let g:airline_theme = 'onedark'
 " enable airline tabs
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+" configure tmuxline
+let g:airline#extensions#tmuxline#enabled = 0
+let g:tmuxline_preset = 'full'
+let g:tmuxline_theme = 'jellybeans'
 
 " set timeout for which-key & friends
 " (also sets how long vim will wait between

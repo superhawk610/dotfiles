@@ -1,4 +1,5 @@
 export ZSH_DISABLE_COMPFIX=true
+export TERM=xterm-256color
 
 # determine OS ----------------
 

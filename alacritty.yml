@@ -1,0 +1,17 @@
+shell:
+  program: "C:\\Windows\\System32\\wsl.exe"
+  args:
+    - "-d Ubuntu-20.04"
+font:
+  normal:
+    family: "FiraCode Nerd Font"
+window:
+  decorations: Full
+  padding:
+    x: 18
+    y: 18
+colors:
+  primary:
+    background: '0x262626'
+    foreground: '0xdcdfe4'
+

@@ -29,6 +29,9 @@ if !in_vscode
   Plug 'godlygeek/tabular'
   Plug 'plasticboy/vim-markdown'
   Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+
+  " tmux support
+  Plug 'christoomey/vim-tmux-navigator'
 endif
 
 Plug 'cespare/vim-toml'
@@ -288,10 +291,12 @@ else
 
   " tab switching
   nnoremap <C-t> :tabnew<CR>
-  nnoremap <C-h> :tabprevious<CR>
-  nnoremap <C-j> :tabprevious<CR>
-  nnoremap <C-k> :tabnext<CR>
-  nnoremap <C-l> :tabnext<CR>
+
+  " pane navigation
+  nnoremap <C-h> :TmuxNavigateLeft<CR>
+  nnoremap <C-j> :TmuxNavigateDown<CR>
+  nnoremap <C-k> :TmuxNavigateUp<CR>
+  nnoremap <C-l> :TmuxNavigateRight<CR>
 
   " buffer switching 
   nnoremap <Leader>B :Buffers<CR>

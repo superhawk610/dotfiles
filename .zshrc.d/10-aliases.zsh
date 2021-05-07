@@ -7,6 +7,12 @@ alias R='exec zsh'
 alias cfg='nvim ~/.zshrc'
 alias vcfg='nvim ~/.config/nvim/init.vim'
 
+## tmux
+alias tm='tmux'
+alias tma='tmux attach'
+alias tmn='tmux new -s'
+alias tmls='tmux list-sessions'
+
 ## elixir
 alias iexm='iex -S mix'
 alias phx='iex -S mix phx.server'

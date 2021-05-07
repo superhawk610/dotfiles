@@ -1,8 +1,6 @@
-# copy to ~/.zshrc.d to enable
-
-
 # path
 export PATH=$PATH:~/Library/Python/3.9/bin
+export PATH=$PATH:~/.cargo/bin
 
 # alias -----------------------
 

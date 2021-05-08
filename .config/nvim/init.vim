@@ -341,7 +341,8 @@ else
   " emulate VS Code bindings
   nmap <silent> <Leader>P :History<CR>
   nmap <silent> <Leader>p :Files<CR>
-  nmap <silent> <Leader>g :GFiles<CR>
+  nmap <silent> <Leader>g :CocDiagnostics<CR>
+  nmap <silent> <Leader>G :GFiles<CR>
   nmap <silent> <Leader>f :Rg<CR>
   nmap <silent> <Leader>n :new<CR>
 

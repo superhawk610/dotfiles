@@ -68,11 +68,14 @@ call plug#end()
 " fzf (should be installed by :PlugInstall)
 " rg
 "
-" --- nested deps
+" --- coc languages
 "
 " coc (:CocInstall X)
 " - coc-json
 " - coc-tsserver
+" - coc-toml
+" - coc-elixir
+" - coc-markdownlint
 "
 " --- usage
 "
@@ -117,6 +120,13 @@ function! GetVersion()
   return matchstr(s, 'NVIM v\zs[^\n]*')
 endfunction
 
+" allow writing a new nested file with :W
+function! WriteCreatingDirs()
+  execute ':silent !mkdir -p %:h'
+  execute ':write'
+endfunction
+command W call WriteCreatingDirs()
+
 filetype plugin indent on
 syntax enable
 
@@ -159,6 +169,11 @@ let g:airline#extensions#tmuxline#enabled = 0
 let g:tmuxline_preset = 'full'
 let g:tmuxline_theme = 'jellybeans'
 
+" configure project root
+let g:startify_change_to_dir = 0 " disable vim-startify's auto cwd
+let g:rooter_targets = '/,*' " everything, including directories
+let g:rooter_patterns = ['mix.exs', '.git']
+
 " set timeout for which-key & friends
 " (also sets how long vim will wait between
 " keypresses and still consider it to be
@@ -196,9 +211,57 @@ else
   set signcolumn=yes
 endif
 
-" display Coc info in statusline
+" configure Coc
 if !in_vscode
+  " display Coc info in statusline
   set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+  " use <TAB> to trigger completions
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1] =~# '\s'
+  endfunction
+
+  " use <C-space> to trigger completion
+  if has('nvim')
+    inoremap <silent><expr> <c-space> coc#refresh()
+  else
+    inoremap <silent><expr> <c-@> coc#refresh()
+  end
+
+  " use `[g` and `]g` to navigate diagnostics (errors & warnings)
+  " (`:CocDiagnostics` to list all diagnostics from current buffer)
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+  " goto definition
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gD <Plug>(coc-type-definition)
+
+  " hover documentation
+  nnoremap <silent> gh :call <SID>show_documentation()<CR>
+
+  function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+      execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+      call CocActionAsync('doHover')
+    else
+      execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+  endfunction
+
+  " scroll documentation windows with <C-f> and <C-b>
+  if has('nvim-0.4.0') || has('patch-8.2.0750')
+    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+    nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  endif
 endif
 
 if !in_vscode
@@ -302,6 +365,8 @@ else
   nnoremap <Leader>B :Buffers<CR>
   nnoremap <Leader>bb :Buffers<CR>
   nnoremap <Leader>bq :bd<CR>
+  " close all unsaved buffers
+  nnoremap <Leader>bQ :%bd<CR>
   nnoremap gb :bnext<CR>
   nnoremap gB :bprev<CR>
 

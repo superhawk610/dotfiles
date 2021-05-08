@@ -22,6 +22,7 @@ if !in_vscode
   Plug 'airblade/vim-rooter' " change CWD to project root when opening file
 
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+  Plug 'vim-test/vim-test'
 
   Plug 'psliwka/vim-smoothie' " smooth scrolling
 
@@ -76,6 +77,7 @@ call plug#end()
 " - coc-toml
 " - coc-elixir
 " - coc-markdownlint
+" - coc-rust-analyzer
 "
 " --- usage
 "
@@ -257,13 +259,18 @@ if !in_vscode
     endif
   endfunction
 
-  " scroll documentation windows with <C-f> and <C-b>
+  " scroll doc windows with <C-d>/<C-u> (fast) and <C-y>/<C-e> (slow)
+  " (requires manually binding vim-smoothie)
+  let g:smoothie_no_default_mappings = 1
   if has('nvim-0.4.0') || has('patch-8.2.0750')
-    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-    nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+    nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1, 3) : smoothie#downwards()
+    nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0, 3) : smoothie#upwards()
+    nnoremap <silent><nowait><expr> <C-y> coc#float#has_scroll() ? coc#float#scroll(1, 1) : "\<C-y>"
+    nnoremap <silent><nowait><expr> <C-e> coc#float#has_scroll() ? coc#float#scroll(0, 1) : "\<C-e>"
   endif
 endif
 
+" configure markdown
 if !in_vscode
   " use light grey max width marker
   highlight ColorColumn ctermbg=234 " Grey11
@@ -377,6 +384,10 @@ else
 
   " markdown preview
   nmap <C-p> <Plug>MarkdownPreviewToggle
+
+  " test runner
+  nmap <silent> <Leader>tt :TestNearest<CR>
+  nmap <silent> <Leader>tf :TestFile<CR>
 endif
 
 " clear search highlighting

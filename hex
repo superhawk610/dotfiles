@@ -1,0 +1,46 @@
+#!/bin/bash
+set -eo pipefail
+
+# Fetch information about the latest version of a Hex
+# package from `hex.pm/api`.
+
+GREEN='\033[0;32m'
+CYAN='\033[0;36m'
+DIM='\033[0;2m'
+RESET='\033[0m'
+
+API_BASE="https://hex.pm/api"
+
+if ! command -v curl &> /dev/null; then
+  echo "curl could not be found"
+  exit 1
+fi
+
+if ! command -v jq &> /dev/null; then
+  echo "jq could not be found"
+  exit 1
+fi
+
+if ! [[ $# -eq 1 ]]; then
+  echo "Usage: hex [package-name]"
+  exit 1
+fi
+
+PACKAGE="$1"
+PACKAGE_URL="$API_BASE/packages/$PACKAGE"
+
+if ! json=$(curl -fs $PACKAGE_URL); then
+  echo -e "\n  package ${GREEN}${PACKAGE}${RESET} not found!"
+  exit 1
+fi
+
+latest=$(echo $json | jq -r .latest_version)
+stable=$(echo $json | jq -r .latest_stable_version)
+package_url=$(echo $json | jq -r .html_url)
+docs_url=$(echo $json | jq -r .docs_html_url)
+
+echo -e "\n  latest: ${GREEN}${latest}${RESET}"
+echo -e   "  stable: ${GREEN}${stable}${RESET}"
+echo -e   "  package: ${CYAN}${package_url}${RESET}"
+echo -e   "  docs: ${CYAN}${docs_url}${RESET}"
+

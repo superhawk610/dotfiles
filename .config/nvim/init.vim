@@ -5,6 +5,7 @@ call plug#begin(plug_dir)
 
 if !in_vscode
   Plug 'mhinz/vim-startify'
+  Plug 'perservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -28,17 +29,17 @@ if !in_vscode
 
   " improved Markdown support (better syntax highlighting/folding)
   Plug 'godlygeek/tabular'
-  Plug 'plasticboy/vim-markdown'
-  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+  Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+  Plug 'iamcco/markdown-preview.nvim', { 'for': 'markdown', 'do': 'cd app && yarn install' }
 
   " tmux support
   Plug 'christoomey/vim-tmux-navigator'
 endif
 
-Plug 'cespare/vim-toml'
-Plug 'elixir-editors/vim-elixir'
+Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'elixir-editors/vim-elixir', { 'for' : 'elixir' }
 Plug 'kana/vim-textobj-user'
-Plug 'amiralies/vim-textobj-elixir'
+Plug 'amiralies/vim-textobj-elixir', { 'for' : 'elixir' }
 Plug 'kevinoid/vim-jsonc' " JSON w/ comments
 
 Plug 'tpope/vim-commentary'
@@ -176,6 +177,9 @@ let g:startify_change_to_dir = 0 " disable vim-startify's auto cwd
 let g:rooter_targets = '/,*' " everything, including directories
 let g:rooter_patterns = ['mix.exs', '.git']
 
+" configure NERDTree
+let g:NERDTreeQuitOnOpen = 1
+
 " set timeout for which-key & friends
 " (also sets how long vim will wait between
 " keypresses and still consider it to be
@@ -192,6 +196,9 @@ set expandtab     " use 2 spaces when pressing <Tab>
 set tabstop=2     " display tab characters as 2 spaces
 set softtabstop=2 " display soft tabs as 2 spaces
 set shiftwidth=2  " when indenting with '>', use 2 spaces
+
+" language-specific tab size
+autocmd FileType rust setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 " keep non-active buffers in-memory (required by CoC's :TextEdit)
 set hidden
@@ -352,6 +359,7 @@ else
   nmap <silent> <Leader>G :GFiles<CR>
   nmap <silent> <Leader>f :Rg<CR>
   nmap <silent> <Leader>n :new<CR>
+  nnoremap <Leader>e :NERDTreeToggle<CR>
 
   " lazy write/quit
   nmap <Leader>w :w<CR>
@@ -388,6 +396,11 @@ else
   " test runner
   nmap <silent> <Leader>tt :TestNearest<CR>
   nmap <silent> <Leader>tf :TestFile<CR>
+  if has('nvim')
+    " after running a test, press any key to exit OR press
+    " this bind to inspect the output
+    tmap <C-i> <C-\><C-n>
+  endif
 endif
 
 " clear search highlighting

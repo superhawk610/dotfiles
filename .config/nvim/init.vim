@@ -5,7 +5,7 @@ call plug#begin(plug_dir)
 
 if !in_vscode
   Plug 'mhinz/vim-startify'
-  Plug 'perservim/nerdtree', { 'on': 'NERDTreeToggle' }
+  Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'

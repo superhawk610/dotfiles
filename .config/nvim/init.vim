@@ -114,6 +114,20 @@ call plug#end()
 "      <C-x> horizontal split (:sp)
 "      <C-v> vertical split (:vsp)
 "
+" --- lesser-known modes
+"
+"  # insert-normal and command modes
+"
+"  while in insert mode, you can enter insert-command mode to run a
+"  single normal mode command and then move directly back to insert
+"  mode (bound to <C-o> by default, rebound to <C-p> to avoid conflicting
+"  with tmux leader); while in insert-normal, the mode prompt should
+"  change to `-- (insert) --` to indicate
+"
+"  additionally, you can press <C-r>= while in insert mode to enter
+"  command mode, allowing you to `execute` a command and then return
+"  to insert mode
+"
 " --------------------
 
 function! GetVersion()
@@ -220,6 +234,9 @@ else
   set signcolumn=yes
 endif
 
+" <C-o> is bound to tmux leader, so remap insert-normal keybind
+imap <C-p> <C-o>
+
 " configure Coc
 if !in_vscode
   " display Coc info in statusline
@@ -274,6 +291,10 @@ if !in_vscode
     nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0, 3) : smoothie#upwards()
     nnoremap <silent><nowait><expr> <C-y> coc#float#has_scroll() ? coc#float#scroll(1, 1) : "\<C-y>"
     nnoremap <silent><nowait><expr> <C-e> coc#float#has_scroll() ? coc#float#scroll(0, 1) : "\<C-e>"
+    inoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? "\<C-r>=coc#float#scroll(1, 3)\<CR>" : "\<C-d>"
+    inoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? "\<C-r>=coc#float#scroll(0, 3)\<CR>" : "\<C-u>"
+    inoremap <silent><nowait><expr> <C-y> coc#float#has_scroll() ? "\<C-r>=coc#float#scroll(1, 1)\<CR>" : "\<C-y>"
+    inoremap <silent><nowait><expr> <C-e> coc#float#has_scroll() ? "\<C-r>=coc#float#scroll(0, 1)\<CR>" : "\<C-e>"
   endif
 endif
 
@@ -405,6 +426,7 @@ endif
 
 " clear search highlighting
 nnoremap <C-n> :nohl<CR>
+inoremap <C-n> <C-o>:nohl<CR>
 
 " shift line up/down
 "" Windows

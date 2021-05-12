@@ -37,6 +37,7 @@ if !in_vscode
 endif
 
 Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'lifepillar/pgsql.vim', { 'for': 'sql' }
 Plug 'elixir-editors/vim-elixir', { 'for' : 'elixir' }
 Plug 'kana/vim-textobj-user'
 Plug 'amiralies/vim-textobj-elixir', { 'for' : 'elixir' }
@@ -142,6 +143,7 @@ function! WriteCreatingDirs()
   execute ':silent !mkdir -p %:h'
   execute ':write'
 endfunction
+
 command W call WriteCreatingDirs()
 
 filetype plugin indent on
@@ -189,7 +191,7 @@ let g:tmuxline_theme = 'jellybeans'
 " configure project root
 let g:startify_change_to_dir = 0 " disable vim-startify's auto cwd
 let g:rooter_targets = '/,*' " everything, including directories
-let g:rooter_patterns = ['mix.exs', '.git']
+let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 
 " configure NERDTree
 let g:NERDTreeQuitOnOpen = 1
@@ -302,6 +304,46 @@ endif
 if !in_vscode
   " use light grey max width marker
   highlight ColorColumn ctermbg=234 " Grey11
+
+  " change the background color for markdown code blocks
+  function! s:place_signs()
+    " remove all existing signs
+    execute "sign unplace * file=".expand("%")
+
+    " iterate through each line in the buffer
+    let l:in_block = 0
+    for l:lnum in range(1, len(getline(1, "$")))
+      " detect the start of a code block
+      if !l:in_block && getline(l:lnum) =~ "^```.*$"
+        let l:in_block = 1
+      endif
+      
+      " continue placing signs, until the block stops
+      if l:in_block
+        execute "sign place ".l:lnum." line=".l:lnum." name=codeblock file=".expand("%")
+      endif
+      
+      " stop placing signs
+      if l:in_block && getline(l:lnum) =~ "^```$"
+        let l:in_block = 0
+      endif
+    endfor
+  endfunction
+
+  function! ColorCodeBlocks() abort
+    sign define codeblock linehl=codeBlockBackground
+
+    augroup code_block_background
+      autocmd! * <buffer>
+      autocmd InsertLeave  <buffer> call s:place_signs()
+      autocmd BufEnter     <buffer> call s:place_signs()
+      autocmd BufWritePost <buffer> call s:place_signs()
+    augroup END
+  endfunction
+
+  au FileType markdown
+        \ highlight codeBlockBackground ctermbg=234 |
+        \ call ColorCodeBlocks()
 
   " set the max width to 80 for Markdown files
   au Filetype markdown setlocal

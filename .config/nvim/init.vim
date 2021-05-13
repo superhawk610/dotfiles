@@ -21,6 +21,7 @@ if !in_vscode
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'airblade/vim-rooter' " change CWD to project root when opening file
+  Plug 'tpope/vim-vinegar'
 
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'vim-test/vim-test'

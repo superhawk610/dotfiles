@@ -47,6 +47,12 @@ alias gcp='git cherry-pick'
 alias gs='git status'
 alias gl='git log'
 alias glp='git log --pretty=oneline --abbrev-commit'
+
+### Ignore files (outside of .gitignore) 
+alias gil='git update-index --skip-worktree'
+alias gul='git update-index --no-skip-worktree'
+
+### Checkout branches
 alias gcf='git for-each-ref --format="%(refname:short)" refs/heads | fzf | xargs git checkout'
 alias gcfr='git for-each-ref --format="%(refname:short)" refs/remotes | fzf | sed -e s#^origin/## | xargs git checkout'
 

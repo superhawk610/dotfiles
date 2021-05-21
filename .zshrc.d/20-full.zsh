@@ -22,6 +22,10 @@ unalias gp # set by oh-my-zsh
 
 # setup -----------------------
 
+# deno
+export DENO_INSTALL="/home/aaron/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # clojure
 # export LEIN_USE_BOOTCLASSPATH=no # fix for ultra
 

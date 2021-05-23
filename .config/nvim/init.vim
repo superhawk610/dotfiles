@@ -35,14 +35,20 @@ if !in_vscode
 
   " tmux support
   Plug 'christoomey/vim-tmux-navigator'
+
+  " database interaction
+  Plug 'tpope/vim-dadbod', { 'on': 'DB' }
 endif
 
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'lifepillar/pgsql.vim', { 'for': 'sql' }
-Plug 'elixir-editors/vim-elixir', { 'for' : 'elixir' }
-Plug 'kana/vim-textobj-user'
-Plug 'amiralies/vim-textobj-elixir', { 'for' : 'elixir' }
 Plug 'kevinoid/vim-jsonc' " JSON w/ comments
+
+" Elixir
+Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+Plug 'kana/vim-textobj-user'
+Plug 'amiralies/vim-textobj-elixir', { 'for': 'elixir' }
+Plug 'mhinz/vim-mix-format', { 'for': 'elixir' }
 
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
@@ -196,6 +202,9 @@ let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 
 " configure NERDTree
 let g:NERDTreeQuitOnOpen = 1
+
+" configure Elixir
+let g:mix_format_on_save = 1
 
 " set timeout for which-key & friends
 " (also sets how long vim will wait between

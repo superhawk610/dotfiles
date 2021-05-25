@@ -249,6 +249,20 @@ endif
 " <C-o> is bound to tmux leader, so remap insert-normal keybind
 imap <C-p> <C-o>
 
+" ^ and $ are awkward
+map H ^
+map L $
+
+" center search results
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+
+" very magic by default (treat escape characters like literals)
+nnoremap / /\v
+nnoremap ? ?\v
+
 " configure Coc
 if !in_vscode
   " display Coc info in statusline
@@ -284,6 +298,9 @@ if !in_vscode
 
   " hover documentation
   nnoremap <silent> gh :call <SID>show_documentation()<CR>
+
+  " code actions
+  nmap <silent> <Leader>a v<Plug>(coc-codeaction-selected)
 
   function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)

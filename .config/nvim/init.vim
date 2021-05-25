@@ -206,6 +206,12 @@ let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 " configure NERDTree
 let g:NERDTreeQuitOnOpen = 1
 
+" configure vim-commentary
+"
+" force # as comment prefix for `.ex`/`.exs` files
+" (they sometimes incorrectly assume C-style block comments)
+autocmd FileType elixir setlocal commentstring=#\ %s
+
 " configure Elixir
 let g:mix_format_on_save = 1
 

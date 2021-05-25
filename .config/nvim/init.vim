@@ -138,6 +138,9 @@ call plug#end()
 "
 " --------------------
 
+" change leader to spacebar
+let mapleader = ' '
+
 function! GetVersion()
   redir => s
   silent! version
@@ -259,10 +262,6 @@ nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 
-" very magic by default (treat escape characters like literals)
-nnoremap / /\v
-nnoremap ? ?\v
-
 " configure Coc
 if !in_vscode
   " display Coc info in statusline
@@ -300,7 +299,7 @@ if !in_vscode
   nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
   " code actions
-  nmap <silent> <Leader>a v<Plug>(coc-codeaction-selected)
+  nmap <silent> <Leader>a <Plug>(coc-codeaction-cursor)
 
   function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
@@ -403,9 +402,6 @@ set wildmenu
 " keep selection while indenting/dedenting
 vnoremap > >gv
 vnoremap < <gv
-
-" change leader to spacebar
-let mapleader = ' '
 
 " vscode.neovim
 function s:onWSL()

@@ -263,8 +263,8 @@ map H ^
 map L $
 
 " remap top/bottom keys
-noremap hh H
-noremap ll L
+noremap gH H
+noremap gL L
 
 " center search results
 nnoremap <silent> n nzz

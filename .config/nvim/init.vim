@@ -262,6 +262,10 @@ imap <C-p> <C-o>
 map H ^
 map L $
 
+" remap top/bottom keys
+noremap hh H
+noremap ll L
+
 " center search results
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -417,6 +421,7 @@ endfunction
 
 if in_vscode
   nnoremap <Leader>n <Cmd>call VSCodeNotify('workbench.action.files.newUntitledFile')<CR>
+  nnoremap <Leader>m <Cmd>call VSCodeNotify('editor.action.formatDocument')<CR>
   nnoremap <Leader>N <Cmd>call VSCodeNotify('workbench.action.newWindow')<CR>
   nnoremap <Leader>w <Cmd>call VSCodeNotify('workbench.action.files.save')<CR>
   nnoremap <Leader>W <Cmd>call VSCodeNotify('workbench.action.files.saveWithoutFormatting')<CR>

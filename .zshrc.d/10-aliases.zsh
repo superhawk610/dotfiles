@@ -26,6 +26,10 @@ alias yadi='yarn add -D --ignore-engines --ignore-optional'
 alias yaid='yarn add -D --ignore-engines --ignore-optional'
 alias yr='yarn remove'
 
+## npm
+# get a list of all failing test suites
+alias npm-test-failing-suites='CI=true npm test 2>&1 | rg FAIL'
+
 ## git
 alias gaa='git add -A'
 alias gcm='git commit -m'

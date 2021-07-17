@@ -249,7 +249,7 @@ let g:rooter_targets = '/,*' " everything, including directories
 let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 
 " configure NERDTree
-let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeQuitOnOpen = 0 " set to 1 to close whenever a file is opened
 let g:NERDTreeMouseMode = 2 " single-click for dirs, double-click for files
 let g:NERDTreeHijackNetrw = 0
 

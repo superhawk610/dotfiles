@@ -19,6 +19,9 @@ if !in_vscode
   Plug 'wfxr/minimap.vim', { 'do': ':!cargo install --locked code-minimap' }
   Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 
+  Plug 'francoiscabrol/ranger.vim'
+  Plug 'rbgrouleff/bclose.vim' " required by ranger.vim
+
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -248,6 +251,13 @@ let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 " configure NERDTree
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeMouseMode = 2 " single-click for dirs, double-click for files
+let g:NERDTreeHijackNetrw = 0
+
+" configure ranger
+let g:ranger_map_keys = 0
+let g:ranger_replace_netrw = 1
+let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
+nmap <Leader>o :Ranger<CR>
 
 " configure vim-commentary
 "

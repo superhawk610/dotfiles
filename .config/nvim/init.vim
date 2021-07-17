@@ -191,14 +191,16 @@ let g:startify_bookmarks = [
       \ ]
 
 " tweak colors
-augroup colorextend
+aug colorextend
   autocmd!
   let s:search_highlight = { 'fg': { 'cterm': 235 }, 'bg': { 'cterm': 221 } }
-  autocmd ColorScheme * call onedark#extend_highlight('Search', s:search_highlight)
-augroup END
+  au ColorScheme * call onedark#extend_highlight('Search', s:search_highlight)
+  au ColorScheme * call onedark#extend_highlight('Function', { 'cterm': 'bold' })
+aug END
 
 " configure color scheme
 set cursorline
+let g:onedark_terminal_italics = 1
 colorscheme onedark
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'onedark'

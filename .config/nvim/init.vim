@@ -1,4 +1,4 @@
-" Plug
+" lug
 let in_vscode = exists('g:vscode') " negate to install/update VSCode plugins
 let plug_dir = in_vscode ? '~/.vim/plugged-vscode' : '~/.vim/plugged'
 call plug#begin(plug_dir)
@@ -6,6 +6,8 @@ call plug#begin(plug_dir)
 if !in_vscode
   Plug 'mhinz/vim-startify'
   Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+
+  Plug 'lukas-reineke/indent-blankline.nvim'
 
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -15,6 +17,7 @@ if !in_vscode
   Plug 'joshdick/onedark.vim'
   Plug 'ryanoasis/vim-devicons'
   Plug 'ap/vim-css-color' " display CSS hex values w/ colored background
+  Plug 'ntpeters/vim-better-whitespace' " display trailing whitespacin_vscodee
 
   Plug 'wfxr/minimap.vim', { 'do': ':!cargo install --locked code-minimap' }
   Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
@@ -71,7 +74,7 @@ endif
 
 " sexp
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
-Plug 'guns/vim-sexp', { 'for': 'clojure' } 
+Plug 'guns/vim-sexp', { 'for': 'clojure' }
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 
@@ -119,7 +122,7 @@ call plug#end()
 "      :%!jq .
 "
 " --- fzf
-" 
+"
 "  # Opening search results in a new tab/split
 "
 "  while hovering over a search result from fzf (:Files), you can use
@@ -168,20 +171,21 @@ set clipboard+=unnamedplus
 
 " enable 2-way clipboard sharing on WSL via `win32yank`
 " https://github.com/equalsraf/win32yank
-if s:onWSL()
-  let g:clipboard = {
-        \    'name': 'win32yank-wsl',
-        \    'cache_enabled': 0,
-        \    'copy': {
-        \      '+': 'win32yank.exe -i --crlf',
-        \      '*': 'win32yank.exe -i --crlf',
-        \    },
-        \    'paste': {
-        \      '+': 'win32yank.exe -o --crlf',
-        \      '*': 'win32yank.exe -o --crlf',
-        \    },
-        \ }
-endif
+" (seems to be broken for now :/)
+" if s:onWSL()
+"   let g:clipboard = {
+"         \    'name': 'win32yank-wsl',
+"         \    'cache_enabled': 0,
+"         \    'copy': {
+"         \      '+': 'win32yank.exe -i --crlf',
+"         \      '*': 'win32yank.exe -i --crlf',
+"         \    },
+"         \    'paste': {
+"         \      '+': 'win32yank.exe -o --crlf',
+"         \      '*': 'win32yank.exe -o --crlf',
+"         \    },
+"         \ }
+" endif
 
 " allow writing a new nested file with :W
 function! WriteCreatingDirs()
@@ -220,12 +224,12 @@ let g:startify_bookmarks = [
       \ ]
 
 " tweak colors
-aug colorextend
+augroup colorextend
   autocmd!
   let s:search_highlight = { 'fg': { 'cterm': 235 }, 'bg': { 'cterm': 221 } }
-  au ColorScheme * call onedark#extend_highlight('Search', s:search_highlight)
-  au ColorScheme * call onedark#extend_highlight('Function', { 'cterm': 'bold' })
-aug END
+  autocmd ColorScheme * call onedark#extend_highlight('Search', s:search_highlight)
+  autocmd ColorScheme * call onedark#extend_highlight('Function', { 'cterm': 'bold' })
+augroup END
 
 " configure color scheme
 set cursorline
@@ -233,6 +237,9 @@ let g:onedark_terminal_italics = 1
 colorscheme onedark
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'onedark'
+
+" disable vertical split bar
+set fillchars+=vert:\ 
 
 " enable airline tabs
 let g:airline#extensions#tabline#enabled = 1
@@ -250,16 +257,79 @@ let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 
 " configure NERDTree
 let g:NERDTreeQuitOnOpen = 0 " set to 1 to close whenever a file is opened
-let g:NERDTreeMouseMode = 2 " single-click for dirs, double-click for files
+let g:NERDTreeMouseMode = 3 " single-click for dirs and files
 let g:NERDTreeHijackNetrw = 0
+let g:NERDTreeMinimalUI = 1
+let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''
+let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
+let g:NERDTreeDirArrowExpandable = "\u00a0"
+let g:NERDTreeDirArrowCollapsible = "\u00a0"
+let g:webdevicons_conceal_nerdtree_brackets = 1
+
+" close nvim if NERDTree/Minimap are the last buffers/windows open
+function! CheckLeftBuffers()
+  if tabpagenr('$') == 1
+    let i = 1
+    while i <= winnr('$')
+      if getbufvar(winbufnr(i), '&buftype') == 'help' ||
+          \ getbufvar(winbufnr(i), '&buftype') == 'quickfix' ||
+          \ exists('t:NERDTreeBufName') &&
+          \   bufname(winbufnr(i)) == t:NERDTreeBufName ||
+          \ bufname(winbufnr(i)) == '-MINIMAP-'
+        let i += 1
+      else
+        break
+      endif
+    endwhile
+    if i == winnr('$') + 1
+      qall
+    endif
+    unlet i
+  endif
+endfunction
+autocmd BufEnter * call CheckLeftBuffers()
 
 " configure ranger
 let g:ranger_map_keys = 0
 let g:ranger_replace_netrw = 1
 let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
-nmap <Leader>o :Ranger<CR>
+nmap <silent> <Leader>o :Ranger<CR>
 
-" configure vim-commentary
+" display trailing whitespace
+set list
+set listchars=eol:\ ,tab:»\ ,trail:·,nbsp:⎵,precedes:<,extends:>
+
+" and boundary whitespace
+let g:indent_blankline_char = '·'
+let g:indent_blankline_space_char = '·'
+let g:indent_blankline_space_char_blankline = ' '
+let g:indent_blankline_show_trailing_blankline_indent = v:false
+let g:indent_blankline_show_end_of_line = v:true
+let g:indent_blankline_filetype_exclude = ['nerdtree', 'startify']
+hi IndentBlanklineChar cterm=nocombine ctermfg=237 ctermbg=235
+hi IndentBlanklineSpaceChar cterm=nocombine ctermfg=237 ctermbg=235
+" uncomment to enable alternating line background colors
+" let g:indent_blankline_char_highlight_list = ['IndentEven', 'IndentOdd']
+" let g:indent_blankline_space_char_highlight_list = ['IndentEven', 'IndentOdd']
+" hi IndentOdd cterm=nocombine ctermbg=234 ctermfg=236
+" hi IndentEven cterm=nocombine ctermbg=236 ctermfg=234
+
+" strip trailing whitespace by default
+let g:strip_whitelines_at_eof = 1
+let g:strip_whitespace_on_save = 1
+let g:strip_whitespace_confirm = 0
+let g:show_spaces_that_precede_tabs = 1
+let g:better_whitespace_filetypes_blacklist = [
+      \   'diff',
+      \   'gitcommit',
+      \   'unite',
+      \   'qf',
+      \   'help',
+      \   'startify',
+      \   'minimap',
+      \ ]
+
+":configure vim-commentary
 "
 " force # as comment prefix for `.ex`/`.exs` files
 " (they sometimes incorrectly assume C-style block comments)
@@ -407,12 +477,12 @@ if !in_vscode
       if !l:in_block && getline(l:lnum) =~ "^```.*$"
         let l:in_block = 1
       endif
-      
+
       " continue placing signs, until the block stops
       if l:in_block
         execute "sign place ".l:lnum." line=".l:lnum." name=codeblock file=".expand("%")
       endif
-      
+
       " stop placing signs
       if l:in_block && getline(l:lnum) =~ "^```$"
         let l:in_block = 0
@@ -447,9 +517,9 @@ if !in_vscode
   " enable fenced code block syntax highlighting
   " let g:vim_markdown_fenced_languages = [
   "       \ 'elixir',
-  "       \ 'ts=typescript', 
-  "       \ 'typescript', 
-  "       \ 'js=javascript', 
+  "       \ 'ts=typescript',
+  "       \ 'typescript',
+  "       \ 'js=javascript',
   "       \ 'javascript',
   "       \ 'json',
   "       \ 'jsonc'
@@ -492,7 +562,7 @@ if in_vscode
   else         " on MacOS
     nnoremap <Leader>o <Cmd>call VSCodeNotify('workbench.action.files.openFileFolder')<CR>
   endif
-  
+
   " calva (clojure)
   nnoremap <Leader>cC <Cmd>call VSCodeNotify('calva.jackIn')<CR>
   nmap <Leader>cr :w<CR><Cmd>call VSCodeNotify('calva.loadFile')<CR>
@@ -522,7 +592,7 @@ else
   nnoremap <C-k> :TmuxNavigateUp<CR>
   nnoremap <C-l> :TmuxNavigateRight<CR>
 
-  " buffer switching 
+  " buffer switching
   nnoremap <Leader>B :Buffers<CR>
   nnoremap <Leader>bb :Buffers<CR>
   nnoremap <Leader>bq :bd<CR>
@@ -548,10 +618,10 @@ else
   endif
 
   " minimap
-  hi MinimapBase ctermbg=234 ctermfg=145
+  hi MinimapBase ctermbg=234 ctermfg=242
   hi MinimapHighlight ctermbg=235 ctermfg=111
   hi MinimapSearchHighlight ctermbg=238 ctermfg=252
-  
+
   let g:minimap_auto_start = 0
   let g:minimap_git_colors = 1
   let g:minimap_highlight_range = 1
@@ -587,4 +657,3 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 
 "" reference
 "" xterm 256 colors: https://vim.fandom.com/wiki/Xterm256_color_names_for_console_Vim
-

@@ -16,6 +16,8 @@ if !in_vscode
   Plug 'ryanoasis/vim-devicons'
   Plug 'ap/vim-css-color' " display CSS hex values w/ colored background
 
+  Plug 'wfxr/minimap.vim', { 'do': ':!cargo install --locked code-minimap' }
+
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -43,6 +45,7 @@ endif
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'lifepillar/pgsql.vim', { 'for': 'sql' }
 Plug 'kevinoid/vim-jsonc' " JSON w/ comments
+Plug 'jparise/vim-graphql'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -141,6 +144,9 @@ call plug#end()
 " change leader to spacebar
 let mapleader = ' '
 
+" enable scrolling
+set mouse=a
+
 function! GetVersion()
   redir => s
   silent! version
@@ -184,7 +190,15 @@ let g:startify_bookmarks = [
       \ { 'c': '~/code'                  },
       \ ]
 
+" tweak colors
+augroup colorextend
+  autocmd!
+  let s:search_highlight = { 'fg': { 'cterm': 235 }, 'bg': { 'cterm': 221 } }
+  autocmd ColorScheme * call onedark#extend_highlight('Search', s:search_highlight)
+augroup END
+
 " configure color scheme
+set cursorline
 colorscheme onedark
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'onedark'
@@ -205,6 +219,7 @@ let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 
 " configure NERDTree
 let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeMouseMode = 2 " single-click for dirs, double-click for files
 
 " configure vim-commentary
 "
@@ -222,6 +237,7 @@ let g:mix_format_on_save = 1
 set timeoutlen=750
 
 set number      " display line numbers
+set hlsearch
 set ignorecase
 set smartcase   " search is only case-sensitive when query contains uppercase
 set scrolloff=4 " start scrolling when 4 lines away from top/bottom of window
@@ -456,7 +472,7 @@ else
   nmap <silent> <Leader>G :GFiles<CR>
   nmap <silent> <Leader>f :Rg<CR>
   nmap <silent> <Leader>n :new<CR>
-  nnoremap <Leader>e :NERDTreeToggle<CR>
+  nnoremap <silent> <C-e> :NERDTreeToggle<CR>
 
   " lazy write/quit
   nmap <Leader>w :w<CR>
@@ -498,11 +514,28 @@ else
     " this bind to inspect the output
     tmap <C-i> <C-\><C-n>
   endif
+
+  " minimap
+  hi MinimapBase ctermbg=234 ctermfg=145
+  hi MinimapHighlight ctermbg=235 ctermfg=111
+  hi MinimapSearchHighlight ctermbg=238 ctermfg=252
+  
+  let g:minimap_auto_start = 0
+  let g:minimap_git_colors = 1
+  let g:minimap_highlight_range = 1
+  let g:minimap_highlight_search = 1
+  let g:minimap_base_highlight = 'MinimapBase'
+  let g:minimap_highlight = 'MinimapHighlight'
+  let g:minimap_search_color = 'MinimapSearchHighlight'
+  let g:minimap_block_filetypes = ['fugitive', 'nerdtree', 'tagbar', 'startify']
+
+  nmap <silent> <C-m> :MinimapToggle<CR>
+  autocmd BufReadPost,FileReadPost * if &l:buftype !=# 'help' | :Minimap
 endif
 
 " clear search highlighting
-nnoremap <C-n> :nohl<CR>
-inoremap <C-n> <C-o>:nohl<CR>
+nnoremap <silent> <C-n> :nohl<CR>:call minimap#vim#ClearColorSearch()<CR>
+inoremap <silent> <C-n> <C-o>:nohl<CR><C-o>:call minimap#vim#ClearColorSearch()<CR>
 
 " shift line up/down
 "" Windows

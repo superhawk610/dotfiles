@@ -17,6 +17,7 @@ if !in_vscode
   Plug 'ap/vim-css-color' " display CSS hex values w/ colored background
 
   Plug 'wfxr/minimap.vim', { 'do': ':!cargo install --locked code-minimap' }
+  Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
@@ -473,7 +474,7 @@ else
   nmap <silent> <Leader>g :CocDiagnostics<CR>
   nmap <silent> <Leader>G :GFiles<CR>
   nmap <silent> <Leader>f :Rg<CR>
-  nmap <silent> <Leader>n :new<CR>
+  nmap <silent> <Leader>n :tabnew<CR>
   nnoremap <silent> <C-e> :NERDTreeToggle<CR>
 
   " lazy write/quit
@@ -531,13 +532,13 @@ else
   let g:minimap_search_color = 'MinimapSearchHighlight'
   let g:minimap_block_filetypes = ['fugitive', 'nerdtree', 'tagbar', 'startify']
 
-  nmap <silent> <C-m> :MinimapToggle<CR>
+  nmap <silent> m :MinimapToggle<CR>
   autocmd BufReadPost,FileReadPost * if &l:buftype !=# 'help' | :Minimap
 endif
 
-" clear search highlighting
-nnoremap <silent> <C-n> :nohl<CR>:call minimap#vim#ClearColorSearch()<CR>
-inoremap <silent> <C-n> <C-o>:nohl<CR><C-o>:call minimap#vim#ClearColorSearch()<CR>
+" clear search highlighting (<C-/>)
+nnoremap <silent> <C-_> :nohl<CR>:call minimap#vim#ClearColorSearch()<CR>
+inoremap <silent> <C-_> <C-o>:nohl<CR><C-o>:call minimap#vim#ClearColorSearch()<CR>
 
 " shift line up/down
 "" Windows

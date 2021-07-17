@@ -148,6 +148,9 @@ let mapleader = ' '
 " enable scrolling
 set mouse=a
 
+" use system clipboard
+set clipboard=unnamedplus
+
 function! GetVersion()
   redir => s
   silent! version
@@ -176,7 +179,7 @@ let g:startify_custom_header = [
       \ '          ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║          ',
       \ '          ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║          ',
       \ '          ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝          ',
-      \ '                                       '. GetVersion(). '             ',
+      \ '            '. GetVersion(). '                                        ',
       \ '                                                                      ',
       \ ]
 

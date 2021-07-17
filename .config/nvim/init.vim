@@ -1,4 +1,4 @@
-" lug
+" Plug
 let in_vscode = exists('g:vscode') " negate to install/update VSCode plugins
 let plug_dir = in_vscode ? '~/.vim/plugged-vscode' : '~/.vim/plugged'
 call plug#begin(plug_dir)
@@ -15,6 +15,7 @@ if !in_vscode
 
   Plug 'autoload/onedark.vim' " required for airline theme
   Plug 'joshdick/onedark.vim'
+  Plug 'liuchengxu/space-vim-dark'
   Plug 'ryanoasis/vim-devicons'
   Plug 'ap/vim-css-color' " display CSS hex values w/ colored background
   Plug 'ntpeters/vim-better-whitespace' " display trailing whitespacin_vscodee
@@ -229,17 +230,26 @@ augroup colorextend
   let s:search_highlight = { 'fg': { 'cterm': 235 }, 'bg': { 'cterm': 221 } }
   autocmd ColorScheme * call onedark#extend_highlight('Search', s:search_highlight)
   autocmd ColorScheme * call onedark#extend_highlight('Function', { 'cterm': 'bold' })
+  autocmd ColorScheme * call onedark#extend_highlight('Number', { 'fg': { 'cterm': 4 } })
 augroup END
 
-" configure color scheme
 set cursorline
-let g:onedark_terminal_italics = 1
-colorscheme onedark
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'onedark'
 
 " disable vertical split bar
 set fillchars+=vert:\ 
+
+" uncomment to enable space-vim theme
+" colorscheme space-vim-dark
+" hi Normal ctermbg=none
+" hi LineNr ctermbg=none
+" hi SignColumn ctermbg=none
+" uncomment for grey comments
+" hi Comment ctermfg=59
+
+let g:onedark_terminal_italics = 0
+colorscheme onedark
+let g:airline_theme = 'onedark'
 
 " enable airline tabs
 let g:airline#extensions#tabline#enabled = 1
@@ -320,6 +330,7 @@ let g:strip_whitespace_on_save = 1
 let g:strip_whitespace_confirm = 0
 let g:show_spaces_that_precede_tabs = 1
 let g:better_whitespace_filetypes_blacklist = [
+      \   'vim',
       \   'diff',
       \   'gitcommit',
       \   'unite',
@@ -619,7 +630,7 @@ else
 
   " minimap
   hi MinimapBase ctermbg=234 ctermfg=242
-  hi MinimapHighlight ctermbg=235 ctermfg=111
+  hi MinimapHighlight ctermbg=235 ctermfg=4
   hi MinimapSearchHighlight ctermbg=238 ctermfg=252
 
   let g:minimap_auto_start = 0

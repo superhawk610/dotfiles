@@ -142,14 +142,10 @@ call plug#end()
 "
 " --------------------
 
-" change leader to spacebar
-let mapleader = ' '
-
-" enable scrolling
-set mouse=a
-
-" use system clipboard
-set clipboard=unnamedplus
+function s:onWSL()
+  let _ = system("grep -qEi \"(Microsoft|WSL)\" /proc/version")
+  return v:shell_error == 0
+endfunction
 
 function! GetVersion()
   redir => s
@@ -157,6 +153,32 @@ function! GetVersion()
   redir END
   return matchstr(s, 'NVIM v\zs[^\n]*')
 endfunction
+
+" change leader to spacebar
+let mapleader = ' '
+
+" enable scrolling
+set mouse=a
+
+" use system clipboard
+set clipboard+=unnamedplus
+
+" enable 2-way clipboard sharing on WSL via `win32yank`
+" https://github.com/equalsraf/win32yank
+if s:onWSL()
+  let g:clipboard = {
+        \    'name': 'win32yank-wsl',
+        \    'cache_enabled': 0,
+        \    'copy': {
+        \      '+': 'win32yank.exe -i --crlf',
+        \      '*': 'win32yank.exe -i --crlf',
+        \    },
+        \    'paste': {
+        \      '+': 'win32yank.exe -o --crlf',
+        \      '*': 'win32yank.exe -o --crlf',
+        \    },
+        \ }
+endif
 
 " allow writing a new nested file with :W
 function! WriteCreatingDirs()
@@ -434,12 +456,6 @@ set wildmenu
 " keep selection while indenting/dedenting
 vnoremap > >gv
 vnoremap < <gv
-
-" vscode.neovim
-function s:onWSL()
-  let _ = system("grep -qEi \"(Microsoft|WSL)\" /proc/version")
-  return v:shell_error == 0
-endfunction
 
 if in_vscode
   nnoremap <Leader>n <Cmd>call VSCodeNotify('workbench.action.files.newUntitledFile')<CR>

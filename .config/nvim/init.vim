@@ -54,6 +54,9 @@ endif
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'lifepillar/pgsql.vim', { 'for': 'sql' }
 Plug 'kevinoid/vim-jsonc' " JSON w/ comments
+Plug 'yuezk/vim-js'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'leafgarland/typescript-vim'
 Plug 'jparise/vim-graphql'
 
 " Elixir
@@ -82,6 +85,16 @@ Plug 'tpope/vim-surround'
 
 call plug#end()
 
+let g:coc_global_extensions = [
+      \ 'coc-json',
+      \ 'coc-tsserver',
+      \ 'coc-toml',
+      \ 'coc-elixir',
+      \ 'coc-markdownlint',
+      \ 'coc-rust-analyzer',
+      \ 'coc-prettier',
+      \ ]
+
 " --------------------
 "
 " --- install deps
@@ -89,16 +102,6 @@ call plug#end()
 " vim-plug
 " fzf (should be installed by :PlugInstall)
 " rg
-"
-" --- coc languages
-"
-" coc (:CocInstall X)
-" - coc-json
-" - coc-tsserver
-" - coc-toml
-" - coc-elixir
-" - coc-markdownlint
-" - coc-rust-analyzer
 "
 " --- usage
 "
@@ -294,8 +297,8 @@ let g:onedark_color_overrides = {
       \ 'purple': { 'gui': '#875fd7', 'cterm': 105, 'cterm16': 5 }
       \ }
 
+" highlight current line
 set cursorline
-let g:airline_powerline_fonts = 1
 
 " disable vertical split bar
 set fillchars+=vert:\ 
@@ -308,12 +311,14 @@ set fillchars+=vert:\
 " uncomment for grey comments
 " hi Comment ctermfg=59
 
+let g:onedark_hide_endofbuffer = 1 " hide ~ at end of file
 let g:onedark_terminal_italics = 0
 colorscheme onedark
 
 " configure airline
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:bufferline_echo = 0
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline_theme = 'lucius'
@@ -379,7 +384,7 @@ set listchars=tab:»\ ,trail:·,nbsp:⎵,precedes:<,extends:>
 " let g:indent_blankline_space_char_blankline = ' '
 " let g:indent_blankline_show_trailing_blankline_indent = v:false
 " let g:indent_blankline_show_end_of_line = v:true
-let g:indent_blankline_filetype_exclude = ['git', 'help', 'nerdtree', 'startify']
+let g:indent_blankline_filetype_exclude = ['git', 'help', 'nerdtree', 'startify', 'minimap']
 hi IndentBlanklineChar cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar cterm=nocombine ctermfg=237 ctermbg=235
 " uncomment to enable alternating line background colors
@@ -713,6 +718,9 @@ else
 
   " easily copy relative path to current file
   nmap <silent> <Leader><Leader>c :let @* = execute('echo @%')<CR>
+
+  " format file with prettier using 
+  nmap <Leader>m <Plug>(coc-format)
 endif
 
 " clear search highlighting (<C-/>)

@@ -1,6 +1,12 @@
 {
   "coc.preferences.formatOnType": true,
-  "coc.preferences.formatOnSaveFiletypes": ["elixir"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "elixir",
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact"
+  ],
   // elixir's formatter can be a bit slow
   "coc.preferences.willSaveHandlerTimeout": 1500,
   "python.formatting.provider": "black",
@@ -13,4 +19,3 @@
     }
   }
 }
-

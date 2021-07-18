@@ -1,2 +1,5 @@
 # Elixir
 .elixir_ls
+
+# nvim
+.vim

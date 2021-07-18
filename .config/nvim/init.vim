@@ -315,7 +315,7 @@ let g:indent_blankline_space_char = '·'
 let g:indent_blankline_space_char_blankline = ' '
 let g:indent_blankline_show_trailing_blankline_indent = v:false
 let g:indent_blankline_show_end_of_line = v:true
-let g:indent_blankline_filetype_exclude = ['nerdtree', 'startify']
+let g:indent_blankline_filetype_exclude = ['git', 'nerdtree', 'startify']
 hi IndentBlanklineChar cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar cterm=nocombine ctermfg=237 ctermbg=235
 " uncomment to enable alternating line background colors

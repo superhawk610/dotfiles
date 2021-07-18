@@ -5,7 +5,7 @@ call plug#begin(plug_dir)
 
 if !in_vscode
   Plug 'mhinz/vim-startify'
-  Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+  Plug 'preservim/nerdtree'
 
   Plug 'lukas-reineke/indent-blankline.nvim'
 
@@ -200,22 +200,35 @@ command W call WriteCreatingDirs()
 filetype plugin indent on
 syntax enable
 
-" configure splash screen
+      " uncomment to use ANSI Shadow logo
+      "
+      " \ '          ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗          ',
+      " \ '          ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║          ',
+      " \ '          ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║          ',
+      " \ '          ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║          ',
+      " \ '          ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║          ',
+      " \ '          ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝          ',
+
+" configure splash screen (dragons taken from https://github.com/siduck76/NvChad)
 let g:startify_custom_header = [
-      \ '                                                                      ',
-      \ '                                                                      ',
-      \ '          ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗          ',
-      \ '          ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║          ',
-      \ '          ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║          ',
-      \ '          ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║          ',
-      \ '          ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║          ',
-      \ '          ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝          ',
-      \ '            '. GetVersion(). '                                        ',
-      \ '                                                                      ',
-      \ ]
+      \ '                                            ',
+      \ '       ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆               ',
+      \ '        ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦            ',
+      \ '              ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄          ',
+      \ '               ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄         ',
+      \ '              ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀        ',
+      \ '       ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄       ',
+      \ '      ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄        ',
+      \ '     ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄       ',
+      \ '     ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄      ',
+      \ '          ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆          ',
+      \ '           ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃          ',
+      \ '                                            ',
+      \ ] + startify#fortune#quote()
 
 let g:startify_lists = [
       \ { 'type': 'bookmarks', 'header': ['  Bookmarks']           },
+      \ { 'type': 'files',     'header': ['  Recent Files']        },
       \ { 'type': 'dir',       'header': ['  Files in '. getcwd()] },
       \ ]
 
@@ -225,7 +238,10 @@ let g:startify_bookmarks = [
       \ { 'c': '~/code'                  },
       \ ]
 
-" tweak colors
+let g:startify_files_number = 5
+autocmd FileType startify hi StartifyHeader cterm=none ctermfg=242
+
+" tweak highlight groups
 augroup colorextend
   autocmd!
   let s:search_highlight = { 'fg': { 'cterm': 235 }, 'bg': { 'cterm': 221 } }
@@ -233,6 +249,11 @@ augroup colorextend
   autocmd ColorScheme * call onedark#extend_highlight('Function', { 'cterm': 'bold' })
   autocmd ColorScheme * call onedark#extend_highlight('Number', { 'fg': { 'cterm': 4 } })
 augroup END
+
+" tweak colors
+let g:onedark_color_overrides = {
+      \ 'purple': { 'gui': '#875fd7', 'cterm': 98, 'cterm16': 5 }
+      \ }
 
 set cursorline
 let g:airline_powerline_fonts = 1
@@ -259,9 +280,7 @@ let g:airline#extensions#bufferline#enabled = 1
 let g:airline_theme = 'lucius'
 
 " configure tmuxline
-let g:airline#extensions#tmuxline#enabled = 0
 let g:tmuxline_preset = 'full'
-let g:tmuxline_theme = 'jellybeans'
 
 " configure project root
 let g:startify_change_to_dir = 0 " disable vim-startify's auto cwd
@@ -269,6 +288,7 @@ let g:rooter_targets = '/,*' " everything, including directories
 let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 
 " configure NERDTree
+autocmd VimEnter * NERDTree | wincmd p
 let g:NERDTreeQuitOnOpen = 0 " set to 1 to close whenever a file is opened
 let g:NERDTreeMouseMode = 3 " single-click for dirs and files
 let g:NERDTreeHijackNetrw = 0
@@ -588,7 +608,7 @@ else
   nmap <silent> <Leader>G :GFiles<CR>
   nmap <silent> <Leader>f :Rg<CR>
   nmap <silent> <Leader>n :tabnew<CR>
-  nnoremap <silent> <C-e> :NERDTreeToggle<CR>
+  nnoremap <silent> t :NERDTreeToggle<CR>
 
   " lazy write/quit
   nmap <Leader>w :w<CR>

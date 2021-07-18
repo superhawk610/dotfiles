@@ -238,7 +238,7 @@ set cursorline
 let g:airline_powerline_fonts = 1
 
 " disable vertical split bar
-set fillchars+=vert:\
+set fillchars+=vert:\ 
 
 " uncomment to enable space-vim theme
 " colorscheme space-vim-dark
@@ -646,6 +646,12 @@ else
   let g:minimap_block_filetypes = ['git', 'help', 'fugitive', 'nerdtree', 'tagbar', 'startify']
 
   nmap <silent> m :MinimapToggle<CR>
+
+  " quickly get to current config
+  nmap <silent> <Leader><Leader>v :e ~/.config/nvim/init.vim<CR>
+
+  " easily copy relative path to current file
+  nmap <silent> <Leader><Leader>c :let @* = execute('echo @%')<CR>
 endif
 
 " clear search highlighting (<C-/>)

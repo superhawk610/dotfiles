@@ -12,6 +12,7 @@ if !in_vscode
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'edkolev/tmuxline.vim'
+  Plug 'bling/vim-bufferline'
 
   Plug 'autoload/onedark.vim' " required for airline theme
   Plug 'joshdick/onedark.vim'
@@ -237,7 +238,7 @@ set cursorline
 let g:airline_powerline_fonts = 1
 
 " disable vertical split bar
-set fillchars+=vert:\ 
+set fillchars+=vert:\
 
 " uncomment to enable space-vim theme
 " colorscheme space-vim-dark
@@ -249,11 +250,13 @@ set fillchars+=vert:\
 
 let g:onedark_terminal_italics = 0
 colorscheme onedark
-let g:airline_theme = 'onedark'
 
-" enable airline tabs
+" configure airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:bufferline_echo = 0
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline_theme = 'lucius'
 
 " configure tmuxline
 let g:airline#extensions#tmuxline#enabled = 0
@@ -307,15 +310,15 @@ nmap <silent> <Leader>o :Ranger<CR>
 
 " display trailing whitespace
 set list
-set listchars=eol:\ ,tab:»\ ,trail:·,nbsp:⎵,precedes:<,extends:>
+set listchars=tab:»\ ,trail:·,nbsp:⎵,precedes:<,extends:>
 
 " and boundary whitespace
-let g:indent_blankline_char = '·'
-let g:indent_blankline_space_char = '·'
-let g:indent_blankline_space_char_blankline = ' '
-let g:indent_blankline_show_trailing_blankline_indent = v:false
-let g:indent_blankline_show_end_of_line = v:true
-let g:indent_blankline_filetype_exclude = ['git', 'nerdtree', 'startify']
+" let g:indent_blankline_char = '·'
+" let g:indent_blankline_space_char = '·'
+" let g:indent_blankline_space_char_blankline = ' '
+" let g:indent_blankline_show_trailing_blankline_indent = v:false
+" let g:indent_blankline_show_end_of_line = v:true
+let g:indent_blankline_filetype_exclude = ['git', 'help', 'nerdtree', 'startify']
 hi IndentBlanklineChar cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar cterm=nocombine ctermfg=237 ctermbg=235
 " uncomment to enable alternating line background colors
@@ -633,17 +636,16 @@ else
   hi MinimapHighlight ctermbg=235 ctermfg=4
   hi MinimapSearchHighlight ctermbg=238 ctermfg=252
 
-  let g:minimap_auto_start = 0
+  let g:minimap_auto_start = 1
   let g:minimap_git_colors = 1
   let g:minimap_highlight_range = 1
   let g:minimap_highlight_search = 1
   let g:minimap_base_highlight = 'MinimapBase'
   let g:minimap_highlight = 'MinimapHighlight'
   let g:minimap_search_color = 'MinimapSearchHighlight'
-  let g:minimap_block_filetypes = ['fugitive', 'nerdtree', 'tagbar', 'startify']
+  let g:minimap_block_filetypes = ['git', 'help', 'fugitive', 'nerdtree', 'tagbar', 'startify']
 
   nmap <silent> m :MinimapToggle<CR>
-  autocmd BufReadPost,FileReadPost * if &l:buftype !=# 'help' | :Minimap
 endif
 
 " clear search highlighting (<C-/>)

@@ -19,7 +19,7 @@ if !in_vscode
   Plug 'liuchengxu/space-vim-dark'
   Plug 'ryanoasis/vim-devicons'
   Plug 'ap/vim-css-color' " display CSS hex values w/ colored background
-  Plug 'ntpeters/vim-better-whitespace' " display trailing whitespacin_vscodee
+  Plug 'ntpeters/vim-better-whitespace' " display trailing whitespace
 
   Plug 'wfxr/minimap.vim', { 'do': ':!cargo install --locked code-minimap' }
   Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
@@ -402,6 +402,7 @@ let g:better_whitespace_filetypes_blacklist = [
       \   'vim',
       \   'diff',
       \   'gitcommit',
+      \   'fugitive',
       \   'unite',
       \   'qf',
       \   'help',
@@ -702,7 +703,7 @@ else
   hi MinimapHighlight ctermbg=235 ctermfg=4
   hi MinimapSearchHighlight ctermbg=238 ctermfg=252
 
-  let g:minimap_auto_start = 1
+  let g:minimap_auto_start = 0
   let g:minimap_git_colors = 1
   let g:minimap_highlight_range = 1
   let g:minimap_highlight_search = 1
@@ -710,6 +711,7 @@ else
   let g:minimap_highlight = 'MinimapHighlight'
   let g:minimap_search_color = 'MinimapSearchHighlight'
   let g:minimap_block_filetypes = ['git', 'help', 'fugitive', 'nerdtree', 'tagbar', 'startify']
+  autocmd BufReadPost,FileReadPost * if &l:buftype !=# 'help' | :Minimap
 
   nmap <silent> m :MinimapToggle<CR>
 

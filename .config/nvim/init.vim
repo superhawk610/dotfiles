@@ -209,6 +209,45 @@ syntax enable
       " \ '          ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║          ',
       " \ '          ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝          ',
 
+function! s:QuoteOfTheDay()
+  let max_len = 60
+
+  " first, get a quote from Startify
+  let quote_lines = startify#fortune#quote()
+
+  " constrain each line to `max_len` or less characters
+  let lines = []
+  for line in quote_lines
+    " if the string is empty, just append a newline and move on
+    if strlen(line) == 0
+      call add(lines, line)
+      continue
+    endif
+
+    while strlen(line) > max_len
+      " find space at or closest before final character
+      let i = max_len
+      while i > 0
+        if strcharpart(line, i, 1) ==# ' '
+          break
+        endif
+        let i -= 1
+      endwhile
+
+      " append lines
+      call add(lines, strcharpart(line, 0, i))
+      let line = strcharpart(line, i + 1)
+    endwhile
+
+    " append last line
+    if strlen(line) > 0
+      call add(lines, line)
+    endif
+  endfor
+
+  return lines
+endfunction
+
 " configure splash screen (dragons taken from https://github.com/siduck76/NvChad)
 let g:startify_custom_header = [
       \ '                                            ',
@@ -224,7 +263,7 @@ let g:startify_custom_header = [
       \ '          ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆          ',
       \ '           ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃          ',
       \ '                                            ',
-      \ ] + startify#fortune#quote()
+      \ ] + s:QuoteOfTheDay()
 
 let g:startify_lists = [
       \ { 'type': 'bookmarks', 'header': ['  Bookmarks']           },
@@ -252,7 +291,7 @@ augroup END
 
 " tweak colors
 let g:onedark_color_overrides = {
-      \ 'purple': { 'gui': '#875fd7', 'cterm': 98, 'cterm16': 5 }
+      \ 'purple': { 'gui': '#875fd7', 'cterm': 105, 'cterm16': 5 }
       \ }
 
 set cursorline
@@ -279,8 +318,10 @@ let g:bufferline_echo = 0
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline_theme = 'lucius'
 
-" configure tmuxline
+" configure tmuxline (only needs to be enabled to save changes,
+" once it's good you can just save it with :TmuxlineSnapshot)
 let g:tmuxline_preset = 'full'
+let g:airline#extensions#tmuxline#enabled = 0
 
 " configure project root
 let g:startify_change_to_dir = 0 " disable vim-startify's auto cwd

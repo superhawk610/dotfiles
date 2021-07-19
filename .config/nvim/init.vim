@@ -49,6 +49,9 @@ if !in_vscode
 
   " database interaction
   Plug 'tpope/vim-dadbod', { 'on': 'DB' }
+
+  " Emmet
+  Plug 'mattn/emmet-vim'
 endif
 
 Plug 'cespare/vim-toml', { 'for': 'toml' }
@@ -656,10 +659,12 @@ else
   nmap <silent> <Leader>f :Rg<CR>
   nmap <silent> <Leader>n :tabnew<CR>
   nnoremap <silent> t :NERDTreeToggle<CR>
+  nnoremap <silent> T :NERDTreeFind<CR>
 
   " lazy write/quit
   nmap <Leader>w :w<CR>
-  nmap <Leader>q :q<CR>
+  nmap <Leader>q :Bclose<CR>
+  nmap <Leader>Q :q<CR>
 
   " reload config
   noremap <Leader>r :source $MYVIMRC<CR>
@@ -711,23 +716,32 @@ else
   let g:minimap_highlight = 'MinimapHighlight'
   let g:minimap_search_color = 'MinimapSearchHighlight'
   let g:minimap_block_filetypes = ['git', 'help', 'fugitive', 'nerdtree', 'tagbar', 'startify']
-  autocmd BufReadPost,FileReadPost * if &l:buftype !=# 'help' | :Minimap
-
-  nmap <silent> m :MinimapToggle<CR>
+  " autocmd BufReadPost,FileReadPost * if &l:buftype !=# 'help' | :Minimap
 
   " quickly get to current config
   nmap <silent> <Leader><Leader>v :e ~/.config/nvim/init.vim<CR>
 
   " easily copy relative path to current file
-  nmap <silent> <Leader><Leader>c :let @* = execute('echo @%')<CR>
+  nmap <silent> <Leader><Leader>c :let @* = trim(execute('echo @%'))<CR>
+
+  function! FormatFile()
+    if &l:filetype ==# 'elixir'
+      echo 'Formatting with `mix format`'
+      execute ':MixFormat'
+    else
+      execute 'norm \<Plug>(coc-format)'
+    endif
+  endfunction
 
   " format file with prettier using 
-  nmap <Leader>m <Plug>(coc-format)
+  nmap <silent> <Leader>m :call FormatFile()<CR>
 endif
 
 " clear search highlighting (<C-/>)
-nnoremap <silent> <C-_> :nohl<CR>:call minimap#vim#ClearColorSearch()<CR>
-inoremap <silent> <C-_> <C-o>:nohl<CR><C-o>:call minimap#vim#ClearColorSearch()<CR>
+" nnoremap <silent> <C-_> :nohl<CR>:call minimap#vim#ClearColorSearch()<CR>
+" inoremap <silent> <C-_> <C-o>:nohl<CR><C-o>:call minimap#vim#ClearColorSearch()<CR>
+nnoremap <silent> <C-_> :nohl<CR>
+inoremap <silent> <C-_> <C-o>:nohl<CR>
 
 " shift line up/down
 "" Windows

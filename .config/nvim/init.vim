@@ -573,7 +573,7 @@ let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 " configure NERDTree
 autocmd VimEnter * NERDTree | wincmd p
 let g:NERDTreeQuitOnOpen = 0 " set to 1 to close whenever a file is opened
-let g:NERDTreeMouseMode = 3 " single-click for dirs and files
+let g:NERDTreeMouseMode = 2 " single-click for dirs, double-click for files
 let g:NERDTreeHijackNetrw = 0
 let g:NERDTreeMinimalUI = 1
 let g:WebDevIconsNerdTreeBeforeGlyphPadding = ''

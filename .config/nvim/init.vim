@@ -291,9 +291,7 @@ let g:startify_bookmarks = [
 let g:startify_files_number = 5
 autocmd FileType startify hi StartifyHeader gui=none guifg=#5C6370 cterm=none ctermfg=242
 
-if !s:onWSL()
-  set termguicolors
-endif
+set termguicolors
 
 " tweak highlight groups
 augroup colorextend

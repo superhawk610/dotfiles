@@ -7,17 +7,21 @@ if !in_vscode
   Plug 'mhinz/vim-startify'
   Plug 'preservim/nerdtree'
 
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'kyazdani42/nvim-web-devicons'
+
   Plug 'lukas-reineke/indent-blankline.nvim'
 
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
-  Plug 'edkolev/tmuxline.vim'
-  Plug 'bling/vim-bufferline'
+  " Plug 'vim-airline/vim-airline'
+  " Plug 'vim-airline/vim-airline-themes'
+  " Plug 'edkolev/tmuxline.vim'
+  " Plug 'bling/vim-bufferline'
+  Plug 'akinsho/nvim-bufferline.lua'
+  Plug 'glepnir/galaxyline.nvim', { 'branch': 'main' }
 
   Plug 'autoload/onedark.vim' " required for airline theme
   Plug 'joshdick/onedark.vim'
   Plug 'liuchengxu/space-vim-dark'
-  Plug 'ryanoasis/vim-devicons'
   Plug 'ap/vim-css-color' " display CSS hex values w/ colored background
   Plug 'ntpeters/vim-better-whitespace' " display trailing whitespace
 
@@ -96,6 +100,7 @@ let g:coc_global_extensions = [
       \ 'coc-markdownlint',
       \ 'coc-rust-analyzer',
       \ 'coc-prettier',
+      \ 'coc-lua',
       \ ]
 
 " --------------------
@@ -284,7 +289,11 @@ let g:startify_bookmarks = [
       \ ]
 
 let g:startify_files_number = 5
-autocmd FileType startify hi StartifyHeader cterm=none ctermfg=242
+autocmd FileType startify hi StartifyHeader gui=none guifg=#5C6370 cterm=none ctermfg=242
+
+if !s:onWSL()
+  set termguicolors
+endif
 
 " tweak highlight groups
 augroup colorextend
@@ -297,7 +306,7 @@ augroup END
 
 " tweak colors
 let g:onedark_color_overrides = {
-      \ 'purple': { 'gui': '#875fd7', 'cterm': 105, 'cterm16': 5 }
+      \ 'purple': { 'gui': '#7c7cff', 'cterm': 105, 'cterm16': 5 }
       \ }
 
 " highlight current line
@@ -320,11 +329,238 @@ colorscheme onedark
 
 " configure airline
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:bufferline_echo = 0
-let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#bufferline#enabled = 0
 let g:airline_theme = 'lucius'
+
+" configure galaxyline
+lua <<EOF
+local gl = require('galaxyline')
+local condition = require('galaxyline.condition')
+local buffer = require('galaxyline.provider_buffer')
+
+-- onedark
+local colors = {
+  bg = '#282c34',
+  bg_dim = '#333842',
+  bg_light = '#444b59',
+  black = '#222222',
+  white = '#abb2bf',
+  gray = '#868c96',
+  red = '#e06c75',
+  green = '#98c379',
+  yellow = '#e5c07b',
+  blue = '#61afef',
+  purple = '#7c7cff', -- tweaked to match custom color
+  teal = '#56b6c2',
+}
+
+function mode_alias(m)
+  local alias = {
+    n = 'NORMAL',
+    i = 'INSERT',
+    c = 'COMMAND',
+    R = 'REPLACE',
+    t = 'TERMINAL',
+    [''] = 'V-BLOCK',
+    V = 'V-LINE',
+    v = 'VISUAL',
+  }
+
+  return alias[m] or ''
+end
+
+function mode_color(m)
+  local mode_colors = {
+    normal =  colors.green,
+    insert =  colors.blue,
+    visual =  colors.purple,
+    replace =  colors.red,
+  }
+
+  local color = {
+    n = mode_colors.normal,
+    i = mode_colors.insert,
+    c = mode_colors.replace,
+    R = mode_colors.replace,
+    t = mode_colors.insert,
+    [''] = mode_colors.visual,
+    V = mode_colors.visual,
+    v = mode_colors.visual,
+  }
+
+  return color[m] or colors.bg_light
+end
+
+-- disable for these file types
+gl.short_line_list = { 'startify', 'nerdtree', 'term', 'fugitive' }
+
+gl.section.left[1] = {
+  ViModeIcon = {
+    separator = '  ',
+    separator_highlight = {colors.black, colors.bg_light},
+    highlight = {colors.white, colors.black},
+    provider = function() return "   " end,
+  }
+}
+
+gl.section.left[2] = {
+  CWD = {
+    separator = '  ',
+    separator_highlight = function()
+      return {colors.bg_light, condition.buffer_not_empty() and colors.bg_dim or colors.bg}
+    end,
+    highlight = {colors.white, colors.bg_light},
+    provider = function()
+      local dirname = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+      return ' ' .. dirname .. ' '
+    end,
+  }
+}
+
+gl.section.left[3] = {
+  FileIcon = {
+    provider = 'FileIcon',
+    condition = condition.buffer_not_empty,
+    highlight = {colors.gray, colors.bg_dim},
+  }
+}
+
+gl.section.left[4] = {
+  FileName = {
+    provider = 'FileName',
+    condition = condition.buffer_not_empty,
+    highlight = {colors.gray, colors.bg_dim},
+    separator_highlight = {colors.bg_dim, colors.bg},
+    separator = '  ',
+  }
+}
+
+gl.section.left[5] = {
+  DiffAdd = {
+    icon = '  ',
+    provider = 'DiffAdd',
+    condition = condition.hide_in_width,
+    highlight = {colors.white, colors.bg},
+  }
+}
+
+gl.section.left[6] = {
+  DiffModified = {
+    icon = '  ',
+    provider = 'DiffModified',
+    condition = condition.hide_in_width,
+    highlight = {colors.gray, colors.bg},
+  }
+}
+
+gl.section.left[7] = {
+  DiffRemove = {
+    icon = '  ',
+    provider = 'DiffRemove',
+    condition = condition.hide_in_width,
+    highlight = {colors.gray, colors.bg},
+  }
+}
+
+gl.section.left[8] = {
+  CocStatus = {
+    highlight = {colors.gray, colors.bg},
+    provider = function() return vim.fn['coc#status']() end
+  }
+}
+
+gl.section.left[9] = {
+  CocFunction = {
+    icon = 'λ ',
+    highlight = {colors.gray, colors.bg},
+    provider = function()
+      local has_func, func_name = pcall(vim.api.nvim_buf_get_var, 0, 'coc_current_function')
+      if not has_func then return '' end
+      return func_name or ''
+    end,
+  }
+}
+
+gl.section.right[1] = {
+  FileType = {
+    highlight = {colors.gray, colors.bg},
+    provider = function()
+      local buf = require('galaxyline.provider_buffer')
+      return string.lower(buf.get_buffer_filetype())
+    end,
+  }
+}
+
+gl.section.right[2] = {
+  GitBranch = {
+    icon = ' ',
+    separator = '  ',
+    condition = condition.check_git_workspace,
+    highlight = {colors.teal, colors.bg},
+    provider = 'GitBranch',
+  }
+}
+
+gl.section.right[3] = {
+  FileLocation = {
+    icon = ' ',
+    separator = ' ',
+    separator_highlight = {colors.bg_dim, colors.bg},
+    highlight = {colors.gray, colors.bg_dim},
+    provider = function()
+      local current_line = vim.fn.line('.')
+      local total_lines = vim.fn.line('$')
+
+      if current_line == 1 then
+        return 'Top'
+      elseif current_line == total_lines then
+        return 'Bot'
+      end
+
+      local percent, _ = math.modf((current_line / total_lines) * 100)
+      return '' .. percent .. '%'
+    end,
+  }
+}
+
+vim.api.nvim_command('hi GalaxyViModeReverse guibg=' .. colors.bg_dim)
+
+gl.section.right[4] = {
+  ViMode = {
+    icon = ' ',
+    separator = ' ',
+    separator_highlight = 'GalaxyViModeReverse',
+    highlight = {colors.bg, mode_color()},
+    provider = function()
+      local m = vim.fn.mode() or vim.fn.visualmode()
+      local mode = mode_alias(m)
+      local color = mode_color(m)
+      vim.api.nvim_command('hi GalaxyViMode guibg=' .. color)
+      vim.api.nvim_command('hi GalaxyViModeReverse guifg=' .. color)
+      return ' ' .. mode .. ' '
+    end,
+  }
+}
+EOF
+
+" configure nvim-bufferline
+lua <<EOF
+require('bufferline').setup{
+  options = {
+    numbers = 'none',
+    separator_style = 'thin',
+    always_show_bufferline = true,
+    offsets = {{
+      filetype = 'nerdtree',
+      text = 'NERDTree',
+      text_align = 'center',
+    }}
+  }
+}
+EOF
 
 " configure tmuxline (only needs to be enabled to save changes,
 " once it's good you can just save it with :TmuxlineSnapshot)
@@ -388,8 +624,8 @@ set listchars=tab:»\ ,trail:·,nbsp:⎵,precedes:<,extends:>
 " let g:indent_blankline_show_trailing_blankline_indent = v:false
 " let g:indent_blankline_show_end_of_line = v:true
 let g:indent_blankline_filetype_exclude = ['git', 'help', 'nerdtree', 'startify', 'minimap']
-hi IndentBlanklineChar cterm=nocombine ctermfg=237 ctermbg=235
-hi IndentBlanklineSpaceChar cterm=nocombine ctermfg=237 ctermbg=235
+hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
+hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 " uncomment to enable alternating line background colors
 " let g:indent_blankline_char_highlight_list = ['IndentEven', 'IndentOdd']
 " let g:indent_blankline_space_char_highlight_list = ['IndentEven', 'IndentOdd']
@@ -680,10 +916,6 @@ else
 
   " buffer switching
   nnoremap <Leader>B :Buffers<CR>
-  nnoremap <Leader>bb :Buffers<CR>
-  nnoremap <Leader>bq :bd<CR>
-  " close all unsaved buffers
-  nnoremap <Leader>bQ :%bd<CR>
   nnoremap gb :bnext<CR>
   nnoremap gB :bprev<CR>
 
@@ -735,6 +967,21 @@ else
 
   " format file with prettier using 
   nmap <silent> <Leader>m :call FormatFile()<CR>
+
+  " relies on `bclose.vim`
+  function! CloseAllOtherBuffers()
+    let me = bufnr('%')
+    let bufs = map(filter(copy(getbufinfo()), 'v:val.listed'), 'v:val.bufnr')
+
+    for bufnr in bufs
+      if bufnr != me
+        execute ':Bclose '. bufnr
+      endif
+    endfor
+  endfunction
+
+  " close all but current buffer
+  nmap <silent> <Leader><Leader>q :call CloseAllOtherBuffers()<CR>
 endif
 
 " clear search highlighting (<C-/>)

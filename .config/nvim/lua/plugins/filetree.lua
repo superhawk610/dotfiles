@@ -2,6 +2,8 @@ local tree = require('nvim-tree.config')
 local tree_cb = tree.nvim_tree_callback
 local g = vim.g
 
+local M = {}
+
 g.nvim_tree_side = 'left'
 g.nvim_tree_width = 40
 g.nvim_tree_ignore = {'.git'}
@@ -50,6 +52,30 @@ g.nvim_tree_icons = {
   }
 }
 
+local function local_cb(func)
+  return string.format(":lua require('plugins.filetree').%s()<CR>", func)
+end
+
+function M.close_all()
+  local lib = require('nvim-tree.lib')
+  local view = require('nvim-tree.view')
+
+  local function iter(entries)
+    for _, node in ipairs(entries) do
+      if node.entries and node.open then
+        iter(node.entries)
+        node.open = false
+      end
+    end
+  end
+
+  iter(lib.Tree.entries)
+  lib.redraw()
+
+  -- move cursor back to top of tree
+  view.set_cursor({2, 0})
+end
+
 g.nvim_tree_disable_bindings = 1
 g.nvim_tree_bindings = {
   { key = {'<CR>', 'o'}, cb = tree_cb('edit') },
@@ -57,7 +83,8 @@ g.nvim_tree_bindings = {
   { key = '<LeftRelease>', cb = tree_cb('toggle_dir') },
   { key = 'C', cb = tree_cb('cd') },
   { key = {'-', 'u'}, cb = tree_cb('dir_up') },
-  { key = {'X', '<BS>'}, cb = tree_cb('close_node') },
+  { key = 'X', cb = local_cb('close_all') },
+  { key = '<BS>', cb = tree_cb('close_node') },
   { key = 'P', cb = tree_cb('parent_node') },
   { key = '<', cb = tree_cb('prev_sibling') },
   { key = '>', cb = tree_cb('next_sibling') },
@@ -80,3 +107,5 @@ g.nvim_tree_bindings = {
   { key = 'q', cb = tree_cb('close') },
   { key = '?', cb = tree_cb('toggle_help') },
 }
+
+return M

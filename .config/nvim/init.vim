@@ -257,10 +257,11 @@ hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=
 " hi NvimTreeNormal guibg=#222222
 " hi NvimTreeCursorLine guibg=#7c7cff guifg=#222222
 autocmd FileType NvimTree
-      \ hi NvimTreeNormal gui=none guibg=#2d313b |
-      \ hi link NvimTreeFolderIcon Question |
-      \ hi link NvimTreeFolderName Question |
-      \ hi link NvimTreeOpenedFolderName Question
+      \ hi NvimTreeNormal guibg=#2d313b |
+      \ hi NvimTreeIndentMarker guifg=#778399 |
+      \ hi link NvimTreeFolderIcon Normal |
+      \ hi link NvimTreeFolderName Normal |
+      \ hi link NvimTreeOpenedFolderName Normal
 
 " ^ and $ are awkward
 map H ^
@@ -425,7 +426,11 @@ let g:startify_bookmarks = [
       \ ]
 
 let g:startify_files_number = 5
-autocmd FileType startify hi StartifyHeader gui=none guifg=#5C6370 cterm=none ctermfg=242
+
+" remove buffer-local mapping to t since it conflicts with NvimTree
+autocmd FileType startify
+      \ execute 'nunmap <buffer> t' |
+      \ hi StartifyHeader gui=none guifg=#5C6370 cterm=none ctermfg=242
 
 " configure nvim-tree
 autocmd VimEnter * exe "lua require('nvim-tree').open()" | wincmd p

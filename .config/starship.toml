@@ -18,11 +18,11 @@ success_symbol = "[ ➜ ](#98c379)"
 error_symbol = "[ ➜ ](#e06c75)"
 
 [directory]
-style = "bg:#303030 fg:white"
+style = "bg:green fg:black"
 read_only = " "
-read_only_style = "bg:#303030 fg:red bold"
+read_only_style = "bg:green fg:white bold"
 truncate_to_repo = true
-format = "[   $path ]($style)[$read_only]($read_only_style)[](bg:black fg:#303030) "
+format = "[   $path ]($style)[$read_only]($read_only_style)[](bg:none fg:green) "
 
 [git_branch]
 symbol = " "

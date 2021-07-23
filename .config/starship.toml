@@ -1,42 +1,69 @@
 format = """
-$shlvl\
 $directory\
 $git_branch\
 $git_commit\
 $git_state\
 $git_status\
 ${custom.git-wip}\
-$docker_context\
-$package\
-$elixir\
-$erlang\
-$golang\
-$nodejs\
-$python\
-$ruby\
-$rust\
-$memory_usage\
-$aws\
-$env_var\
 $cmd_duration\
-$line_break\
-$jobs\
-$battery\
-$time\
 $status\
-$shell\
+$line_break\
 $character"""
 
+# insert a blank line between prompts
+add_newline = true
+
+[character]
+success_symbol = "[ ➜ ](#98c379)"
+error_symbol = "[ ➜ ](#e06c75)"
+
+[directory]
+style = "bg:#333333 fg:white"
+read_only = " "
+read_only_style = "bg:#333333 fg:red bold"
+truncate_to_repo = true
+format = "[   $path ]($style)[$read_only]($read_only_style)[](bg:black fg:#333333) "
+
+[git_branch]
+symbol = " "
+style = "#56b6c2"
+format = "[$symbol$branch]($style) "
+
+[git_commit]
+style = "bold #61afef"
+
+[git_state]
+style = "bold #e5c07b"
+format = "[$state($progress_current/$progress_total)]($style) "
+
+[git_status]
+style = "#868c96"
+format = "[$all_status$ahead_behind]($style) "
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+stashed = " "
+conflicted = "✗"
+untracked = " "
+modified = " "
+renamed = " "
+deleted = " "
+staged = " "
+
 [status]
-style = "dimmed cyan"
-format = "[$symbol $status]($style) "
+style = "#e06c75"
+format = "[$symbol$status]($style) "
+symbol = " "
 map_symbol = false
 disabled = false
 
-[custom.git-wip]
-command = "echo WIP"
-when = "git log -n 1 2>/dev/null | grep -q -c '\\-\\-wip\\-\\-'"
-symbol = "🚧 "
-style = "bold yellow"
-description = "Display a warning if the latest commit in the current git repo is WIP."
+[cmd_duration]
+format = "[took](#868c96) [$duration]($style)"
+style = "#7c7cff"
 
+[custom.git-wip]
+description = "Display a warning if the latest commit in the current git repo is WIP."
+when = "git log -n 1 2>/dev/null | grep -q -c '\\-\\-wip\\-\\-'"
+command = "echo wip"
+style = "bold #e5c07b"
+symbol = " "

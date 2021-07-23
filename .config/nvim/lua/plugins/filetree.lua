@@ -56,6 +56,33 @@ local function local_cb(func)
   return string.format(":lua require('plugins.filetree').%s()<CR>", func)
 end
 
+function M.toggle_dir()
+  local lib = require('nvim-tree.lib')
+
+  local node = lib.get_node_at_cursor()
+  if not node then return end
+  if not node.entries then return end
+
+  if node.open then
+    lib.close_node(node)
+  elseif node.entries ~= nil then
+    lib.unroll_dir(node)
+  end
+end
+
+function M.edit_file()
+  local lib = require('nvim-tree.lib')
+
+  local node = lib.get_node_at_cursor()
+  if not node then return end
+
+  if node.link_to and not node.entries then
+    lib.open_file('edit', node.link_to)
+  elseif not node.entries then
+    lib.open_file('edit', node.absolute_path)
+  end
+end
+
 function M.close_all()
   local lib = require('nvim-tree.lib')
   local view = require('nvim-tree.view')
@@ -79,8 +106,8 @@ end
 g.nvim_tree_disable_bindings = 1
 g.nvim_tree_bindings = {
   { key = {'<CR>', 'o'}, cb = tree_cb('edit') },
-  { key = '<2-LeftMouse>', cb = tree_cb('edit_file') },
-  { key = '<LeftRelease>', cb = tree_cb('toggle_dir') },
+  { key = '<2-LeftMouse>', cb = local_cb('edit_file') },
+  { key = '<LeftRelease>', cb = local_cb('toggle_dir') },
   { key = 'C', cb = tree_cb('cd') },
   { key = {'-', 'u'}, cb = tree_cb('dir_up') },
   { key = 'X', cb = local_cb('close_all') },

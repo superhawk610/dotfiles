@@ -6,8 +6,7 @@ call plug#begin(plug_dir)
 if !in_vscode
   Plug 'mhinz/vim-startify'
 
-  " Plug 'kyazdani42/nvim-tree.lua'
-  Plug 'superhawk610/nvim-tree.lua', { 'branch': 'feat/toggle_dir' }
+  Plug 'kyazdani42/nvim-tree.lua'
   Plug 'kyazdani42/nvim-web-devicons'
 
   Plug 'lukas-reineke/indent-blankline.nvim'
@@ -258,6 +257,7 @@ hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=
 " hi NvimTreeCursorLine guibg=#7c7cff guifg=#222222
 autocmd FileType NvimTree
       \ hi NvimTreeNormal guibg=#2d313b |
+      \ hi NvimTreeRootFolder guifg=#778399 |
       \ hi NvimTreeIndentMarker guifg=#778399 |
       \ hi link NvimTreeFolderIcon Normal |
       \ hi link NvimTreeFolderName Normal |

@@ -54,13 +54,27 @@ local function mode_color(m)
   return color[m] or colors.bg_light
 end
 
+-- combine 2 or more conditions
+local function combine(...)
+  local arg = {...}
+  return function()
+    for _, cond in ipairs(arg) do
+      if not cond() then return false end
+    end
+
+    return true
+  end
+end
+
 -- disable for these file types
 gl.short_line_list = { 'startify', 'nerdtree', 'term', 'fugitive', 'NvimTree' }
 
 gl.section.left[1] = {
-  ViModeIcon = {
+  PrefixIcon = {
     separator = '  ',
-    separator_highlight = {colors.black, colors.bg_light},
+    separator_highlight = function()
+      return {colors.black, condition.hide_in_width() and colors.bg_light or colors.bg_dim}
+    end,
     highlight = {colors.white, colors.black},
     provider = function() return "   " end,
   }
@@ -68,6 +82,7 @@ gl.section.left[1] = {
 
 gl.section.left[2] = {
   CWD = {
+    condition = condition.hide_in_width,
     separator = '  ',
     separator_highlight = function()
       return {colors.bg_light, condition.buffer_not_empty() and colors.bg_dim or colors.bg}
@@ -127,6 +142,7 @@ gl.section.left[7] = {
 
 gl.section.left[8] = {
   CocStatus = {
+    condition = condition.hide_in_width,
     highlight = {colors.gray, colors.bg},
     provider = function()
       return vim.fn['coc#status']()
@@ -140,6 +156,7 @@ gl.section.left[9] = {
   CocFunction = {
     icon = 'λ ',
     highlight = {colors.gray, colors.bg},
+    condition = condition.hide_in_width,
     provider = function()
       local has_func, func_name = pcall(vim.api.nvim_buf_get_var, 0, 'coc_current_function')
       if not has_func then return '' end
@@ -162,9 +179,12 @@ gl.section.right[2] = {
   GitBranch = {
     icon = ' ',
     separator = '  ',
-    condition = condition.check_git_workspace,
     highlight = {colors.teal, colors.bg},
     provider = 'GitBranch',
+    condition = combine(
+      condition.hide_in_width,
+      condition.check_git_workspace
+    ),
   }
 }
 
@@ -203,7 +223,7 @@ gl.section.right[4] = {
       local mode = mode_alias(m)
       local color = mode_color(m)
       vim.api.nvim_command('hi GalaxyViMode guibg=' .. color)
-      vim.api.nvim_command('hi GalaxyViModeReverse guifg=' .. color)
+      vim.api.nvim_command('hi GalaxyViModeReverse guibg=' .. colors.bg_dim .. ' guifg=' .. color)
       return ' ' .. mode .. ' '
     end,
   }

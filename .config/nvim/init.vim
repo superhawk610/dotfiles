@@ -103,6 +103,9 @@ let g:coc_global_extensions = [
       \ 'coc-lua',
       \ ]
 
+" load lua config
+lua require('config')
+
 " --------------------
 "
 " --- install deps
@@ -241,22 +244,23 @@ let g:onedark_color_overrides = {
       \ 'purple': { 'gui': '#7c7cff', 'cterm': 105, 'cterm16': 5 }
       \ }
 
+let g:onedark_hide_endofbuffer = 1 " hide ~ at end of file
+let g:onedark_terminal_italics = 0
+colorscheme onedark
+
 " highlight TODO and FIXME comments
 hi Todo ctermfg=235 ctermbg=42 guifg=#222222 guibg=#01d17a
-
-hi NvimTreeNormal guibg=#2d313b
-" hi NvimTreeNormal guibg=#222222
-" hi NvimTreeCursorLine guibg=#7c7cff guifg=#222222
-hi link NvimTreeFolderIcon Question
-hi link NvimTreeFolderName Question
-hi link NvimTreeOpenedFolderName Question
 
 hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 
-let g:onedark_hide_endofbuffer = 1 " hide ~ at end of file
-let g:onedark_terminal_italics = 0
-colorscheme onedark
+" hi NvimTreeNormal guibg=#222222
+" hi NvimTreeCursorLine guibg=#7c7cff guifg=#222222
+autocmd FileType NvimTree
+      \ hi NvimTreeNormal gui=none guibg=#2d313b |
+      \ hi link NvimTreeFolderIcon Question |
+      \ hi link NvimTreeFolderName Question |
+      \ hi link NvimTreeOpenedFolderName Question
 
 " ^ and $ are awkward
 map H ^
@@ -318,7 +322,7 @@ inoremap <silent><nowait><expr> <C-e> coc#float#has_scroll() ? "\<C-r>=coc#float
 " use <TAB> to trigger completions
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
-      \ check_back_space() ? "\<TAB>" :
+      \ utils#check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
@@ -422,9 +426,6 @@ let g:startify_bookmarks = [
 
 let g:startify_files_number = 5
 autocmd FileType startify hi StartifyHeader gui=none guifg=#5C6370 cterm=none ctermfg=242
-
-" load lua config
-lua require('config')
 
 " configure nvim-tree
 autocmd VimEnter * exe "lua require('nvim-tree').open()" | wincmd p

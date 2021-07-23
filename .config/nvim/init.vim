@@ -5,10 +5,12 @@ call plug#begin(plug_dir)
 
 if !in_vscode
   Plug 'mhinz/vim-startify'
-  Plug 'preservim/nerdtree'
+  " Plug 'preservim/nerdtree'
 
-  Plug 'ryanoasis/vim-devicons'
+  " Plug 'ryanoasis/vim-devicons'
   Plug 'kyazdani42/nvim-web-devicons'
+  " Plug 'kyazdani42/nvim-tree.lua'
+  Plug 'superhawk610/nvim-tree.lua', { 'branch': 'feat/toggle_dir' }
 
   Plug 'lukas-reineke/indent-blankline.nvim'
 
@@ -246,13 +248,13 @@ function! s:QuoteOfTheDay()
       endwhile
 
       " append lines
-      call add(lines, strcharpart(line, 0, i))
+      call add(lines, '    '. strcharpart(line, 0, i))
       let line = strcharpart(line, i + 1)
     endwhile
 
     " append last line
     if strlen(line) > 0
-      call add(lines, line)
+      call add(lines, '    '. line)
     endif
   endfor
 
@@ -261,19 +263,19 @@ endfunction
 
 " configure splash screen (dragons taken from https://github.com/siduck76/NvChad)
 let g:startify_custom_header = [
-      \ '                                            ',
-      \ '       ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆               ',
-      \ '        ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦            ',
-      \ '              ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄          ',
-      \ '               ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄         ',
-      \ '              ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀        ',
-      \ '       ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄       ',
-      \ '      ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄        ',
-      \ '     ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄       ',
-      \ '     ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄      ',
-      \ '          ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆          ',
-      \ '           ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃          ',
-      \ '                                            ',
+      \ '                                                    ',
+      \ '           ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆                   ',
+      \ '            ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦                ',
+      \ '                  ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄              ',
+      \ '                   ⣸⣿⣿⢧ ⢻⠻⣿⣿⣷⣄⣀⠄⠢⣀⡀⠈⠙⠿⠄             ',
+      \ '                  ⢠⣿⣿⣿⠈    ⣻⣿⣿⣿⣿⣿⣿⣿⣛⣳⣤⣀⣀            ',
+      \ '           ⢠⣧⣶⣥⡤⢄ ⣸⣿⣿⠘  ⢀⣴⣿⣿⡿⠛⣿⣿⣧⠈⢿⠿⠟⠛⠻⠿⠄           ',
+      \ '          ⣰⣿⣿⠛⠻⣿⣿⡦⢹⣿⣷   ⢊⣿⣿⡏  ⢸⣿⣿⡇ ⢀⣠⣄⣾⠄            ',
+      \ '         ⣠⣿⠿⠛ ⢀⣿⣿⣷⠘⢿⣿⣦⡀ ⢸⢿⣿⣿⣄ ⣸⣿⣿⡇⣪⣿⡿⠿⣿⣷⡄           ',
+      \ '         ⠙⠃   ⣼⣿⡟  ⠈⠻⣿⣿⣦⣌⡇⠻⣿⣿⣷⣿⣿⣿ ⣿⣿⡇ ⠛⠻⢷⣄          ',
+      \ '              ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆              ',
+      \ '               ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃              ',
+      \ '                                                    ',
       \ ] + s:QuoteOfTheDay()
 
 let g:startify_lists = [
@@ -302,6 +304,8 @@ augroup colorextend
   autocmd ColorScheme * call onedark#extend_highlight('Number', { 'fg': { 'cterm': 4 } })
 augroup END
 
+hi Todo ctermfg=235 ctermbg=42 guifg=#222222 guibg=#01d17a
+
 " tweak colors
 let g:onedark_color_overrides = {
       \ 'purple': { 'gui': '#7c7cff', 'cterm': 105, 'cterm16': 5 }
@@ -311,7 +315,7 @@ let g:onedark_color_overrides = {
 set cursorline
 
 " disable vertical split bar
-set fillchars+=vert:\ 
+set fillchars+=vert:\  " intentional trailing space
 
 " uncomment to enable space-vim theme
 " colorscheme space-vim-dark
@@ -393,7 +397,7 @@ function mode_color(m)
 end
 
 -- disable for these file types
-gl.short_line_list = { 'startify', 'nerdtree', 'term', 'fugitive' }
+gl.short_line_list = { 'startify', 'nerdtree', 'term', 'fugitive', 'NvimTree' }
 
 gl.section.left[1] = {
   ViModeIcon = {
@@ -466,7 +470,11 @@ gl.section.left[7] = {
 gl.section.left[8] = {
   CocStatus = {
     highlight = {colors.gray, colors.bg},
-    provider = function() return vim.fn['coc#status']() end
+    provider = function()
+      return vim.fn['coc#status']()
+        :gsub('\u{274c}', '\u{f06a}')         -- 
+        :gsub('\u{26a0}\u{fe0f}', '\u{f071}') -- 
+    end
   }
 }
 
@@ -475,7 +483,7 @@ gl.section.left[9] = {
     icon = 'λ ',
     highlight = {colors.gray, colors.bg},
     provider = function()
-      local has_func, func_name = pcall(vim.api.nvim_buf_get_var, 0, 'coc_current_function')
+      has_func, func_name = pcall(vim.api.nvim_buf_get_var, 0, 'coc_current_function')
       if not has_func then return '' end
       return func_name or ''
     end,
@@ -551,12 +559,118 @@ require('bufferline').setup{
     numbers = 'none',
     separator_style = 'thin',
     always_show_bufferline = true,
-    offsets = {{
-      filetype = 'nerdtree',
-      text = 'NERDTree',
-      text_align = 'center',
-    }}
+    offsets = {
+      -- {
+      --   filetype = 'nerdtree',
+      --   text = 'NERDTree',
+      --   text_align = 'center',
+      -- },
+      {
+        filetype = 'NvimTree',
+        text = 'NvimTree',
+        text_align = 'center',
+      }
+    }
   }
+}
+EOF
+
+" configure nvim-tree
+autocmd VimEnter * exe "lua require('nvim-tree').open()" | wincmd p
+
+nnoremap <silent> t :NvimTreeToggle<CR>
+nnoremap <silent> T :NvimTreeFindFile<CR>
+
+hi NvimTreeNormal guibg=#2d313b
+" hi NvimTreeNormal guibg=#222222
+" hi NvimTreeCursorLine guibg=#7c7cff guifg=#222222
+hi link NvimTreeFolderIcon Question
+hi link NvimTreeFolderName Question
+hi link NvimTreeOpenedFolderName Question
+
+lua <<EOF
+tree = require('nvim-tree.config')
+
+local tree_cb = tree.nvim_tree_callback
+local g = vim.g
+
+g.nvim_tree_side = 'left'
+g.nvim_tree_width = 40
+g.nvim_tree_ignore = {'.git'}
+g.nvim_tree_gitignore = 1
+g.nvim_tree_auto_open = 0
+g.nvim_tree_auto_close = 1    -- close if last window open
+g.nvim_tree_auto_ignore_ft = {'startify'}
+g.nvim_tree_quit_on_open = 0  -- close when opening file
+g.nvim_tree_follow = 1
+g.nvim_tree_indent_markers = 1
+g.nvim_tree_hide_dotfiles = 1
+g.nvim_tree_git_hl = 1
+g.nvim_tree_highlight_opened_files = 0
+g.nvim_tree_add_trailing = 0  -- hide trailing `/` on dirs
+g.nvim_tree_disable_netrw = 1
+g.nvim_tree_hijack_netrw = 0
+g.nvim_tree_group_empty = 1   -- group single-node folders
+g.nvim_tree_root_folder_modifier = ':~' -- ':t'
+
+g.nvim_tree_show_icons = {
+  git = 1,
+  files = 1,
+  folders = 1,
+  folder_arrows = 0,
+}
+
+g.nvim_tree_icons = {
+  default = '',
+  symlink = '',
+  git = {
+    unstaged = '✗',
+    staged = '✓',
+    unmerged = '',
+    renamed = '➜',
+    untracked = '',
+    deleted = '',
+    ignored = '',
+  },
+  folder = {
+    default = '',
+    open = 'ﱮ',
+    empty = '',
+    empty_open = 'ﱮ',
+    symlink = '',
+    symlink_open = 'ﱮ',
+  }
+}
+
+g.nvim_tree_disable_bindings = 1
+g.nvim_tree_bindings = {
+  { key = {'<CR>', 'o'}, cb = tree_cb('edit') },
+  { key = '<2-LeftMouse>', cb = tree_cb('edit_file') },
+  { key = '<LeftRelease>', cb = tree_cb('toggle_dir') },
+  { key = 'C', cb = tree_cb('cd') },
+  { key = {'-', 'u'}, cb = tree_cb('dir_up') },
+  { key = {'X', '<BS>'}, cb = tree_cb('close_node') },
+  { key = 'P', cb = tree_cb('parent_node') },
+  { key = '<', cb = tree_cb('prev_sibling') },
+  { key = '>', cb = tree_cb('next_sibling') },
+  { key = 'K', cb = tree_cb('first_sibling') },
+  { key = 'J', cb = tree_cb('last_sibling') },
+  { key = '<C-v>', cb = tree_cb('vsplit') },
+  { key = '<C-x>', cb = tree_cb('split') },
+  { key = '<C-t>', cb = tree_cb('tabnew') },
+  { key = 'I', cb = tree_cb('toggle_ignored') },
+  { key = 'H', cb = tree_cb('toggle_dotfiles') },
+  { key = 'a', cb = tree_cb('create') },
+  { key = 'd', cb = tree_cb('remove') },
+  { key = 'r', cb = tree_cb('rename') },
+  { key = '<C-r>', cb = tree_cb('full_rename') },
+  { key = 'x', cb = tree_cb('cut') },
+  { key = 'c', cb = tree_cb('copy') },
+  { key = 'p', cb = tree_cb('paste') },
+  { key = 'r', cb = tree_cb('rename') },
+  { key = 'R', cb = tree_cb('refresh') },
+  { key = 'q', cb = tree_cb('close') },
+  { key = '?', cb = tree_cb('toggle_help') },
 }
 EOF
 
@@ -571,7 +685,7 @@ let g:rooter_targets = '/,*' " everything, including directories
 let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
 
 " configure NERDTree
-autocmd VimEnter * NERDTree | wincmd p
+" autocmd VimEnter * NERDTree | wincmd p
 let g:NERDTreeQuitOnOpen = 0 " set to 1 to close whenever a file is opened
 let g:NERDTreeMouseMode = 2 " single-click for dirs, double-click for files
 let g:NERDTreeHijackNetrw = 0
@@ -621,7 +735,7 @@ set listchars=tab:»\ ,trail:·,nbsp:⎵,precedes:<,extends:>
 " let g:indent_blankline_space_char_blankline = ' '
 " let g:indent_blankline_show_trailing_blankline_indent = v:false
 " let g:indent_blankline_show_end_of_line = v:true
-let g:indent_blankline_filetype_exclude = ['git', 'help', 'nerdtree', 'startify', 'minimap']
+let g:indent_blankline_filetype_exclude = ['git', 'help', 'nerdtree', 'startify', 'minimap', 'NvimTree']
 hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 " uncomment to enable alternating line background colors
@@ -703,6 +817,9 @@ imap <C-p> <C-o>
 " ^ and $ are awkward
 map H ^
 map L $
+
+" make Y behave the same way as C and D
+nmap Y y$
 
 " remap top/bottom keys
 noremap gH H
@@ -892,8 +1009,8 @@ else
   nmap <silent> <Leader>G :GFiles<CR>
   nmap <silent> <Leader>f :Rg<CR>
   nmap <silent> <Leader>n :tabnew<CR>
-  nnoremap <silent> t :NERDTreeToggle<CR>
-  nnoremap <silent> T :NERDTreeFind<CR>
+  " nnoremap <silent> t :NERDTreeToggle<CR>
+  " nnoremap <silent> T :NERDTreeFind<CR>
 
   " lazy write/quit
   nmap <Leader>w :w<CR>
@@ -945,7 +1062,7 @@ else
   let g:minimap_base_highlight = 'MinimapBase'
   let g:minimap_highlight = 'MinimapHighlight'
   let g:minimap_search_color = 'MinimapSearchHighlight'
-  let g:minimap_block_filetypes = ['git', 'help', 'fugitive', 'nerdtree', 'tagbar', 'startify']
+  let g:minimap_block_filetypes = ['git', 'help', 'fugitive', 'nerdtree', 'tagbar', 'startify', 'NvimTree']
   " autocmd BufReadPost,FileReadPost * if &l:buftype !=# 'help' | :Minimap
 
   " quickly get to current config
@@ -963,7 +1080,7 @@ else
     endif
   endfunction
 
-  " format file with prettier using 
+  " format file with prettier using
   nmap <silent> <Leader>m :call FormatFile()<CR>
 
   " relies on `bclose.vim`

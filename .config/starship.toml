@@ -14,15 +14,21 @@ $character"""
 add_newline = true
 
 [character]
-success_symbol = "[ ➜ ](#98c379)"
-error_symbol = "[ ➜ ](#e06c75)"
+success_symbol = "[➜](#98c379)"
+error_symbol = "[➜](#e06c75)"
 
 [directory]
-style = "bg:#98c379 fg:black"
+style = ""
 read_only = " "
 read_only_style = "bg:#98c379 fg:white bold"
 truncate_to_repo = true
-format = "[   $path ]($style)[$read_only]($read_only_style)[](bg:none fg:#98c379) "
+format = """
+[](bg:none fg:#e5c07b)\
+[ ](bg:#e5c07b fg:black)\
+[ $path ](bg:#333333 fg:#a8b1bf)\
+[$read_only]($read_only_style)\
+[](bg:none fg:#333333) \
+"""
 
 [git_branch]
 symbol = " "

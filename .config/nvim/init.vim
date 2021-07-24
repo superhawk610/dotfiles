@@ -259,9 +259,9 @@ autocmd FileType NvimTree
       \ hi NvimTreeNormal guibg=#2d313b |
       \ hi NvimTreeRootFolder guifg=#778399 |
       \ hi NvimTreeIndentMarker guifg=#778399 |
-      \ hi link NvimTreeFolderIcon Normal |
-      \ hi link NvimTreeFolderName Normal |
-      \ hi link NvimTreeOpenedFolderName Normal
+      \ hi NvimTreeFolderIcon guifg=#abb2bf guibg=#2d313b |
+      \ hi NvimTreeFolderName guifg=#abb2bf guibg=#2d313b |
+      \ hi NvimTreeOpenedFolderName guifg=#abb2bf guibg=#2d313b
 
 " ^ and $ are awkward
 map H ^

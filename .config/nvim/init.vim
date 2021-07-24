@@ -103,7 +103,7 @@ let g:coc_global_extensions = [
       \ ]
 
 " load lua config
-lua require('config')
+if !in_vscode | execute "lua require('config')" | end
 
 " --------------------
 "

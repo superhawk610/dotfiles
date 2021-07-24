@@ -3,3 +3,6 @@
 
 # nvim
 .vim
+
+# Python
+__pycache__

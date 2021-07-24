@@ -64,7 +64,7 @@ map_symbol = false
 disabled = false
 
 [cmd_duration]
-format = "[took](#868c96) [$duration]($style)"
+format = "[took](#868c96) [$duration]($style) "
 style = "#7c7cff"
 
 [custom.git-wip]

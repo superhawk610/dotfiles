@@ -320,12 +320,15 @@ inoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? "\<C-r>=coc#float
 inoremap <silent><nowait><expr> <C-y> coc#float#has_scroll() ? "\<C-r>=coc#float#scroll(1, 1)\<CR>" : "\<C-y>"
 inoremap <silent><nowait><expr> <C-e> coc#float#has_scroll() ? "\<C-r>=coc#float#scroll(0, 1)\<CR>" : "\<C-e>"
 
-" use <TAB> to trigger completions
+" use <TAB> to cycle completions
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ utils#check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" autocomplete on <CR>
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " emulate VS Code bindings
 nmap <silent> <Leader>P :History<CR>

@@ -304,7 +304,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gD <Plug>(coc-type-definition)
 
 " hover documentation
-nnoremap <silent> gh :call show_documentation()<CR>
+nnoremap <silent> gh :call utils#show_documentation()<CR>
 
 " code actions
 nmap <silent> <Leader>a <Plug>(coc-codeaction-cursor)
@@ -363,7 +363,7 @@ nnoremap <C-k> :TmuxNavigateUp<CR>
 nnoremap <C-l> :TmuxNavigateRight<CR>
 
 " buffer switching
-nnoremap <Leader>B :Buffers<CR>
+nnoremap <Leader>b :Buffers<CR>
 nnoremap gb :bnext<CR>
 nnoremap gB :bprev<CR>
 
@@ -460,6 +460,9 @@ let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
 " configure indentation guides
 let g:indent_blankline_filetype_exclude = ['git', 'help', 'nerdtree', 'startify', 'minimap', 'NvimTree']
+
+" disable bclose default bindings
+let g:bclose_no_plugin_maps = 1
 
 " strip trailing whitespace by default
 let g:strip_whitelines_at_eof = 1

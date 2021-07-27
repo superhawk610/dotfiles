@@ -289,6 +289,11 @@ nnoremap <silent> T :NvimTreeFindFile<CR>
 
 nmap <silent> <Leader>o :Ranger<CR>
 
+" jump between quickfix lines
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
+nnoremap <silent> <Leader>c :call utils#toggle_quickfix()<CR>
+
 " use `[g` and `]g` to navigate diagnostics (errors & warnings)
 " (`:CocDiagnostics` to list all diagnostics from current buffer)
 nmap <silent> [g <Plug>(coc-diagnostic-prev)

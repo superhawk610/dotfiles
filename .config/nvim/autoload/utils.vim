@@ -119,3 +119,11 @@ function! utils#close_all_other_buffers()
     endif
   endfor
 endfunction
+
+function! utils#toggle_quickfix()
+  if getqflist({ 'winid': 0 }).winid
+    cclose
+  else
+    copen
+  endif
+endfunction

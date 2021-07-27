@@ -91,9 +91,12 @@ Plug 'tpope/vim-surround'
 
 call plug#end()
 
+" when `coc-eslint` is run for the first time, it requires permission;
+" to grant it, run `CocCommand eslint.showOutputChannel` and confirm
 let g:coc_global_extensions = [
       \ 'coc-json',
       \ 'coc-tsserver',
+      \ 'coc-eslint',
       \ 'coc-toml',
       \ 'coc-elixir',
       \ 'coc-markdownlint',

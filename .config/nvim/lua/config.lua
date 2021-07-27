@@ -11,7 +11,7 @@ require('bufferline').setup{
     numbers = 'none',
     separator_style = 'thin',
     always_show_bufferline = true,
-    close_command = 'Bclose',
+    close_command = 'Bclose %d',
     offsets = {
       -- {
       --   filetype = 'nerdtree',

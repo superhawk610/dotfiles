@@ -7,6 +7,7 @@
     "javascript",
     "javascriptreact"
   ],
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   // elixir's formatter can be a bit slow
   "coc.preferences.willSaveHandlerTimeout": 1500,
   "python.formatting.provider": "black",

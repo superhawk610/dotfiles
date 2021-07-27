@@ -363,6 +363,7 @@ nnoremap <C-k> :TmuxNavigateUp<CR>
 nnoremap <C-l> :TmuxNavigateRight<CR>
 
 " buffer switching
+nnoremap <silent> <Leader><Leader>b :BufferLinePick<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap gb :bnext<CR>
 nnoremap gB :bprev<CR>

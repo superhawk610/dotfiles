@@ -88,8 +88,8 @@ function! utils#place_signs()
   endfor
 endfunction
 
-function! utils#color_code_blocks() abort
-  sign define codeblock linehl=codeBlockBackground
+function! utils#color_md_code_blocks()
+  sign define codeblock linehl=MarkdownCodeBlock
 
   augroup code_block_background
     autocmd! * <buffer>
@@ -117,6 +117,15 @@ function! utils#close_all_other_buffers()
     if bufnr != me
       execute ':Bclose '. bufnr
     endif
+  endfor
+endfunction
+
+" relies on `bclose.vim`
+function! utils#close_all_buffers()
+  let bufs = map(filter(copy(getbufinfo()), 'v:val.listed'), 'v:val.bufnr')
+
+  for bufnr in bufs
+    execute ':Bclose '. bufnr
   endfor
 endfunction
 

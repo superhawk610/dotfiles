@@ -4,6 +4,8 @@ let plug_dir = in_vscode ? '~/.vim/plugged-vscode' : '~/.vim/plugged'
 call plug#begin(plug_dir)
 
 if !in_vscode
+  Plug 'nvim-lua/plenary.nvim' " Lua utils for a bunch of stuff
+
   Plug 'mhinz/vim-startify'
 
   Plug 'kyazdani42/nvim-tree.lua'
@@ -19,7 +21,8 @@ if !in_vscode
   Plug 'glepnir/galaxyline.nvim', { 'branch': 'main' }
 
   Plug 'joshdick/onedark.vim'
-  Plug 'ap/vim-css-color' " display CSS hex values w/ colored background
+  Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' } " requires Go
+  Plug 'folke/todo-comments.nvim'
   Plug 'ntpeters/vim-better-whitespace' " display trailing whitespace
 
   Plug 'wfxr/minimap.vim', { 'do': ':!cargo install --locked code-minimap' }
@@ -30,6 +33,8 @@ if !in_vscode
 
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
+  Plug 'sindrets/diffview.nvim'
+
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'airblade/vim-rooter' " change CWD to project root when opening file
@@ -55,6 +60,9 @@ if !in_vscode
 
   " Emmet
   Plug 'mattn/emmet-vim'
+
+  " remove quickfix lines with `dd`
+  Plug 'TamaMcGlinn/quickfixdd'
 endif
 
 Plug 'cespare/vim-toml', { 'for': 'toml' }
@@ -103,6 +111,7 @@ let g:coc_global_extensions = [
       \ 'coc-rust-analyzer',
       \ 'coc-prettier',
       \ 'coc-lua',
+      \ 'coc-pyright',
       \ ]
 
 " load lua config
@@ -228,6 +237,10 @@ endif
 set wildmode=longest,list,full
 set wildmenu
 
+augroup filetypedetect
+  autocmd BufRead,BufNewFile .env.local setfiletype sh
+augroup END
+
 filetype plugin indent on
 set termguicolors
 syntax enable
@@ -250,21 +263,8 @@ let g:onedark_hide_endofbuffer = 1 " hide ~ at end of file
 let g:onedark_terminal_italics = 0
 colorscheme onedark
 
-" highlight TODO and FIXME comments
-hi Todo ctermfg=235 ctermbg=42 guifg=#222222 guibg=#01d17a
-
 hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
-
-" hi NvimTreeNormal guibg=#222222
-" hi NvimTreeCursorLine guibg=#7c7cff guifg=#222222
-autocmd FileType NvimTree
-      \ hi NvimTreeNormal guibg=#2d313b |
-      \ hi NvimTreeRootFolder guifg=#778399 |
-      \ hi NvimTreeIndentMarker guifg=#778399 |
-      \ hi NvimTreeFolderIcon guifg=#abb2bf guibg=#2d313b |
-      \ hi NvimTreeFolderName guifg=#abb2bf guibg=#2d313b |
-      \ hi NvimTreeOpenedFolderName guifg=#abb2bf guibg=#2d313b
 
 " ^ and $ are awkward
 map H ^
@@ -338,20 +338,26 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " autocomplete on <CR>
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
+" exclude file names from :Rg results
+command! -bang -nargs=* Rg call fzf#vim#grep(
+      \ "rg --column --line-number --no-heading --color=always --smart-case ". shellescape(<q-args>), 1,
+      \ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+
 " emulate VS Code bindings
-nmap <silent> <Leader>P :History<CR>
-nmap <silent> <Leader>p :Files<CR>
-nmap <silent> <Leader>g :CocDiagnostics<CR>
-nmap <silent> <Leader>G :GFiles<CR>
-nmap <silent> <Leader>f :Rg<CR>
-nmap <silent> <Leader>n :tabnew<CR>
+nnoremap <silent> <Leader>P :History<CR>
+nnoremap <silent> <Leader>p :Files<CR>
+nnoremap <silent> <Leader>g :CocDiagnostics<CR>
+nnoremap <silent> <Leader>G :GFiles<CR>
+nnoremap <silent> <Leader>f :Rg<CR>
+nnoremap <silent> <Leader>F :Rg <C-r><C-w><CR>
+nnoremap <silent> <Leader>n :tabnew<CR>
 " nnoremap <silent> t :NERDTreeToggle<CR>
 " nnoremap <silent> T :NERDTreeFind<CR>
 
 " lazy write/quit
-nmap <Leader>w :w<CR>
-nmap <Leader>q :Bclose<CR>
-nmap <Leader>Q :q<CR>
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>q :Bclose<CR>
+nnoremap <silent> <Leader>Q :call utils#close_all_buffers()<CR>
 
 " reload config
 noremap <Leader>r :source $MYVIMRC<CR>
@@ -379,8 +385,8 @@ nnoremap <Leader>zo :loadview<CR>
 nmap <C-p> <Plug>MarkdownPreviewToggle
 
 " test runner
-nmap <silent> <Leader>tt :TestNearest<CR>
-nmap <silent> <Leader>tf :TestFile<CR>
+nnoremap <silent> <Leader>tt :TestNearest<CR>
+nnoremap <silent> <Leader>tf :TestFile<CR>
 if has('nvim')
   " after running a test, press any key to exit OR press
   " this bind to inspect the output
@@ -388,19 +394,24 @@ if has('nvim')
 endif
 
 " quickly get to current config
-nmap <silent> <Leader><Leader>v :e ~/.config/nvim/init.vim<CR>
+nnoremap <silent> <Leader><Leader>v :e ~/.config/nvim/init.vim<CR>
 
 " easily copy relative path to current file
-nmap <silent> <Leader><Leader>c :let @* = trim(execute('echo @%'))<CR>
+nnoremap <silent> <Leader><Leader>c :let @* = trim(execute('echo @%'))<CR>
+nnoremap <silent> <Leader><Leader>C :echo trim(execute('echo @%'))<CR>
 
 " format file with prettier using
-nmap <silent> <Leader>m :call utils#format_file()<CR>
+nnoremap <silent> <Leader>m :call utils#format_file()<CR>
 
 " close all but current buffer
-nmap <silent> <Leader><Leader>q :call utils#close_all_other_buffers()<CR>
+nnoremap <silent> <Leader><Leader>q :call utils#close_all_other_buffers()<CR>
 
 " activate Zen mode
-nmap <silent> <Leader>z :ZenMode<CR>
+nnoremap <silent> <Leader>z :ZenMode<CR>
+
+" open/close visual git diff
+nnoremap <Leader>xd :DiffviewOpen<CR>
+nnoremap <Leader>xD :DiffviewClose<CR>
 
 " clear search highlighting (<C-/>)
 " nnoremap <silent> <C-_> :nohl<CR>:call minimap#vim#ClearColorSearch()<CR>
@@ -445,7 +456,10 @@ autocmd FileType startify
       \ hi StartifyHeader gui=none guifg=#5C6370 cterm=none ctermfg=242
 
 " configure nvim-tree
-autocmd VimEnter * exe "lua require('nvim-tree').open()" | wincmd p
+autocmd ColorScheme * lua require('plugins.filetree').update_highlights()
+autocmd VimEnter * exe "lua require('nvim-tree').open()" |
+      \ exe "lua require('plugins.filetree').update_highlights()" |
+      \ wincmd p
 
 " configure tmuxline (only needs to be enabled to save changes,
 " once it's good you can just save it with :TmuxlineSnapshot)
@@ -494,8 +508,8 @@ let g:mix_format_on_save = 1
 
 " change the background color for markdown code blocks
 au FileType markdown
-      \ highlight codeBlockBackground ctermbg=234 |
-      \ call color_code_blocks()
+      \ highlight MarkdownCodeBlock guibg=#222222 ctermbg=234 |
+      \ call utils#color_md_code_blocks()
 
 " set the max width to 80 for Markdown files
 au Filetype markdown setlocal

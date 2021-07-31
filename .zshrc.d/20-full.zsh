@@ -59,4 +59,4 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # starship (prompt)
 eval "$(starship init zsh)"
 
-if on_wsl; then cd ~; fi
+if on_wsl && [ "$(pwd)" = "/mnt/c/Users/Aaron Ross" ]; then cd ~; fi

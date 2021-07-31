@@ -1,6 +1,7 @@
 # path
 export PATH=$PATH:~/Library/Python/3.9/bin
 export PATH=$PATH:~/.cargo/bin
+export PATH=$PATH:/usr/local/go/bin
 
 # alias -----------------------
 
@@ -50,9 +51,7 @@ fi
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # direnv
-if on_mac; then
-  eval "$(direnv hook zsh)"
-fi
+if on_mac; then eval "$(direnv hook zsh)"; fi
 
 # elixir
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -60,3 +59,4 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # starship (prompt)
 eval "$(starship init zsh)"
 
+if on_wsl; then cd ~; fi

@@ -20,6 +20,10 @@ on_linux() {
   [ "$OS" = "linux" ]
 }
 
+on_wsl() {
+  grep -qEi '(Microsoft|WSL)' /proc/version
+}
+
 # extended initialization -----
 
 if [ -d "$HOME/.zshrc.d" ]
@@ -28,4 +32,3 @@ then
     source $f
   done
 fi
-

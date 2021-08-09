@@ -245,15 +245,6 @@ filetype plugin indent on
 set termguicolors
 syntax enable
 
-" tweak highlight groups
-augroup colorextend
-  autocmd!
-  let s:search_highlight = { 'fg': { 'cterm': 235 }, 'bg': { 'cterm': 221 } }
-  autocmd ColorScheme * call onedark#extend_highlight('Search', s:search_highlight)
-  autocmd ColorScheme * call onedark#extend_highlight('Function', { 'cterm': 'bold' })
-  autocmd ColorScheme * call onedark#extend_highlight('Number', { 'fg': { 'cterm': 4 } })
-augroup END
-
 " tweak colors
 let g:onedark_color_overrides = {
       \ 'purple': { 'gui': '#7c7cff', 'cterm': 105, 'cterm16': 5 }
@@ -265,6 +256,8 @@ colorscheme onedark
 
 hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
+hi DiffAdd guifg=none guibg=#39443b
+hi DiffDelete guifg=#49323a guibg=#49323a
 
 " ^ and $ are awkward
 map H ^

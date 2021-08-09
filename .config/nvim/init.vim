@@ -5,6 +5,7 @@ call plug#begin(plug_dir)
 
 if !in_vscode
   Plug 'nvim-lua/plenary.nvim' " Lua utils for a bunch of stuff
+  Plug 'mattn/webapi-vim' " read from files/web APIs
 
   Plug 'mhinz/vim-startify'
 
@@ -12,6 +13,7 @@ if !in_vscode
   Plug 'kyazdani42/nvim-web-devicons'
 
   Plug 'lukas-reineke/indent-blankline.nvim'
+  Plug 'TaDaa/vimade' " dim inactive splits
 
   " Plug 'vim-airline/vim-airline'
   " Plug 'vim-airline/vim-airline-themes'
@@ -52,6 +54,9 @@ if !in_vscode
   Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
   Plug 'iamcco/markdown-preview.nvim', { 'for': 'markdown', 'do': 'cd app && yarn install' }
 
+  " styled-components syntax
+  Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+
   " tmux support
   Plug 'christoomey/vim-tmux-navigator'
 
@@ -72,6 +77,7 @@ Plug 'yuezk/vim-js'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'leafgarland/typescript-vim'
 Plug 'jparise/vim-graphql'
+Plug 'hail2u/vim-css3-syntax'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -113,9 +119,6 @@ let g:coc_global_extensions = [
       \ 'coc-lua',
       \ 'coc-pyright',
       \ ]
-
-" load lua config
-if !in_vscode | execute "lua require('config')" | end
 
 " --------------------
 "
@@ -454,6 +457,10 @@ autocmd VimEnter * exe "lua require('nvim-tree').open()" |
       \ exe "lua require('plugins.filetree').update_highlights()" |
       \ wincmd p
 
+" configure vimade
+let g:vimade = { "fadelevel": 0.6 }
+autocmd FileType NvimTree VimadeBufDisable
+
 " configure tmuxline (only needs to be enabled to save changes,
 " once it's good you can just save it with :TmuxlineSnapshot)
 let g:tmuxline_preset = 'full'
@@ -500,9 +507,9 @@ autocmd FileType elixir setlocal commentstring=#\ %s
 let g:mix_format_on_save = 1
 
 " change the background color for markdown code blocks
-au FileType markdown
-      \ highlight MarkdownCodeBlock guibg=#222222 ctermbg=234 |
-      \ call utils#color_md_code_blocks()
+" au FileType markdown
+"       \ highlight MarkdownCodeBlock guibg=#1a1c21 ctermbg=234 |
+"       \ call utils#color_md_code_blocks()
 
 " set the max width to 80 for Markdown files
 au Filetype markdown setlocal
@@ -510,22 +517,37 @@ au Filetype markdown setlocal
       \ colorcolumn=79
       \ conceallevel=2
 
-" this is enabled by default for all languages
-" by vim-markdown, leaving it here for reference
-"
+" make code blocks less noticeable
+au Filetype markdown
+      \ hi link mkdCodeStart Comment |
+      \ hi link mkdCodeEnd Comment
+
 " enable fenced code block syntax highlighting
-" let g:vim_markdown_fenced_languages = [
-"       \ 'elixir',
-"       \ 'ts=typescript',
-"       \ 'typescript',
-"       \ 'js=javascript',
-"       \ 'javascript',
-"       \ 'json',
-"       \ 'jsonc'
-"       \ ]
+let g:vim_markdown_fenced_languages = [
+      \ 'elixir',
+      \ 'ts=typescript',
+      \ 'typescript',
+      \ 'js=javascript',
+      \ 'javascript',
+      \ 'json',
+      \ 'jsonc'
+      \ ]
 
 " disable header folding
 let g:vim_markdown_folding_disabled = 1
 
-" enable VSCode bindings
-if in_vscode | runtime 'vscode.vim' | end
+" show start/end tags for code blocks
+let g:vim_markdown_conceal_code_blocks = 0
+
+" custom emmet snippets
+" https://docs.emmet.io/customization/snippets/
+let s:emmet_snippets_file = '~/.config/nvim/emmet-snippets.json'
+let g:user_emmet_settings = webapi#json#decode(join(readfile(expand(s:emmet_snippets_file)), ''))
+
+if in_vscode
+  " enable VSCode bindings
+  runtime 'vscode.vim'
+else
+  " load lua config
+  execute "lua require('config')"
+end

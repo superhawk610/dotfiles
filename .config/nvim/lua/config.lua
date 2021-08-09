@@ -8,7 +8,11 @@ require('plugins.statusline')
 require('todo-comments').setup {}
 
 -- configure zen-mode
-require('zen-mode').setup {}
+require('zen-mode').setup {
+  window = {
+    backdrop = 0.9,
+  },
+}
 
 -- configure nvim-bufferline
 require('bufferline').setup {

@@ -136,3 +136,9 @@ function! utils#toggle_quickfix()
     copen
   endif
 endfunction
+
+function! utils#identify_highlight()
+  echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+        \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+        \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+endfunction

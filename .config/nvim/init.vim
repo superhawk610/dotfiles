@@ -168,13 +168,40 @@ let g:coc_global_extensions = [
 "
 "  while in insert mode, you can enter insert-command mode to run a
 "  single normal mode command and then move directly back to insert
-"  mode (bound to <C-o> by default, rebound to <C-p> to avoid conflicting
-"  with tmux leader); while in insert-normal, the mode prompt should
-"  change to `-- (insert) --` to indicate
+"  mode (bound to <C-o>); while in insert-normal, the mode prompt
+"  should change to `-- (insert) --` to indicate
 "
-"  additionally, you can press <C-r>= while in insert mode to enter
+"  additionally, you can press `<C-r> =` while in insert mode to enter
 "  command mode, allowing you to `execute` a command and then return
 "  to insert mode
+"
+" --- folds and folding
+"
+"  by default, folds are disabled for most file types
+"
+"  to enable folding, set `foldmethod` to one of the following values
+"
+"      manual (default)
+"      indent
+"      syntax (you probably want this one)
+"
+"      expr / marker / diff (these are less used)
+"
+"  once folding is enabled, use these commands to toggle
+"
+"      zo   Open fold
+"      zc   Close fold
+"      za   Toggle fold
+"
+"      zO   Open all folds (under cursor)
+"      zC   Close all folds
+"      zA   Toggle all folds
+"
+"      zr   Peel back one layer of folding (in entire buffer)
+"      zR   Open all folds in buffer
+"
+"      zm   Fold by one more layer (in entire buffer)
+"      zM   Close all folds
 "
 " --------------------
 
@@ -302,6 +329,15 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gD <Plug>(coc-type-definition)
 
+" visual multi
+let g:VM_maps = {}
+let g:VM_maps['Undo'] = 'u'
+let g:VM_maps['Redo'] = '<C-r>'
+" let g:VM_maps['Add Cursor Up'] = '<C-Up>'
+let g:VM_maps['Add Cursor Down'] = '<C-m>'
+
+nnoremap <silent> <Leader>v :CocList outline<CR>
+
 " hover documentation
 nnoremap <silent> gh :call utils#show_documentation()<CR>
 
@@ -337,6 +373,10 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " exclude file names from :Rg results
 command! -bang -nargs=* Rg call fzf#vim#grep(
       \ "rg --column --line-number --no-heading --color=always --smart-case ". shellescape(<q-args>), 1,
+      \ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+
+command! -bang -nargs=* RgExact call fzf#vim#grep(
+      \ "rg --column --line-number --no-heading --color=always --fixed-strings ". shellescape(<q-args>), 1,
       \ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 
 " emulate VS Code bindings

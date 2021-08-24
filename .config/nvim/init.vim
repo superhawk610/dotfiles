@@ -353,7 +353,8 @@ nnoremap <silent> <Leader>n :tabnew<CR>
 " lazy write/quit
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :Bclose<CR>
-nnoremap <silent> <Leader>Q :call utils#close_all_buffers()<CR>
+nnoremap <silent> <Leader>Q :Startify<CR>:call utils#close_all_other_buffers()<CR>
+nnoremap <silent> <Leader><Leader>q :call utils#close_all_other_buffers()<CR>
 
 " reload config
 noremap <Leader>r :source $MYVIMRC<CR>
@@ -398,9 +399,6 @@ nnoremap <silent> <Leader><Leader>C :echo trim(execute('echo @%'))<CR>
 
 " format file with prettier using
 nnoremap <silent> <Leader>m :call utils#format_file()<CR>
-
-" close all but current buffer
-nnoremap <silent> <Leader><Leader>q :call utils#close_all_other_buffers()<CR>
 
 " activate Zen mode
 nnoremap <silent> <Leader>z :ZenMode<CR>

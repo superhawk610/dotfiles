@@ -1,6 +1,7 @@
 {
   "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveFiletypes": [
+    "rust",
     "elixir",
     "typescript",
     "typescriptreact",

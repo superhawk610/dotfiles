@@ -491,9 +491,11 @@ autocmd FileType startify
 
 " configure nvim-tree
 autocmd ColorScheme * lua require('plugins.filetree').update_highlights()
-autocmd VimEnter * exe "lua require('nvim-tree').open()" |
+autocmd VimEnter * if argc() == 0 |
+      \ exe "lua require('nvim-tree').open()" |
       \ exe "lua require('plugins.filetree').update_highlights()" |
-      \ wincmd p
+      \ wincmd p |
+      \ endif
 
 " configure vimade
 let g:vimade = { "fadelevel": 0.6 }

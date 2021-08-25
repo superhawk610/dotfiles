@@ -310,6 +310,10 @@ nnoremap <silent> # #zz
 vnoremap > >gv
 vnoremap < <gv
 
+" shift indents while inserting with <M-[> and <M-]>
+imap “ <C-o><<
+imap ‘ <C-o>>>
+
 nnoremap <silent> t :NvimTreeToggle<CR>
 nnoremap <silent> T :NvimTreeFindFile<CR>
 

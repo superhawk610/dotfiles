@@ -313,6 +313,8 @@ vnoremap < <gv
 " shift indents while inserting with <M-[> and <M-]>
 imap “ <C-d>
 imap ‘ <C-t>
+imap <M-[> <C-d>
+imap <M-]> <C-t>
 
 nnoremap <silent> t :NvimTreeToggle<CR>
 nnoremap <silent> T :NvimTreeFindFile<CR>
@@ -582,6 +584,9 @@ let g:vim_markdown_folding_disabled = 1
 
 " show start/end tags for code blocks
 let g:vim_markdown_conceal_code_blocks = 0
+
+" indent markdown lists by 2 spaces
+let g:vim_markdown_new_list_item_indent = 2
 
 " custom emmet snippets
 " https://docs.emmet.io/customization/snippets/

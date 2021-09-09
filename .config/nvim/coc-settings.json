@@ -1,6 +1,7 @@
 {
   "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveFiletypes": [
+    "json",
     "rust",
     "elixir",
     "typescript",

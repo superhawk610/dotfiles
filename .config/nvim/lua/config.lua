@@ -74,3 +74,6 @@ require('diffview').setup {
     }),
   }
 }
+
+-- configure headlines
+require('headlines').setup {}

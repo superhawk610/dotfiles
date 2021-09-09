@@ -38,8 +38,8 @@ g.nvim_tree_icons = {
     staged = '✓',
     unmerged = '',
     renamed = '➜',
-    untracked = '★',
-    deleted = '',
+    untracked = 'U',
+    deleted = 'D',
     ignored = '',
   },
   folder = {

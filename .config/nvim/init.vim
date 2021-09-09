@@ -13,6 +13,7 @@ if !in_vscode
   Plug 'kyazdani42/nvim-web-devicons'
 
   Plug 'lukas-reineke/indent-blankline.nvim'
+  Plug 'lukas-reineke/headlines.nvim'
   Plug 'TaDaa/vimade' " dim inactive splits
 
   " Plug 'vim-airline/vim-airline'
@@ -150,6 +151,10 @@ let g:coc_global_extensions = [
 "  you can accomplish the same thing with the entire file by using
 "
 "      :%!jq .
+"
+"  # format XML file with `xmllint`
+"
+"      :%!xmllint --format -
 "
 " --- fzf
 "

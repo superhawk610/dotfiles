@@ -35,6 +35,17 @@
       // to enable in GQL template literals, include these filetypes
       // "filetypes": ["typescript", "typescriptreact", "graphql"]
       "filetypes": ["graphql"]
+    },
+    // brew install ccls
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
     }
   }
 }

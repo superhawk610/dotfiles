@@ -146,8 +146,9 @@ gl.section.left[8] = {
     highlight = {colors.gray, colors.bg},
     provider = function()
       return vim.fn['coc#status']()
-        :gsub('\u{274c}', '\u{f06a}')         -- 
-        :gsub('\u{26a0}\u{fe0f}', '\u{f071}') -- 
+        -- :gsub('\u{274c}', '\u{f06a}')         -- 
+        -- :gsub('\u{26a0}\u{fe0f}', '\u{f071}') -- 
+        -- :gsub('^W(%d)$', '\u{f071} %1')       --   (ccls)
     end
   }
 }

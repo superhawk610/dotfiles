@@ -1,4 +1,6 @@
 {
+  "diagnostic.errorSign": " ",
+  "diagnostic.warningSign": " ",
   "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveFiletypes": [
     "json",
@@ -37,6 +39,8 @@
       "filetypes": ["graphql"]
     },
     // brew install ccls
+    // --OR--
+    // sudo apt install ccls
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],

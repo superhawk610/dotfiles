@@ -280,6 +280,9 @@ filetype plugin indent on
 set termguicolors
 syntax enable
 
+let g:coc_status_error_sign = ' '
+let g:coc_status_warning_sign = ' '
+
 " tweak colors
 let g:onedark_color_overrides = {
       \ 'purple': { 'gui': '#7c7cff', 'cterm': 105, 'cterm16': 5 }

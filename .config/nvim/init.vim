@@ -45,6 +45,7 @@ if !in_vscode
 
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'vim-test/vim-test'
+  Plug 'puremourning/vimspector'
 
   Plug 'psliwka/vim-smoothie' " smooth scrolling
 
@@ -155,6 +156,13 @@ let g:coc_global_extensions = [
 "  # format XML file with `xmllint`
 "
 "      :%!xmllint --format -
+"
+"  # run a single command without triggering autocmds
+"
+"  disable autocmds during execution of a command by prefixing with :noa
+"
+"      " write a file without formatting
+"      :noa w
 "
 " --- fzf
 "
@@ -349,6 +357,9 @@ let g:VM_maps['Undo'] = 'u'
 let g:VM_maps['Redo'] = '<C-r>'
 " let g:VM_maps['Add Cursor Up'] = '<C-Up>'
 let g:VM_maps['Add Cursor Down'] = '<C-m>'
+
+" vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
 
 nnoremap <silent> <Leader>v :CocList outline<CR>
 

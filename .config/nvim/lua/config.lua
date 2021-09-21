@@ -51,10 +51,8 @@ local dv_common_binds = {
 }
 require('diffview').setup {
   diff_binaries = false,
-  file_panel = {
-    width = 40,
-    use_icons = true,
-  },
+  use_icons = true,
+  file_panel = { width = 40 },
   key_bindings = {
     disable_defaults = true,
     view = dv_common_binds,

@@ -36,6 +36,7 @@ if !in_vscode
 
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
+  Plug 'APZelos/blamer.nvim'
   Plug 'sindrets/diffview.nvim'
 
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -290,6 +291,10 @@ syntax enable
 
 let g:coc_status_error_sign = ' '
 let g:coc_status_warning_sign = ' '
+
+let g:blamer_enabled = 1
+let g:blamer_relative_time = 1
+let g:blamer_template = '<committer>, <committer-time> • <summary>'
 
 " tweak colors
 let g:onedark_color_overrides = {

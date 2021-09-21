@@ -1,6 +1,8 @@
 {
   "diagnostic.errorSign": " ",
   "diagnostic.warningSign": " ",
+  // display hover diagnostic everywhere on line, not just at error site
+  // "diagnostic.checkCurrentLine": true,
   "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveFiletypes": [
     "json",

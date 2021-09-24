@@ -531,6 +531,12 @@ autocmd VimEnter * if argc() == 0 |
 let g:vimade = { "fadelevel": 0.6 }
 autocmd FileType NvimTree VimadeBufDisable
 
+" configure fugitive
+autocmd FileType fugitive
+      \ nmap <buffer> <leader>q :q<CR><C-w><C-w>
+autocmd FileType gitcommit
+      \ nmap <buffer> <leader>q :wq<CR>
+
 " configure tmuxline (only needs to be enabled to save changes,
 " once it's good you can just save it with :TmuxlineSnapshot)
 let g:tmuxline_preset = 'full'

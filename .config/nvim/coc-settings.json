@@ -11,7 +11,8 @@
     "typescript",
     "typescriptreact",
     "javascript",
-    "javascriptreact"
+    "javascriptreact",
+    "crystal"
   ],
   "prettier.semi": true,
   "prettier.singleQuote": true,
@@ -52,6 +53,14 @@
           "directory": "/tmp/ccls"
         }
       }
+    },
+    // wget https://github.com/elbywan/crystalline/releases/latest/download/crystalline_x86_64-unknown-linux-gnu.gz -O crystalline.gz && \
+    // gzip -d crystalline.gz && \
+    // chmod u+x crystalline
+    "crystal": {
+      "command": "crystalline",
+      "args": ["--stdio"],
+      "filetypes": ["crystal"]
     }
   }
 }

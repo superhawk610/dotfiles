@@ -81,6 +81,7 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'leafgarland/typescript-vim'
 Plug 'jparise/vim-graphql'
 Plug 'hail2u/vim-css3-syntax'
+Plug 'vim-crystal/vim-crystal'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -578,6 +579,7 @@ let g:better_whitespace_filetypes_blacklist = [
 " force # as comment prefix for `.ex`/`.exs` files
 " (they sometimes incorrectly assume C-style block comments)
 autocmd FileType elixir setlocal commentstring=#\ %s
+autocmd FileType c,cpp setlocal commentstring=//\ %s
 
 " configure Elixir
 let g:mix_format_on_save = 1

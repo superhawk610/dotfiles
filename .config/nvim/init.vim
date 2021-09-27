@@ -530,7 +530,7 @@ autocmd VimEnter * if argc() == 0 |
 
 " configure vimade
 let g:vimade = { "fadelevel": 0.6 }
-autocmd FileType NvimTree VimadeBufDisable
+autocmd BufEnter * if &ft ==# 'NvimTree' | execute 'VimadeBufDisable' | endif
 
 " configure fugitive
 autocmd FileType fugitive

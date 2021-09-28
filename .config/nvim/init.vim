@@ -82,6 +82,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'jparise/vim-graphql'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'vim-crystal/vim-crystal'
+Plug 'bfrg/vim-cpp-modern'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -284,6 +285,7 @@ set wildmenu
 
 augroup filetypedetect
   autocmd BufRead,BufNewFile .env.local setfiletype sh
+  autocmd BufRead,BufNewFile .envrc setfiletype sh
 augroup END
 
 filetype plugin indent on
@@ -583,6 +585,10 @@ autocmd FileType c,cpp setlocal commentstring=//\ %s
 
 " configure Elixir
 let g:mix_format_on_save = 1
+
+" configure C/C++
+let g:cpp_member_highlight = 1
+let g:cpp_simple_highlight = 1
 
 " change the background color for markdown code blocks
 " au FileType markdown

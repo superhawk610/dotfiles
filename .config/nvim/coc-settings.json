@@ -49,13 +49,20 @@
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
       "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
       "initializationOptions": {
+        "highlight": { "lsRanges": true }, // needed by vim-lsp-cxx-highlight
         "cache": {
           "directory": "/tmp/ccls"
         }
       }
     },
+    // (linux)
     // wget https://github.com/elbywan/crystalline/releases/latest/download/crystalline_x86_64-unknown-linux-gnu.gz -O crystalline.gz && \
     // gzip -d crystalline.gz && \
+    // chmod u+x crystalline
+    //
+    // (macos)
+    // curl -L https://github.com/elbywan/crystalline/releases/latest/download/crystalline_x86_64-apple-darwin.gz -o crystalline.gz &&\
+    // gzip -d crystalline.gz &&\
     // chmod u+x crystalline
     "crystal": {
       "command": "crystalline",

@@ -25,6 +25,9 @@ alias ulgc='ultralist archive c && ultralist archive gc'
 ## git
 unalias gp # set by oh-my-zsh
 
+## graphviz
+alias dotp='dot -Tsvg -Gpad=0.2 -Gbgcolor="#ffffff00" -Ncolor="#eb4034" -Nfontcolor="#eb4034" -Ecolor="#eb4034"'
+
 # setup -----------------------
 
 # deno
@@ -64,4 +67,3 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 # starship (prompt)
 eval "$(starship init zsh)"
-

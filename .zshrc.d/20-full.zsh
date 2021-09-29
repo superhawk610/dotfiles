@@ -26,7 +26,7 @@ alias ulgc='ultralist archive c && ultralist archive gc'
 unalias gp # set by oh-my-zsh
 
 ## graphviz
-alias dotp='dot -Tsvg -Gpad=0.2 -Gbgcolor="#ffffff00" -Ncolor="#eb4034" -Nfontcolor="#eb4034" -Ecolor="#eb4034"'
+alias dotp='dot -Tsvg -Gpad=0.2 -Gbgcolor=none -Ncolorscheme=rdpu9 -Ecolorscheme=rdpu9 -Ncolor=1 -Nfontcolor=1 -Ecolor=1'
 
 # setup -----------------------
 

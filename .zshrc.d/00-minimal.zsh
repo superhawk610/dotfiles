@@ -6,4 +6,3 @@ export PATH=$PATH:~/scripts
 
 # editor
 export EDITOR=nvim
-

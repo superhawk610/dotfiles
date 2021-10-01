@@ -350,6 +350,10 @@ nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
 nnoremap <silent> <Leader>c :call utils#toggle_quickfix()<CR>
 
+" switch between .c and .h
+nnoremap <silent> [h :e %:r.h<CR>
+nnoremap <silent> ]h :e %:r.c<CR>
+
 " use `[g` and `]g` to navigate diagnostics (errors & warnings)
 " (`:CocDiagnostics` to list all diagnostics from current buffer)
 nmap <silent> [g <Plug>(coc-diagnostic-prev)

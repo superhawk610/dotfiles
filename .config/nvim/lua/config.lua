@@ -1,5 +1,16 @@
 local utils = require('utils')
 
+-- configure devicons
+require('nvim-web-devicons').setup {
+  override = {
+    heex = {
+      icon = '',
+      color = '#a074c4',
+      name = 'Heex',
+    }
+  },
+}
+
 -- load plugins
 require('plugins.filetree')
 require('plugins.statusline')

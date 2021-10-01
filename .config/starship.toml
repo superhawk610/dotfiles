@@ -61,6 +61,7 @@ style = "#e06c75"
 format = "[$symbol$status]($style) "
 symbol = " "
 map_symbol = false
+pipestatus = false
 disabled = false
 
 [cmd_duration]

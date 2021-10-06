@@ -83,6 +83,7 @@ Plug 'jparise/vim-graphql'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'vim-crystal/vim-crystal'
 Plug 'bfrg/vim-cpp-modern'
+Plug 'ziglang/zig.vim'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }

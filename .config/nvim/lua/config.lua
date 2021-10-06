@@ -7,7 +7,12 @@ require('nvim-web-devicons').setup {
       icon = '',
       color = '#a074c4',
       name = 'Heex',
-    }
+    },
+    zig = {
+      icon = '',
+      color = '#f69a1b',
+      name = 'Zig',
+    },
   },
 }
 

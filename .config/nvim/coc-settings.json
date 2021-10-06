@@ -68,6 +68,14 @@
       "command": "crystalline",
       "args": ["--stdio"],
       "filetypes": ["crystal"]
+    },
+    // git clone --recurse-submodules https://github.com/zigtools/zls
+    // cd zls
+    // zig build -Drelease-safe
+    // mv zig-out/bin/zls ~/.local/bin/zls
+    "zls": {
+      "command": "zls",
+      "filetypes": ["zig"]
     }
   }
 }

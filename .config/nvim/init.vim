@@ -311,8 +311,12 @@ colorscheme onedark
 
 hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
+
 hi DiffAdd guifg=none guibg=#39443b
 hi DiffDelete guifg=#49323a guibg=#49323a
+
+" hi mkdCode guifg=#abb2bf guibg=#444b59
+" hi mkdCodeDelimiter guifg=#abb2bf guibg=#444b59
 
 " ^ and $ are awkward
 map H ^

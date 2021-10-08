@@ -287,6 +287,7 @@ set wildmenu
 augroup filetypedetect
   autocmd BufRead,BufNewFile .env.local setfiletype sh
   autocmd BufRead,BufNewFile .envrc setfiletype sh
+  autocmd BufRead,BufNewFile *.porth setfiletype porth
 augroup END
 
 filetype plugin indent on

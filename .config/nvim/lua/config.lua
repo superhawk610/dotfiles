@@ -91,3 +91,16 @@ require('diffview').setup {
 
 -- configure headlines
 require('headlines').setup {}
+
+-- configure telescope
+require ('telescope').setup {
+  extensions = {
+    dash = {
+      dash_app_path = '/Applications/Dash.app',
+      debounce = 750,
+      file_type_keywords = {
+        elixir = { 'elixir' },
+      },
+    },
+  },
+}

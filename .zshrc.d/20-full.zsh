@@ -7,6 +7,10 @@ if on_mac; then
   export PATH=/usr/local/opt/llvm@11/bin:$PATH
 fi
 
+if on_wsl; then
+  [[ "$PWD" = "/mnt/c/Users/Aaron Ross" ]] && cd ~
+fi
+
 # alias -----------------------
 
 ## general

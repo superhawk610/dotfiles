@@ -34,6 +34,9 @@ alias dotp='dot -Tsvg -Gpad=0.2 -Gbgcolor="#282c34" -Nfontname="FiraCode Nerd Fo
 
 # setup -----------------------
 
+# bat
+export BAT_THEME=base16
+
 # deno
 export DENO_INSTALL="/home/aaron/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"

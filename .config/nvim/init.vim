@@ -499,6 +499,14 @@ nnoremap <Leader>xD :DiffviewClose<CR>
 nnoremap <silent> <C-_> :nohl<CR>
 inoremap <silent> <C-_> <C-o>:nohl<CR>
 
+" align asm comments at end of line
+command! TabAsm GTabularize /^\s*\S.*\zs;/l4c1
+augroup Asm
+  autocmd FileType asm nnoremap <silent><buffer> <Leader>m :TabAsm<CR>
+  autocmd FileType asm
+        \ autocmd! Asm BufWritePre <buffer> execute "TabAsm"
+augroup END
+
 " configure splash screen (dragons taken from https://github.com/siduck76/NvChad)
 let g:startify_custom_header = [
       \ '                                                    ',

@@ -87,6 +87,7 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'vim-crystal/vim-crystal'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'ziglang/zig.vim'
+Plug 'vim-python/python-syntax'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -126,7 +127,8 @@ let g:coc_global_extensions = [
       \ 'coc-rust-analyzer',
       \ 'coc-prettier',
       \ 'coc-lua',
-      \ 'coc-pyright',
+      \ 'coc-jedi',
+      \ 'coc-diagnostic',
       \ ]
 
 " --------------------
@@ -396,6 +398,9 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " scroll doc windows with <C-d>/<C-u> (fast) and <C-y>/<C-e> (slow)
 " (requires manually binding vim-smoothie)
 let g:smoothie_no_default_mappings = 1
+
+" enable all Python syntax highlighting features
+let g:python_highlight_all = 1
 
 nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1, 3) : smoothie#downwards()
 nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0, 3) : smoothie#upwards()

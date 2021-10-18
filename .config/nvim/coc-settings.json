@@ -12,7 +12,8 @@
     "typescriptreact",
     "javascript",
     "javascriptreact",
-    "crystal"
+    "crystal",
+    "python"
   ],
   "prettier.semi": true,
   "prettier.singleQuote": true,
@@ -21,7 +22,25 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   // elixir's formatter can be a bit slow
   "coc.preferences.willSaveHandlerTimeout": 1500,
-  "python.formatting.provider": "black",
+  // pip3 install --user black isort docformatter
+  "filetypes": ["python"],
+  "diagnostic-languageserver.formatFiletypes": {
+    "python": ["black", "isort", "docformatter"]
+  },
+  "diagnostic-languageserver.formatters": {
+    "black": {
+      "command": "black",
+      "args": ["-q", "-"]
+    },
+    "isort": {
+      "command": "isort",
+      "args": ["-q", "-"]
+    },
+    "docformatter": {
+      "command": "docformatter",
+      "args": ["-"]
+    }
+  },
   "Lua": {
     "workspace.library": {
       "/usr/share/nvim/runtime/lua": true,
@@ -77,5 +96,4 @@
       "command": "zls",
       "filetypes": ["zig"]
     }
-  }
 }

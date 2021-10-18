@@ -21,7 +21,7 @@ on_linux() {
 }
 
 on_wsl() {
-  grep -qEi '(Microsoft|WSL)' /proc/version
+  [ -f "/proc/version" ] && grep -qEi '(Microsoft|WSL)' /proc/version
 }
 
 # extended initialization -----

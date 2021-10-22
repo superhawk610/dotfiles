@@ -313,7 +313,7 @@ let g:onedark_color_overrides = {
 
 let g:onedark_hide_endofbuffer = 1 " hide ~ at end of file
 let g:onedark_terminal_italics = 0
-colorscheme onedark
+if !in_vscode | colorscheme onedark | endif
 
 hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
@@ -550,7 +550,7 @@ autocmd FileType startify
 
 " configure nvim-tree
 autocmd ColorScheme * lua require('plugins.filetree').update_highlights()
-autocmd VimEnter * if argc() == 0 |
+autocmd VimEnter * if argc() == 0 && !in_vscode |
       \ exe "lua require('nvim-tree').open()" |
       \ exe "lua require('plugins.filetree').update_highlights()" |
       \ wincmd p |
@@ -655,7 +655,9 @@ let g:vim_markdown_new_list_item_indent = 2
 " custom emmet snippets
 " https://docs.emmet.io/customization/snippets/
 let s:emmet_snippets_file = '~/.config/nvim/emmet-snippets.json'
-let g:user_emmet_settings = webapi#json#decode(join(readfile(expand(s:emmet_snippets_file)), ''))
+if !in_vscode
+  let g:user_emmet_settings = webapi#json#decode(join(readfile(expand(s:emmet_snippets_file)), ''))
+endif
 
 if in_vscode
   " enable VSCode bindings

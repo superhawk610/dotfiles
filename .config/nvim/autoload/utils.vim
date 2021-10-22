@@ -14,7 +14,11 @@ function! utils#quote_of_the_day()
   let max_len = 60
 
   " first, get a quote from Startify
-  let quote_lines = startify#fortune#quote()
+  if exists('g:vscode')
+    let quote_lines = []
+  else
+    let quote_lines = startify#fortune#quote()
+  endif
 
   " constrain each line to `max_len` or less characters
   let lines = []

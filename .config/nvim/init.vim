@@ -55,6 +55,8 @@ if !in_vscode
 
   Plug 'folke/zen-mode.nvim'
 
+  Plug 'scr1pt0r/crease.vim' " fold text customization
+
   " improved Markdown support (better syntax highlighting/folding)
   Plug 'godlygeek/tabular'
   Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -240,7 +242,7 @@ set clipboard+=unnamedplus
 set cursorline
 
 " disable vertical split bar
-set fillchars+=vert:\  " intentional trailing space
+set fillchars+=vert:\ ,fold:━
 
 " display trailing whitespace
 set list
@@ -401,6 +403,13 @@ let g:smoothie_no_default_mappings = 1
 
 " enable all Python syntax highlighting features
 let g:python_highlight_all = 1
+
+" custom fold text
+let g:crease_foldtext = { 'default': '━━┓ %t%{CreaseChanged()} ┏%=┥ %l lines  ┝━━' }
+
+function! CreaseChanged()
+  return gitgutter#fold#is_changed() ? ' *' : ''
+endfunction
 
 nnoremap <silent><nowait><expr> <C-d> coc#float#has_scroll() ? coc#float#scroll(1, 3) : smoothie#downwards()
 nnoremap <silent><nowait><expr> <C-u> coc#float#has_scroll() ? coc#float#scroll(0, 3) : smoothie#upwards()

@@ -42,7 +42,7 @@ if !in_vscode
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'nvim-telescope/telescope.nvim'
-  if has('macunix') | Plug 'mrjones2014/dash.nvim' | endif
+  if has('macunix') | Plug 'mrjones2014/dash.nvim', { 'do': 'make install' } | endif
 
   Plug 'airblade/vim-rooter' " change CWD to project root when opening file
   Plug 'tpope/vim-vinegar'

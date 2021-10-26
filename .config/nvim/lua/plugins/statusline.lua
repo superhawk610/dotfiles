@@ -196,17 +196,21 @@ gl.section.right[3] = {
     separator_highlight = {colors.bg_dim, colors.bg},
     highlight = {colors.gray, colors.bg_dim},
     provider = function()
+      local current_col = vim.fn.col('.')
+      local total_cols = vim.fn.col('$')
+      local suffix = '' .. current_col .. ',' .. total_cols
+
       local current_line = vim.fn.line('.')
       local total_lines = vim.fn.line('$')
 
       if current_line == 1 then
-        return 'Top'
+        return 'Top' .. suffix
       elseif current_line == total_lines then
-        return 'Bot'
+        return 'Bot' .. suffix
       end
 
       local percent, _ = math.modf((current_line / total_lines) * 100)
-      return '' .. percent .. '%'
+      return '' .. percent .. '%' .. suffix
     end,
   }
 }

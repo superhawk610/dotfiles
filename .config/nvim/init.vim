@@ -23,7 +23,10 @@ if !in_vscode
   Plug 'akinsho/nvim-bufferline.lua'
   Plug 'glepnir/galaxyline.nvim', { 'branch': 'main' }
 
-  Plug 'joshdick/onedark.vim'
+  " colorscheme
+  Plug 'joshdick/onedark.vim' " onedark
+  Plug 'katawful/kat.nvim'    " kat.nvim, kat.nvim-owo
+
   Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' } " requires Go
   Plug 'folke/todo-comments.nvim'
   Plug 'ntpeters/vim-better-whitespace' " display trailing whitespace
@@ -440,12 +443,12 @@ command! -bang -nargs=* RgExact call fzf#vim#grep(
       \ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 
 " emulate VS Code bindings
-nnoremap <silent> <Leader>P :History<CR>
-nnoremap <silent> <Leader>p :Files<CR>
-nnoremap <silent> <Leader>g :CocDiagnostics<CR>
-nnoremap <silent> <Leader>G :GFiles<CR>
+" also available: `:History`
+nnoremap <silent> <Leader>P :Files<CR>
+nnoremap <silent> <Leader>p :GFiles<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <silent> <Leader>F :Rg <C-r><C-w><CR>
+nnoremap <silent> <Leader>g :CocDiagnostics<CR>
 nnoremap <silent> <Leader>n :tabnew<CR>
 " nnoremap <silent> t :NERDTreeToggle<CR>
 " nnoremap <silent> T :NERDTreeFind<CR>

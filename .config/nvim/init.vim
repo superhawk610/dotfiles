@@ -294,6 +294,10 @@ endif
 set wildmode=longest,list,full
 set wildmenu
 
+" open new splits right/below
+set splitright
+set splitbelow
+
 augroup filetypedetect
   autocmd BufRead,BufNewFile .env.local setfiletype sh
   autocmd BufRead,BufNewFile .envrc setfiletype sh

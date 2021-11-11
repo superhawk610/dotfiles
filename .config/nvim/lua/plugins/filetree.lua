@@ -3,12 +3,10 @@ local g = vim.g
 
 local M = {}
 
-g.nvim_tree_ignore = {'.git'}
 g.nvim_tree_gitignore = 1
 g.nvim_tree_auto_ignore_ft = {'startify'}
 g.nvim_tree_quit_on_open = 0  -- close when opening file
 g.nvim_tree_indent_markers = 1
-g.nvim_tree_hide_dotfiles = 1
 g.nvim_tree_git_hl = 1
 g.nvim_tree_highlight_opened_files = 0
 g.nvim_tree_add_trailing = 0  -- hide trailing `/` on dirs
@@ -97,11 +95,15 @@ end
 
 require('nvim-tree').setup {
   open_on_setup = false,
-  disable_netrw = 1,
-  hijack_netrw = 0,
-  auto_close = 1, -- close if last window open
-  auto_open = 0,
-  follow = 1,
+  disable_netrw = true,
+  hijack_netrw = false,
+  auto_close = true, -- close if last window open
+  auto_open = false,
+  follow = true,
+  filters = {
+    dotfiles = true,
+    custom = {'.git'},
+  },
   view = {
     side = 'left',
     width = 40,

@@ -51,8 +51,9 @@ alias gcp='git cherry-pick'
 alias gs='git status'
 alias gl='git log'
 alias glp='git log --pretty=oneline --abbrev-commit'
+alias gdiff='git diff --no-index'
 
-### Ignore files (outside of .gitignore) 
+### Ignore files (outside of .gitignore)
 alias gil='git update-index --skip-worktree'
 alias gul='git update-index --no-skip-worktree'
 
@@ -114,4 +115,3 @@ alias venv='[ -d .venv ] && source .venv/bin/activate || echo ".venv not found"'
 
 # docker
 alias dc='docker-compose'
-

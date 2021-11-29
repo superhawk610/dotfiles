@@ -16,6 +16,8 @@ require('nvim-web-devicons').setup {
   },
 }
 
+require('virt-column').setup()
+
 -- load plugins
 require('plugins.filetree')
 require('plugins.statusline')

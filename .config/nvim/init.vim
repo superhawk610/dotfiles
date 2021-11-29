@@ -13,6 +13,7 @@ if !in_vscode
   Plug 'kyazdani42/nvim-web-devicons'
 
   Plug 'lukas-reineke/indent-blankline.nvim'
+  Plug 'lukas-reineke/virt-column.nvim'
   Plug 'lukas-reineke/headlines.nvim'
   Plug 'TaDaa/vimade' " dim inactive splits
 

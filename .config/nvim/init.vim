@@ -452,6 +452,9 @@ command! -bang -nargs=* RgExact call fzf#vim#grep(
       \ "rg --column --line-number --no-heading --color=always --fixed-strings ". shellescape(<q-args>), 1,
       \ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
 
+" bind <C-u>/<C-d> to page through FZF results
+let $FZF_DEFAULT_OPTS="--bind ctrl-d:half-page-down,ctrl-u:half-page-up"
+
 " emulate VS Code bindings
 " also available: `:History`
 nnoremap <silent> <Leader>P :Files<CR>

@@ -118,5 +118,8 @@ alias dc='docker-compose'
 
 # cat CSV files
 csvcat() {
-  column -t -s, -n "$@" | less -FSXK
+  # the article I found this in recommends passing the -n
+  # flag to `column`, but that isn't supported on macos
+  # ref: https://www.stefaanlippens.net/pretty-csv.html
+  column -t -s, "$@" | less -FSXK
 }

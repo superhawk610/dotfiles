@@ -57,6 +57,7 @@ if !in_vscode
   Plug 'puremourning/vimspector'
 
   Plug 'psliwka/vim-smoothie' " smooth scrolling
+  Plug 'matze/vim-move' " shift lines/blocks up/down
 
   Plug 'folke/zen-mode.nvim'
 
@@ -528,6 +529,12 @@ nnoremap <Leader>xD :DiffviewClose<CR>
 " inoremap <silent> <C-_> <C-o>:nohl<CR><C-o>:call minimap#vim#ClearColorSearch()<CR>
 nnoremap <silent> <C-_> :nohl<CR>
 inoremap <silent> <C-_> <C-o>:nohl<CR>
+
+" macos bindings for vim-move (since <A-*> bindings don't work)
+noremap ∆ <Esc>:m .+1<CR>
+noremap ˚ <Esc>:m .-2<CR>
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
 
 " align asm comments at end of line
 command! TabAsm GTabularize /^\s*\S.*\zs;/l4c1

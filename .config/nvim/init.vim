@@ -27,6 +27,7 @@ if !in_vscode
   " colorscheme
   Plug 'joshdick/onedark.vim' " onedark
   Plug 'katawful/kat.nvim'    " kat.nvim, kat.nvim-owo
+  Plug 'catppuccin/nvim'
 
   Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' } " requires Go
   Plug 'folke/todo-comments.nvim'

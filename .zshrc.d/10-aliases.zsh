@@ -115,3 +115,8 @@ alias venv='[ -d .venv ] && source .venv/bin/activate || echo ".venv not found"'
 
 # docker
 alias dc='docker-compose'
+
+# cat CSV files
+csvcat() {
+  column -t -s, -n "$@" | less -FSXK
+}

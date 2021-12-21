@@ -33,7 +33,6 @@ if !in_vscode
   Plug 'folke/todo-comments.nvim'
   Plug 'ntpeters/vim-better-whitespace' " display trailing whitespace
 
-  Plug 'wfxr/minimap.vim', { 'do': ':!cargo install --locked code-minimap' }
   Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 
   Plug 'francoiscabrol/ranger.vim'
@@ -42,7 +41,7 @@ if !in_vscode
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
   Plug 'APZelos/blamer.nvim'
-  Plug 'sindrets/diffview.nvim'
+  " Plug 'sindrets/diffview.nvim'
 
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
@@ -53,8 +52,6 @@ if !in_vscode
   Plug 'tpope/vim-vinegar'
 
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-  Plug 'vim-test/vim-test'
-  Plug 'puremourning/vimspector'
 
   Plug 'psliwka/vim-smoothie' " smooth scrolling
   Plug 'matze/vim-move' " shift lines/blocks up/down
@@ -74,9 +71,6 @@ if !in_vscode
   " tmux support
   Plug 'christoomey/vim-tmux-navigator'
 
-  " database interaction
-  Plug 'tpope/vim-dadbod', { 'on': 'DB' }
-
   " Emmet
   Plug 'mattn/emmet-vim'
 
@@ -84,6 +78,7 @@ if !in_vscode
   Plug 'TamaMcGlinn/quickfixdd'
 endif
 
+" syntax
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'lifepillar/pgsql.vim', { 'for': 'sql' }
 Plug 'kevinoid/vim-jsonc' " JSON w/ comments
@@ -104,6 +99,8 @@ Plug 'kana/vim-textobj-user'
 Plug 'amiralies/vim-textobj-elixir', { 'for': 'elixir' }
 Plug 'mhinz/vim-mix-format', { 'for': 'elixir' }
 
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'justinmk/vim-sneak'
 Plug 'machakann/vim-highlightedyank'
@@ -119,8 +116,6 @@ endif
 " sexp
 Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 Plug 'guns/vim-sexp', { 'for': 'clojure' }
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
 
 call plug#end()
 
@@ -397,9 +392,6 @@ let g:VM_maps['Redo'] = '<C-r>'
 " let g:VM_maps['Add Cursor Up'] = '<C-Up>'
 let g:VM_maps['Add Cursor Down'] = '<C-m>'
 
-" vimspector
-let g:vimspector_enable_mappings = 'HUMAN'
-
 nnoremap <silent> <Leader>v :CocList outline<CR>
 
 " hover documentation
@@ -464,8 +456,6 @@ nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <silent> <Leader>F :Rg <C-r><C-w><CR>
 nnoremap <silent> <Leader>g :CocDiagnostics<CR>
 nnoremap <silent> <Leader>n :tabnew<CR>
-" nnoremap <silent> t :NERDTreeToggle<CR>
-" nnoremap <silent> T :NERDTreeFind<CR>
 
 " lazy write/quit
 nnoremap <Leader>w :w<CR>
@@ -498,15 +488,6 @@ nnoremap <Leader>zo :loadview<CR>
 " markdown preview
 nmap <C-p> <Plug>MarkdownPreviewToggle
 
-" test runner
-nnoremap <silent> <Leader>tt :TestNearest<CR>
-nnoremap <silent> <Leader>tf :TestFile<CR>
-if has('nvim')
-  " after running a test, press any key to exit OR press
-  " this bind to inspect the output
-  tmap <C-i> <C-\><C-n>
-endif
-
 " quickly get to current config
 nnoremap <silent> <Leader><Leader>v :e ~/.config/nvim/init.vim<CR>
 
@@ -521,12 +502,10 @@ nnoremap <silent> <Leader>m :call utils#format_file()<CR>
 nnoremap <silent> <Leader>z :ZenMode<CR>
 
 " open/close visual git diff
-nnoremap <Leader>xd :DiffviewOpen<CR>
-nnoremap <Leader>xD :DiffviewClose<CR>
+" nnoremap <Leader>xd :DiffviewOpen<CR>
+" nnoremap <Leader>xD :DiffviewClose<CR>
 
 " clear search highlighting (<C-/>)
-" nnoremap <silent> <C-_> :nohl<CR>:call minimap#vim#ClearColorSearch()<CR>
-" inoremap <silent> <C-_> <C-o>:nohl<CR><C-o>:call minimap#vim#ClearColorSearch()<CR>
 nnoremap <silent> <C-_> :nohl<CR>
 inoremap <silent> <C-_> <C-o>:nohl<CR>
 
@@ -614,7 +593,7 @@ let g:ranger_replace_netrw = 1
 let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
 " configure indentation guides
-let g:indent_blankline_filetype_exclude = ['git', 'help', 'nerdtree', 'startify', 'minimap', 'NvimTree']
+let g:indent_blankline_filetype_exclude = ['git', 'help', 'startify', 'NvimTree']
 
 " disable bclose default bindings
 let g:bclose_no_plugin_maps = 1
@@ -633,7 +612,6 @@ let g:better_whitespace_filetypes_blacklist = [
       \   'qf',
       \   'help',
       \   'startify',
-      \   'minimap',
       \ ]
 
 " force # as comment prefix for `.ex`/`.exs` files

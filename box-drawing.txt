@@ -1,0 +1,57 @@
+Unicode box drawing character referenc
+
+Character code ( \u25{1}{2}
+
+    0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
+  ┌─────────────────────────────────────────────────
+0 │ ─  ━  │  ┃  ┄  ┅  ┆  ┇  ┈  ┉  ┊  ┋  ┌  ┍  ┎  ┏
+  │
+1 │ ┐  ┑  ┒  ┓  └  ┕  ┖  ┗  ┘  ┙  ┚  ┛  ├  ┝  ┞  ┟
+  │
+2 │ ┠  ┡  ┢  ┣  ┤  ┥  ┦  ┧  ┨  ┩  ┪  ┫  ┬  ┭  ┮  ┯
+  │
+3 │ ┰  ┱  ┲  ┳  ┴  ┵  ┶  ┷  ┸  ┹  ┺  ┻  ┼  ┽  ┾  ┿
+  │
+4 │ ╀  ╁  ╂  ╃  ╄  ╅  ╆  ╇  ╈  ╉  ╊  ╋  ╌  ╍  ╎  ╏
+  │
+5 │ ═  ║  ╒  ╓  ╔  ╕  ╖  ╗  ╘  ╙  ╚  ╛  ╜  ╝  ╞  ╟
+  │
+6 │ ╠  ╡  ╢  ╣  ╤  ╥  ╦  ╧  ╨  ╩  ╪  ╫  ╬  ╭  ╮  ╯
+  │
+7 │ ╰  ╱  ╲  ╳  ╴  ╵  ╶  ╷  ╸  ╹  ╺  ╻  ╼  ╽  ╾
+
+* Some characters without an immediately visible difference have different portions
+emboldened to allow for selective emphasis. Make sure to enable a console friendly
+mono-spaced font (like Consolas) for everything to show up correctly
+
+If the table above looks a little dense, here are just the basics
+
+              SINGLE LINED               DOUBLE LINED
+         ┌───────────────────────────────────────────────
+         │
+  WALLS  │  ─  │  ┬  ┴  ┤  ├           ═  ║  ╦  ╩  ╣  ╠
+         │
+CORNERS  │     ┌  ┐  ┘  └                 ╔  ╗  ╝  ╚
+
+
+Here are some neat boxes you can draw
+
+┌──────┐  ╔═══════╗
+│      │  ║       ║
+│      │  ║       ║
+│      │  ║       ║
+└──────┘  ╚═══════
+
+┌──┬───┐  ╔═══════╗
+│  ├───┤  ║       ║
+│  │   │  ║       ║
+│  │   │  ╠══╗    ║
+└──┴───┘  ╚══╩════
+
+The emboldened lines work very well for creating a UI with selectable sections
+
+┌───────┲━━━━━┓  ┌───────┬─────┐  ┏━━━━━━━┱─────┐
+│       ┃     ┃  │       │     │  ┃       ┃     │
+│       ┡━━━━━┩  │       ┢━━━━━┪  ┃       ┠─────┤
+│       │     │  │       ┃     ┃  ┃       ┃     │
+└───────┴─────┘  └───────┺━━━━━┛  ┗━━━━━━━┹─────┘

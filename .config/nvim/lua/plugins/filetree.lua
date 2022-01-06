@@ -52,11 +52,7 @@ function M.toggle_dir()
   if not node then return end
   if not node.entries then return end
 
-  if node.open then
-    lib.close_node(node)
-  elseif node.entries ~= nil then
-    lib.unroll_dir(node)
-  end
+  lib.expand_or_collapse(node)
 end
 
 function M.edit_file()

@@ -25,9 +25,10 @@ if !in_vscode
   Plug 'glepnir/galaxyline.nvim', { 'branch': 'main' }
 
   " colorscheme
-  Plug 'joshdick/onedark.vim' " onedark
-  Plug 'katawful/kat.nvim'    " kat.nvim, kat.nvim-owo
-  Plug 'catppuccin/nvim'
+  Plug 'joshdick/onedark.vim'  " onedark
+  Plug 'katawful/kat.nvim'     " kat.nvim, kat.nvim-owo
+  Plug 'catppuccin/nvim'       " catppuccin
+  Plug 'rebelot/kanagawa.nvim' " kanagawa
 
   Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' } " requires Go
   Plug 'folke/todo-comments.nvim'

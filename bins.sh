@@ -12,6 +12,10 @@ set -euo pipefail
 # - fzf: a command-line fuzzy finder
 # - exa: a modern replacement for `ls`
 #
+# ocaml
+#
+# - opam: package management system for OCaml
+#
 # [jq]: https://github.com/stedolan/jq
 # [fq]: https://github.com/wader/fq
 # [yq]: https://github.com/kislyuk/yq
@@ -19,6 +23,7 @@ set -euo pipefail
 # [bat]: https://github.com/sharkdp/bat
 # [fzf]: https://github.com/junegunn/fzf
 # [exa]: https://github.com/ogham/exa
+# [opam]: https://github.com/ocaml/opam
 
 TMP_DIR="/tmp/bins"
 BIN_DIR="$HOME/.local/bin"
@@ -33,6 +38,7 @@ YQ_VERSION="2.13.0"
 RG_VERSION="13.0.0"
 BAT_VERSION="0.18.3"
 EXA_VERSION="0.10.1"
+OPAM_VERSION="2.1.2"
 
 IC_DONE="\033[0;32m✓\033[0m"
 IC_INFO="\033[0;2m\033[0m"
@@ -47,6 +53,7 @@ case $OS in
     RG_BINARY="ripgrep-${RG_VERSION}-x86_64-apple-darwin"
     BAT_BINARY="bat-v${BAT_VERSION}-x86_64-apple-darwin"
     EXA_BINARY="exa-macos-x86_64-v${EXA_VERSION}"
+    OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-macos"
     ;;
 
   linux)
@@ -55,6 +62,7 @@ case $OS in
     RG_BINARY="ripgrep-${RG_VERSION}-x86_64-unknown-linux-musl"
     BAT_BINARY="bat-v${BAT_VERSION}-x86_64-unknown-linux-musl"
     EXA_BINARY="exa-linux-x86_64-musl-${EXA_VERSION}"
+    OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-linux"
     ;;
 
   *)
@@ -141,6 +149,14 @@ else
   mv "$TMP_DIR/exa/bin/exa" "$BIN_DIR/exa"
   chmod +x "$BIN_DIR/exa"
   log_done "exa installed!"
+fi
+
+if [ -x "$(command -v opam)" ]; then
+  log_done "opam is already installed!"
+else
+  curl -Lo "$BIN_DIR/opam" "https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/${OPAM_BINARY}"
+  chmod +x "$BIN_DIR/opam"
+  log_done "opam installed! run \`opam init\` to get started"
 fi
 
 # ---

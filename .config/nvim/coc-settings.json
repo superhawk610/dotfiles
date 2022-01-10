@@ -95,5 +95,11 @@
     "zls": {
       "command": "zls",
       "filetypes": ["zig"]
+    },
+    // opam install ocaml-lsp-server
+    "ocaml-lsp": {
+      "command": "opam",
+      "args": ["config", "exec", "--", "ocamllsp"],
+      "filetypes": ["ocaml", "reason"]
     }
 }

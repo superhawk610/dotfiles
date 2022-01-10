@@ -72,5 +72,8 @@ fi
 # elixir
 export ERL_AFLAGS="-kernel shell_history enabled"
 
+# ocaml
+[ -x "$(command -v opam)" ] && eval $(opam env)
+
 # starship (prompt)
 eval "$(starship init zsh)"

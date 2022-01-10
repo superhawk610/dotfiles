@@ -93,6 +93,7 @@ Plug 'bfrg/vim-cpp-modern'
 Plug 'ziglang/zig.vim'
 Plug 'vim-python/python-syntax'
 Plug 'rust-lang/rust.vim'
+Plug 'ocaml/vim-ocaml'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }

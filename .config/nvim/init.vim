@@ -180,6 +180,18 @@ let g:coc_global_extensions = [
 "      " write a file without formatting
 "      :noa w
 "
+"  # inspect a character (useful for control characters)
+"
+"      ga
+"
+"  this will display something like this on the status line
+"
+"      <^M>  13,  Hex 0d,  Oct 015, Digr CR
+"
+"  you can type this character in Insert by using <C-k> to enter
+"  digraph input, then typing the `Digr` code shown (in this case,
+"  <S-c> followed by <S-r>)
+"
 " --- fzf
 "
 "  # Opening search results in a new tab/split

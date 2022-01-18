@@ -39,6 +39,7 @@ RG_VERSION="13.0.0"
 BAT_VERSION="0.18.3"
 EXA_VERSION="0.10.1"
 OPAM_VERSION="2.1.2"
+HEXYL_VERSION="0.9.0"
 
 IC_DONE="\033[0;32m✓\033[0m"
 IC_INFO="\033[0;2m\033[0m"
@@ -54,6 +55,7 @@ case $OS in
     BAT_BINARY="bat-v${BAT_VERSION}-x86_64-apple-darwin"
     EXA_BINARY="exa-macos-x86_64-v${EXA_VERSION}"
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-macos"
+    HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-apple-darwin"
     ;;
 
   linux)
@@ -63,6 +65,7 @@ case $OS in
     BAT_BINARY="bat-v${BAT_VERSION}-x86_64-unknown-linux-musl"
     EXA_BINARY="exa-linux-x86_64-musl-${EXA_VERSION}"
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-linux"
+    HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-unknown-linux-musl"
     ;;
 
   *)
@@ -157,6 +160,17 @@ else
   curl -Lo "$BIN_DIR/opam" "https://github.com/ocaml/opam/releases/download/${OPAM_VERSION}/${OPAM_BINARY}"
   chmod +x "$BIN_DIR/opam"
   log_done "opam installed! run \`opam init\` to get started"
+fi
+
+if [ -x "$(command -v hexyl)" ]; then
+  log_done "hexyl is already installed!"
+else
+  log_info "Installing hexyl..."
+  curl -Lo "$TMP_DIR/hexyl.tar.gz" "https://github.com/sharkdp/hexyl/releases/download/v${HEXYL_VERSION}/${HEXYL_BINARY}.tar.gz"
+  tar -xzf "$TMP_DIR/hexyl.tar.gz" -C "$TMP_DIR"
+  mv "$TMP_DIR/${HEXYL_BINARY}/hexyl" "$BIN_DIR/hexyl"
+  chmod +x "$BIN_DIR/hexyl"
+  log_done "hexyl installed!"
 fi
 
 # ---

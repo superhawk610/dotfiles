@@ -11,6 +11,7 @@ set -euo pipefail
 # - bat: a cat(1) clone with wings
 # - fzf: a command-line fuzzy finder
 # - exa: a modern replacement for `ls`
+# - hexyl: a command-line hex viewer
 #
 # ocaml
 #
@@ -23,6 +24,7 @@ set -euo pipefail
 # [bat]: https://github.com/sharkdp/bat
 # [fzf]: https://github.com/junegunn/fzf
 # [exa]: https://github.com/ogham/exa
+# [hexyl]: https://github.com/sharkdp/hexyl
 # [opam]: https://github.com/ocaml/opam
 
 TMP_DIR="/tmp/bins"

@@ -216,6 +216,16 @@ let g:coc_global_extensions = [
 "  command mode, allowing you to `execute` a command and then return
 "  to insert mode
 "
+" --- navigating the changelist
+"
+"  while in insert mode, you may need to jump to a different location
+"  to look something up; once you're done, you can use these bindings
+"
+"      gi   return to the last place you were in insert mode
+"
+"      g;   move forward/backward through the changelist (locations
+"      g,   where you have been in insert mode)
+"
 " --- folds and folding
 "
 "  by default, folds are disabled for most file types

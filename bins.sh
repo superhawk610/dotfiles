@@ -6,7 +6,7 @@ set -euo pipefail
 #
 # - jq: command-line JSON processor
 # - fq: command-line binary data processor, a la jq (archives, images, etc.)
-# - yq: command-line YAML/XML/TOML processor, a la jq
+# - yq/xq/tomlq: command-line YAML/XML/TOML processor, a la jq
 # - rg: grep(1) with a kick in the pants
 # - bat: a cat(1) clone with wings
 # - fzf: a command-line fuzzy finder
@@ -102,11 +102,11 @@ else
 fi
 
 if [ -x "$(command -v yq)" ]; then
-  log_done "yq is already installed!"
+  log_done "yq/xq/tomlq are already installed!"
 else
-  log_info "Installing yq..."
+  log_info "Installing yq/xq/tomlq..."
   pip3 install --user "yq==${YQ_VERSION}"
-  log_done "yq installed!"
+  log_done "yq/xq/tomlq installed!"
 fi
 
 if [ -x "$(command -v rg)" ]; then

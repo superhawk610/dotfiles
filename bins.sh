@@ -8,6 +8,7 @@ set -euo pipefail
 # - fq: command-line binary data processor, a la jq (archives, images, etc.)
 # - yq/xq/tomlq: command-line YAML/XML/TOML processor, a la jq
 # - rg: grep(1) with a kick in the pants
+# - fx: command-line tool and terminal JSON viewer
 # - bat: a cat(1) clone with wings
 # - fzf: a command-line fuzzy finder
 # - exa: a modern replacement for `ls`
@@ -21,6 +22,7 @@ set -euo pipefail
 # [fq]: https://github.com/wader/fq
 # [yq]: https://github.com/kislyuk/yq
 # [rg]: https://github.com/BurntSushi/ripgrep
+# [fx]: https://github.com/antonmedv/fx
 # [bat]: https://github.com/sharkdp/bat
 # [fzf]: https://github.com/junegunn/fzf
 # [exa]: https://github.com/ogham/exa
@@ -38,6 +40,7 @@ JQ_VERSION="1.6"
 FQ_VERSION="0.0.2"
 YQ_VERSION="2.13.0"
 RG_VERSION="13.0.0"
+FX_VERSION="20.0.2"
 BAT_VERSION="0.18.3"
 EXA_VERSION="0.10.1"
 OPAM_VERSION="2.1.2"
@@ -54,6 +57,7 @@ case $OS in
     JQ_BINARY="jq-osx-amd64"
     FQ_BINARY="fq_${FQ_VERSION}_macos_amd64"
     RG_BINARY="ripgrep-${RG_VERSION}-x86_64-apple-darwin"
+    FX_BINARY="fx-macos"
     BAT_BINARY="bat-v${BAT_VERSION}-x86_64-apple-darwin"
     EXA_BINARY="exa-macos-x86_64-v${EXA_VERSION}"
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-macos"
@@ -64,6 +68,7 @@ case $OS in
     JQ_BINARY="jq-linux64"
     FQ_BINARY="fq_${FQ_VERSION}_linux_amd64"
     RG_BINARY="ripgrep-${RG_VERSION}-x86_64-unknown-linux-musl"
+    FX_BINARY="fx-linux"
     BAT_BINARY="bat-v${BAT_VERSION}-x86_64-unknown-linux-musl"
     EXA_BINARY="exa-linux-x86_64-musl-${EXA_VERSION}"
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-linux"
@@ -173,6 +178,17 @@ else
   mv "$TMP_DIR/${HEXYL_BINARY}/hexyl" "$BIN_DIR/hexyl"
   chmod +x "$BIN_DIR/hexyl"
   log_done "hexyl installed!"
+fi
+
+if [ -x "$(command -v fx)" ]; then
+  log_done "fx is already installed!"
+else
+  log_info "Installing fx..."
+  curl -Lo "$TMP_DIR/fx.zip" "https://github.com/antonmedv/fx/releases/download/${FX_VERSION}/${FX_BINARY}.zip"
+  unzip -d "$TMP_DIR" "$TMP_DIR/fx.zip"
+  mv "$TMP_DIR/${FX_BINARY}" "$BIN_DIR/fx"
+  chmod +x "$BIN_DIR/fx"
+  log_done "fx installed!"
 fi
 
 # ---

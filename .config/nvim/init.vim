@@ -7,6 +7,8 @@ if !in_vscode
   Plug 'nvim-lua/plenary.nvim' " Lua utils for a bunch of stuff
   Plug 'mattn/webapi-vim' " read from files/web APIs
 
+  Plug 'echasnovski/mini.nvim'
+
   Plug 'mhinz/vim-startify'
 
   Plug 'kyazdani42/nvim-tree.lua'

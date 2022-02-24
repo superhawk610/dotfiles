@@ -256,6 +256,13 @@ let g:coc_global_extensions = [
 "      zm   Fold by one more layer (in entire buffer)
 "      zM   Close all folds
 "
+" --- copy all search matches into a register
+"
+"      :let @a=""
+"      :g/some_search/yank A
+"
+"  clear register a, then yank all matching lines into it (appending)
+"
 " --------------------
 
 " change leader to spacebar

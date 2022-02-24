@@ -112,6 +112,9 @@ gh_add_origin() {
 alias pip='python3 -m pip'
 alias pip3='python3 -m pip'
 alias venv='[ -d .venv ] && source .venv/bin/activate || echo ".venv not found"'
+alias py='python3'
+alias py2='python'
+alias py3='python3'
 
 # docker
 alias dc='docker-compose'

@@ -97,6 +97,7 @@ Plug 'ziglang/zig.vim'
 Plug 'vim-python/python-syntax'
 Plug 'rust-lang/rust.vim'
 Plug 'ocaml/vim-ocaml'
+Plug 'uiiaoo/java-syntax.vim'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -493,6 +494,7 @@ nnoremap <silent> <Leader>n :tabnew<CR>
 
 " lazy write/quit
 nnoremap <Leader>w :w<CR>
+nnoremap <Leader>W :noa w<CR>
 nnoremap <Leader>q :Bclose<CR>
 nnoremap <silent> <Leader>Q :Startify<CR>:call utils#close_all_other_buffers()<CR>
 nnoremap <silent> <Leader><Leader>q :call utils#close_all_other_buffers()<CR>
@@ -602,7 +604,7 @@ autocmd VimEnter * if argc() == 0 && !in_vscode |
       \ endif
 
 " configure vimade
-let g:vimade = { "fadelevel": 0.6 }
+let g:vimade = { "fadelevel": 0.8 }
 autocmd BufEnter * if &ft ==# 'NvimTree' | execute 'VimadeBufDisable' | endif
 
 " configure fugitive

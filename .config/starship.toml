@@ -19,14 +19,14 @@ error_symbol = "[➜](#e06c75)"
 
 [directory]
 style = ""
-read_only = " "
-read_only_style = "bg:#98c379 fg:white bold"
+read_only = "  "
+read_only_style = "bg:#61afef fg:white bold"
 truncate_to_repo = true
 format = """
 [](bg:none fg:#e5c07b)\
 [ ](bg:#e5c07b fg:black)\
-[ $path ](bg:#333333 fg:#a8b1bf)\
 [$read_only]($read_only_style)\
+[ $path ](bg:#333333 fg:#a8b1bf)\
 [](bg:none fg:#333333) \
 """
 

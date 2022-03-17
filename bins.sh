@@ -13,6 +13,7 @@ set -euo pipefail
 # - fzf: a command-line fuzzy finder
 # - exa: a modern replacement for `ls`
 # - hexyl: a command-line hex viewer
+# - gh: GitHub's official command-line tool
 #
 # ocaml
 #
@@ -28,6 +29,7 @@ set -euo pipefail
 # [exa]: https://github.com/ogham/exa
 # [hexyl]: https://github.com/sharkdp/hexyl
 # [opam]: https://github.com/ocaml/opam
+# [gh]: https://github.com/cli/cli
 
 TMP_DIR="/tmp/bins"
 BIN_DIR="$HOME/.local/bin"
@@ -45,12 +47,14 @@ BAT_VERSION="0.18.3"
 EXA_VERSION="0.10.1"
 OPAM_VERSION="2.1.2"
 HEXYL_VERSION="0.9.0"
+GH_VERSION="2.6.0"
 
 IC_DONE="\033[0;32m✓\033[0m"
 IC_INFO="\033[0;2m\033[0m"
 
 log_done() { echo -e "$IC_DONE $1"; }
 log_info() { echo -e "$IC_INFO $1"; }
+log_text() { echo -e "  $1"; }
 
 case $OS in
   mac)
@@ -62,6 +66,7 @@ case $OS in
     EXA_BINARY="exa-macos-x86_64-v${EXA_VERSION}"
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-macos"
     HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-apple-darwin"
+    GH_BINARY="gh_${GH_VERSION}_macOS_amd64"
     ;;
 
   linux)
@@ -73,6 +78,7 @@ case $OS in
     EXA_BINARY="exa-linux-x86_64-musl-${EXA_VERSION}"
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-linux"
     HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-unknown-linux-musl"
+    GH_BINARY="gh_${GH_VERSION}_linux_amd64"
     ;;
 
   *)
@@ -189,6 +195,24 @@ else
   mv "$TMP_DIR/${FX_BINARY}" "$BIN_DIR/fx"
   chmod +x "$BIN_DIR/fx"
   log_done "fx installed!"
+fi
+
+if [ -x "$(command -v gh)" ]; then
+  log_done "gh is already installed!"
+else
+  log_info "Installing gh..."
+  curl -Lo "$TMP_DIR/gh.tar.gz" "https://github.com/cli/cli/releases/download/v${GH_VERSION}/${GH_BINARY}.tar.gz"
+  tar -xzf "$TMP_DIR/gh.tar.gz" -C "$TMP_DIR"
+  mv "$TMP_DIR/${GH_BINARY}/share/man/man1/"* "$MN1_DIR"
+  mv "$TMP_DIR/${GH_BINARY}/bin/gh" "$BIN_DIR/gh"
+  chmod +x "$BIN_DIR/gh"
+
+  log_text ""
+  log_text "  install extensions ---"
+  log_text "  $ gh extension install dlvhdr/gh-prs"
+  log_text ""
+
+  log_done "gh installed!"
 fi
 
 # ---

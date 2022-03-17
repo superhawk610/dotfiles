@@ -1,0 +1,14 @@
+prSections:
+  - title: Projects
+    filters: repo:superhawk610/smartcalc-tui
+  - title: ecom_api
+    filters: is:open repo:pepsico-ecommerce/ecom_api
+  - title: Mine
+    filters: is:open author:@me
+  - title: Assigned to Me
+    filters: is:open review-requested:@me
+defaults:
+  prsLimit: 20
+  preview:
+    open: true
+    width: 60

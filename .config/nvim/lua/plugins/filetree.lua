@@ -145,7 +145,7 @@ function M.update_highlights()
     " hi NvimTreeCursorLine guibg=#7c7cff guifg=#222222
     hi NvimTreeNormal guibg=#2d313b
     hi NvimTreeRootFolder guifg=#778399
-    hi NvimTreeIndentMarker guifg=#778399
+    hi NvimTreeIndentMarker guifg=#444b59
     hi NvimTreeFolderIcon guifg=#abb2bf guibg=#2d313b
     hi NvimTreeFolderName guifg=#abb2bf guibg=#2d313b
     hi NvimTreeOpenedFolderName guifg=#abb2bf guibg=#2d313b

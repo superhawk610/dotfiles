@@ -98,6 +98,7 @@ Plug 'vim-python/python-syntax'
 Plug 'rust-lang/rust.vim'
 Plug 'ocaml/vim-ocaml'
 Plug 'uiiaoo/java-syntax.vim'
+Plug 'vim-ruby/vim-ruby'
 
 " Elixir
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -127,6 +128,9 @@ call plug#end()
 
 " when `coc-eslint` is run for the first time, it requires permission;
 " to grant it, run `CocCommand eslint.showOutputChannel` and confirm
+"
+" coc-solargraph
+" make sure to run `gem install solargraph` too
 let g:coc_global_extensions = [
       \ 'coc-json',
       \ 'coc-tsserver',
@@ -139,6 +143,7 @@ let g:coc_global_extensions = [
       \ 'coc-lua',
       \ 'coc-jedi',
       \ 'coc-diagnostic',
+      \ 'coc-solargraph',
       \ ]
 
 " --------------------
@@ -366,6 +371,8 @@ hi DiffDelete guifg=#49323a guibg=#49323a
 
 hi CocHintSign NONE
 hi link CocHintSign Comment
+
+hi link javaIdentifier NONE
 
 " hi mkdCode guifg=#abb2bf guibg=#444b59
 " hi mkdCodeDelimiter guifg=#abb2bf guibg=#444b59

@@ -4,7 +4,6 @@ local g = vim.g
 local M = {}
 
 g.nvim_tree_auto_ignore_ft = {'startify'}
-g.nvim_tree_quit_on_open = 0  -- close when opening file
 g.nvim_tree_indent_markers = 1
 g.nvim_tree_git_hl = 1
 g.nvim_tree_highlight_opened_files = 0
@@ -92,13 +91,17 @@ require('nvim-tree').setup {
   open_on_setup = false,
   disable_netrw = true,
   hijack_netrw = false,
-  auto_close = true, -- close if last window open
   auto_open = false,
   follow = true,
   git = { ignore = true },
   filters = {
     dotfiles = true,
     custom = {'.git'},
+  },
+  actions = {
+    open_file = {
+      quit_on_open = false, -- don't close when opening file
+    },
   },
   view = {
     side = 'left',

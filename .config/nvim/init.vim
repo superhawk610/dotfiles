@@ -340,7 +340,6 @@ set splitbelow
 augroup filetypedetect
   autocmd BufRead,BufNewFile .env.local setfiletype sh
   autocmd BufRead,BufNewFile .envrc setfiletype sh
-  autocmd BufRead,BufNewFile *.porth setfiletype porth
 augroup END
 
 filetype plugin indent on
@@ -619,6 +618,9 @@ autocmd FileType fugitive
       \ nmap <buffer> <leader>q :q<CR><C-w><C-w>
 autocmd FileType gitcommit
       \ nmap <buffer> <leader>q :wq<CR>
+
+" close if NvimTree is the last window open
+autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
 
 " configure tmuxline (only needs to be enabled to save changes,
 " once it's good you can just save it with :TmuxlineSnapshot)

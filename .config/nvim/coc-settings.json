@@ -15,8 +15,6 @@
     "crystal",
     "python"
   ],
-  "rust-analyzer.inlayHints.typeHints": true,
-  "rust-analyzer.inlayHints.parameterHints": true,
   "prettier.semi": true,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
@@ -24,11 +22,10 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   // elixir's formatter can be a bit slow
   "coc.preferences.willSaveHandlerTimeout": 1500,
-  // pip3 install --user black isort docformatter
-  "filetypes": ["python"],
   "diagnostic-languageserver.formatFiletypes": {
     "python": ["black", "isort", "docformatter"]
   },
+  // pip3 install --user black isort docformatter
   "diagnostic-languageserver.formatters": {
     "black": {
       "command": "black",

@@ -13,7 +13,8 @@
     "javascript",
     "javascriptreact",
     "crystal",
-    "python"
+    "python",
+    "ruby"
   ],
   "prettier.semi": true,
   "prettier.singleQuote": true,
@@ -22,10 +23,14 @@
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   // elixir's formatter can be a bit slow
   "coc.preferences.willSaveHandlerTimeout": 1500,
+  "solargraph.useBundler": true,
+  "solargraph.formatting": true,
+  "solargraph.diagnostics": true,
+  "solargraph.bundlerPath": "~/.asdf/shims/bundle",
+  // pip3 install --user black isort docformatter
   "diagnostic-languageserver.formatFiletypes": {
     "python": ["black", "isort", "docformatter"]
   },
-  // pip3 install --user black isort docformatter
   "diagnostic-languageserver.formatters": {
     "black": {
       "command": "black",

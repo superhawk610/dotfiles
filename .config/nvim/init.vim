@@ -17,7 +17,7 @@ if !in_vscode
   Plug 'lukas-reineke/indent-blankline.nvim'
   Plug 'lukas-reineke/virt-column.nvim'
   Plug 'lukas-reineke/headlines.nvim'
-  Plug 'TaDaa/vimade' " dim inactive splits
+  " Plug 'TaDaa/vimade' " dim inactive splits
 
   " Plug 'vim-airline/vim-airline'
   " Plug 'vim-airline/vim-airline-themes'
@@ -26,12 +26,26 @@ if !in_vscode
   Plug 'akinsho/nvim-bufferline.lua'
   Plug 'glepnir/galaxyline.nvim', { 'branch': 'main' }
 
-  " colorscheme
-  Plug 'joshdick/onedark.vim'         " onedark
-  Plug 'katawful/kat.nvim'            " kat.nvim, kat.nvim-owo
-  Plug 'catppuccin/nvim'              " catppuccin
-  Plug 'rebelot/kanagawa.nvim'        " kanagawa
-  Plug 'projekt0n/github-nvim-theme'  " github_light, github_dark
+  " colorschemes
+  Plug 'joshdick/onedark.vim'           " onedark
+  Plug 'ghifarit53/tokyonight-vim'      " tokyonight
+  Plug 'katawful/kat.nvim'              " kat.nvim, kat.nwim
+  Plug 'catppuccin/nvim'                " catppuccin
+  Plug 'rebelot/kanagawa.nvim'          " kanagawa
+  Plug 'projekt0n/github-nvim-theme'    " github_light, github_dark
+  Plug 'nanotech/jellybeans.vim'        " jellybeans
+  Plug 'sainnhe/everforest'             " everforest
+  Plug 'sainnhe/sonokai'                " sonokai
+  Plug 'hachy/eva01.vim'                " eva01, eva01-LCL
+  Plug 'pineapplegiant/spaceduck'       " spaceduck
+  Plug 'phanviet/vim-monokai-pro'       " monokai_pro
+  Plug 'Rigellute/shades-of-purple.vim' " shades_of_purple
+  Plug 'ray-x/aurora'                   " aurora
+  Plug 'KabbAmine/yowish.vim'           " yowish
+  Plug 'NLKNguyen/papercolor-theme'     " PaperColor
+  Plug 'w0ng/vim-hybrid'                " hybrid
+  Plug 'ayu-theme/ayu-vim'              " ayu
+  Plug 'drewtempelmeyer/palenight.vim'  " palenight
 
   Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' } " requires Go
   Plug 'folke/todo-comments.nvim'
@@ -50,7 +64,6 @@ if !in_vscode
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'nvim-telescope/telescope.nvim'
-  if has('macunix') | Plug 'mrjones2014/dash.nvim', { 'do': 'make install' } | endif
 
   Plug 'airblade/vim-rooter' " change CWD to project root when opening file
   Plug 'tpope/vim-vinegar'
@@ -353,37 +366,8 @@ let g:blamer_enabled = 1
 let g:blamer_relative_time = 1
 let g:blamer_template = '<committer>, <committer-time> • <summary>'
 
-" tweak colors
-let g:onedark_color_overrides = {
-      \ 'purple': { 'gui': '#7c7cff', 'cterm': 105, 'cterm16': 5 }
-      \ }
-
-let g:onedark_hide_endofbuffer = 1 " hide ~ at end of file
-let g:onedark_terminal_italics = 0
-if !in_vscode | colorscheme onedark | endif
-
-hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
-hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
-
-hi DiffAdd guifg=none guibg=#39443b
-hi DiffDelete guifg=#49323a guibg=#49323a
-
-" FIXME:
-" TODO:
-" NOTE:
-" WARN:
-hi TodoBgFIX guifg=#282c34 guibg=#e06c75
-hi TodoFgFIX guifg=#e06c75
-hi TodoBgTODO guifg=#282c34 guibg=#61afef
-hi TodoFgTODO guifg=#61afef
-
-hi CocHintSign NONE
-hi link CocHintSign Comment
-
-hi link javaIdentifier NONE
-
-" hi mkdCode guifg=#abb2bf guibg=#444b59
-" hi mkdCodeDelimiter guifg=#abb2bf guibg=#444b59
+" set colorscheme
+runtime colorschemes/tokyonight.vim
 
 " ^ and $ are awkward
 map H ^
@@ -439,8 +423,7 @@ nmap <silent> gD <Plug>(coc-type-definition)
 let g:VM_maps = {}
 let g:VM_maps['Undo'] = 'u'
 let g:VM_maps['Redo'] = '<C-r>'
-" let g:VM_maps['Add Cursor Up'] = '<C-Up>'
-let g:VM_maps['Add Cursor Down'] = '<C-m>'
+let g:VM_maps['Add Cursor Down'] = 'm'
 
 nnoremap <silent> <Leader>v :CocList outline<CR>
 
@@ -619,14 +602,18 @@ autocmd VimEnter * if argc() == 0 && !in_vscode |
       \ endif
 
 " configure vimade
-let g:vimade = { "fadelevel": 0.8 }
-autocmd BufEnter * if &ft ==# 'NvimTree' | execute 'VimadeBufDisable' | endif
+" let g:vimade = { "fadelevel": 0.8 }
+" autocmd BufEnter * if &ft ==# 'NvimTree' | execute 'VimadeBufDisable' | endif
 
 " configure fugitive
 autocmd FileType fugitive
       \ nmap <buffer> <leader>q :q<CR><C-w><C-w>
 autocmd FileType gitcommit
       \ nmap <buffer> <leader>q :wq<CR>
+
+" configure plug
+autocmd FileType vim-plug
+      \ nmap <buffer> <leader>q :q<CR>
 
 " close if NvimTree is the last window open
 autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
@@ -725,7 +712,7 @@ endif
 
 if in_vscode
   " enable VSCode bindings
-  runtime 'vscode.vim'
+  runtime vscode.vim
 else
   " load lua config
   execute "lua require('config')"

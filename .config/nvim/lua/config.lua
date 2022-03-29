@@ -1,4 +1,5 @@
 local utils = require('utils')
+local C = utils.colors()
 
 -- configure devicons
 require('nvim-web-devicons').setup {
@@ -34,6 +35,11 @@ require('zen-mode').setup {
 
 -- configure nvim-bufferline
 require('bufferline').setup {
+  highlights = {
+    indicator_selected = {
+      guifg = C.colors.yellow,
+    },
+  },
   options = {
     numbers = 'none',
     separator_style = 'thin',

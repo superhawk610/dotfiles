@@ -1,21 +1,8 @@
 local gl = require('galaxyline')
 local condition = require('galaxyline.condition')
 
--- onedark
-local colors = {
-  bg = '#282c34',
-  bg_dim = '#333842',
-  bg_light = '#444b59',
-  black = '#222222',
-  white = '#abb2bf',
-  gray = '#868c96',
-  red = '#e06c75',
-  green = '#98c379',
-  yellow = '#e5c07b',
-  blue = '#61afef',
-  purple = '#7c7cff', -- tweaked to match custom color
-  teal = '#56b6c2',
-}
+local C = require('utils').colors()
+local colors = C.colors
 
 local function mode_alias(m)
   local alias = {

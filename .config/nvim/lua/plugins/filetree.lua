@@ -1,6 +1,9 @@
 local g = vim.g
 local M = {}
 
+local C = require('utils').colors()
+M.update_highlights = C.update_highlights
+
 g.nvim_tree_auto_ignore_ft = {'startify'}
 g.nvim_tree_indent_markers = 1
 g.nvim_tree_git_hl = 1
@@ -120,19 +123,6 @@ require('nvim-tree').setup {
     },
   },
 }
-
-function M.update_highlights()
-  vim.api.nvim_exec([[
-    " hi NvimTreeNormal guibg=#222222
-    " hi NvimTreeCursorLine guibg=#7c7cff guifg=#222222
-    hi NvimTreeNormal guibg=#2d313b
-    hi NvimTreeRootFolder guifg=#778399
-    hi NvimTreeIndentMarker guifg=#444b59
-    hi NvimTreeFolderIcon guifg=#abb2bf guibg=#2d313b
-    hi NvimTreeFolderName guifg=#abb2bf guibg=#2d313b
-    hi NvimTreeOpenedFolderName guifg=#abb2bf guibg=#2d313b
-  ]], false)
-end
 
 -- set initial highlights, then call this again as an autocmd
 -- on ColorScheme to overwrite nvim-tree's defaults (since

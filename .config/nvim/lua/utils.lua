@@ -8,4 +8,8 @@ function M.merge(t1, t2)
   return t1
 end
 
+function M.colors()
+  return require('colors.' .. vim.g.colorscheme)
+end
+
 return M

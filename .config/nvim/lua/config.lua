@@ -37,7 +37,7 @@ require('zen-mode').setup {
 require('bufferline').setup {
   highlights = {
     indicator_selected = {
-      guifg = C.colors.yellow,
+      guifg = C.colors.blue,
     },
   },
   options = {

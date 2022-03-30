@@ -16,20 +16,31 @@ hi GitGutterDelete guifg=#f7768e guibg=#1a1b26
 hi GitGutterChange guifg=#7aa2f7 guibg=#1a1b26
 hi GitGutterChangeDelete guifg=#e0af68 guibg=#1a1b26
 
+hi diffAdded guibg=#29351d guifg=#9ece6a
+hi diffRemoved guibg=#351a1f guifg=#f7768e
+
 hi SignColumn guifg=#a9b1d6 guibg=#1a1b26
 hi NvimTreeEndOfBuffer guifg=#232434 guibg=#232434
+
+hi HighlightedyankRegion guifg=#1a1b26 guibg=#7aa2f7
 
 " FIXME:
 " TODO:
 " NOTE:
 " WARN:
 hi Todo NONE
-hi TodoBgFIX guifg=#282c34 guibg=#f7768e
+hi TodoBgFIX guifg=#1a1b26 guibg=#f7768e
 hi TodoFgFIX guifg=#f7768e
 hi TodoSignFIX guifg=#f7768e
-hi TodoBgTODO guifg=#282c34 guibg=#9ece6a
+hi TodoBgTODO guifg=#1a1b26 guibg=#9ece6a
 hi TodoFgTODO guifg=#9ece6a
 hi TodoSignTODO guifg=#9ece6a
+hi TodoBgNOTE guifg=#1a1b26 guibg=#abb2bf
+hi TodoFgNOTE guifg=#abb2bf
+hi TodoSignNOTE guifg=#abb2bf
+hi TodoBgWARN guifg=#1a1b26 guibg=#e0af68
+hi TodoFgWARN guifg=#e0af68
+hi TodoSignWARN guifg=#e0af68
 
 hi CocHintSign NONE
 hi link CocHintSign Comment

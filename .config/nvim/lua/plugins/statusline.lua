@@ -53,6 +53,15 @@ local function combine(...)
   end
 end
 
+local num_icon_colors = 5
+local icon_colors = {
+  colors.green,
+  colors.yellow,
+  colors.red,
+  colors.blue,
+  colors.purple
+}
+
 -- disable for these file types
 gl.short_line_list = { 'startify', 'nerdtree', 'term', 'fugitive', 'NvimTree' }
 
@@ -60,9 +69,15 @@ gl.section.left[1] = {
   PrefixIcon = {
     separator = '  ',
     separator_highlight = function()
-      return {colors.black, condition.hide_in_width() and colors.bg_light or colors.bg_dim}
+      local color = vim.b.statusline_icon_color or icon_colors[vim.fn.bufnr() % num_icon_colors + 1]
+      vim.b.statusline_icon_color = color
+      return {color, condition.hide_in_width() and colors.bg_light or colors.bg_dim}
     end,
-    highlight = {colors.white, colors.black},
+    highlight = function()
+      local color = vim.b.statusline_icon_color or icon_colors[vim.fn.bufnr() % num_icon_colors + 1]
+      vim.b.statusline_icon_color = color
+      return {colors.bg, color}
+    end,
     provider = function() return "   " end,
   }
 }

@@ -75,5 +75,8 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # ocaml
 [ -x "$(command -v opam)" ] && eval $(opam env)
 
+# lua
+[ -x "$(command -v luarocks)" ] && eval $(luarocks path)
+
 # starship (prompt)
 eval "$(starship init zsh)"

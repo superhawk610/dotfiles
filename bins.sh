@@ -16,8 +16,10 @@ set -euo pipefail
 # - gh: GitHub's official command-line tool
 #
 # ocaml
-#
 # - opam: package management system for OCaml
+#
+# lua
+# - luarocks: package manager for Lua
 #
 # [jq]: https://github.com/stedolan/jq
 # [fq]: https://github.com/wader/fq
@@ -30,6 +32,7 @@ set -euo pipefail
 # [hexyl]: https://github.com/sharkdp/hexyl
 # [opam]: https://github.com/ocaml/opam
 # [gh]: https://github.com/cli/cli
+# [luarocks]: https://github.com/luarocks/luarocks
 
 TMP_DIR="/tmp/bins"
 BIN_DIR="$HOME/.local/bin"
@@ -48,6 +51,8 @@ EXA_VERSION="0.10.1"
 OPAM_VERSION="2.1.2"
 HEXYL_VERSION="0.9.0"
 GH_VERSION="2.6.0"
+LUA_VERSION="5.4.4"
+LUAROCKS_VERSION="3.8.0"
 
 IC_DONE="\033[0;32m✓\033[0m"
 IC_INFO="\033[0;2m\033[0m"
@@ -55,6 +60,10 @@ IC_INFO="\033[0;2m\033[0m"
 log_done() { echo -e "$IC_DONE $1"; }
 log_info() { echo -e "$IC_INFO $1"; }
 log_text() { echo -e "  $1"; }
+
+# these installs _should_ work for both macos/linux *shrug*
+LUA_BINARY="lua-${LUA_VERSION}"
+LUAROCKS_BINARY="luarocks-${LUAROCKS_VERSION}"
 
 case $OS in
   mac)
@@ -67,6 +76,7 @@ case $OS in
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-macos"
     HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-apple-darwin"
     GH_BINARY="gh_${GH_VERSION}_macOS_amd64"
+    LUA_PLATFORM="macosx"
     ;;
 
   linux)
@@ -79,6 +89,7 @@ case $OS in
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-linux"
     HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-unknown-linux-musl"
     GH_BINARY="gh_${GH_VERSION}_linux_amd64"
+    LUA_PLATFORM="linux"
     ;;
 
   *)
@@ -213,6 +224,35 @@ else
   log_text ""
 
   log_done "gh installed!"
+fi
+
+if [ -x "$(command -v luarocks)" ]; then
+  log_done "luarocks is already installed!"
+else
+  log_info "Checking that lua is installed..."
+
+  if ! [ -f "/usr/local/include/lua.h" ]; then
+    log_info "can't find lua.h, attempting to build and install lua..."
+
+    log_info "removing existing install, if any..."
+    sudo rm -i /usr/bin/lua* /usr/local/bin/lua* || true
+
+    curl -Lo "$TMP_DIR/lua.tar.gz" "http://www.lua.org/ftp/${LUA_BINARY}.tar.gz"
+    tar -xzf "$TMP_DIR/lua.tar.gz" -C "$TMP_DIR"
+    cd "$TMP_DIR/${LUA_BINARY}"
+    make "${LUA_PLATFORM}" test && sudo make install
+
+    log_done "lua installed!"
+  fi
+
+  log_info "Installing luarocks..."
+
+  curl -Lo "$TMP_DIR/luarocks.tar.gz" "https://luarocks.org/releases/${LUAROCKS_BINARY}.tar.gz"
+  tar -xpzf "$TMP_DIR/luarocks.tar.gz" -C "$TMP_DIR"
+  cd "$TMP_DIR/${LUAROCKS_BINARY}"
+  ./configure --with-lua-include=/usr/local/include && make && sudo make install
+
+  log_done "luarocks installed!"
 fi
 
 # ---

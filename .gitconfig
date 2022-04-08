@@ -11,10 +11,6 @@
 [push]
 	default = simple
 
-[delta]
-	line-numbers = true
-	side-by-side = true
-
 [pull]
 	ff = only
 	rebase = false

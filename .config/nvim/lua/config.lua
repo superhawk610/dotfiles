@@ -99,7 +99,11 @@ require('bufferline').setup {
 -- }
 
 -- configure headlines
-require('headlines').setup {}
+require('headlines').setup {
+  markdown = {
+    headline_highlights = { 'Headline1', 'Headline2', 'Headline3' }
+  },
+}
 
 -- configure telescope
 require ('telescope').setup {

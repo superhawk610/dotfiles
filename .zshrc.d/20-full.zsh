@@ -35,7 +35,7 @@ alias dotp='dot -Tsvg -Gpad=0.2 -Gbgcolor="#282c34" -Nfontname="FiraCode Nerd Fo
 # setup -----------------------
 
 # bat
-export BAT_THEME=base16
+export BAT_THEME=OneHalfDark
 
 # deno
 export DENO_INSTALL="/home/aaron/.deno"
@@ -80,3 +80,13 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 # starship (prompt)
 eval "$(starship init zsh)"
+
+case $((1 + $RANDOM % 10)) in
+  # display a random constellation!
+  1 | 2 | 3 | 4) [ -x "$(command -v starfetch)" ] && starfetch;;
+              5) [ -x "$(command -v starfetch)" ] && starfetch | lolcat;;
+  # say something profound
+  6 | 7 | 8) [ -x "$(command -v fortune)" ] && fortune | cowsay -W65;;
+          9) [ -x "$(command -v fortune)" ] && fortune | cowsay -W65 -r;;
+         10) [ -x "$(command -v fortune)" ] && fortune | cowsay -W65 | lolcat;;
+esac

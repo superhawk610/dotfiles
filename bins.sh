@@ -14,6 +14,9 @@ set -euo pipefail
 # - exa: a modern replacement for `ls`
 # - hexyl: a command-line hex viewer
 # - gh: GitHub's official command-line tool
+# - starfetch: command line tool that displays constellations
+# - fortune: command for displaying a random quotation
+# - lolcat: rainbows and unicorns!
 #
 # ocaml
 # - opam: package management system for OCaml
@@ -33,6 +36,10 @@ set -euo pipefail
 # [opam]: https://github.com/ocaml/opam
 # [gh]: https://github.com/cli/cli
 # [luarocks]: https://github.com/luarocks/luarocks
+# [starfetch]: https://github.com/Haruno19/starfetch
+# [fortune]: https://github.com/shlomif/fortune-mod
+# [cowsay]: https://github.com/piuccio/cowsay
+# [lolcat]: https://github.com/busyloop/lolcat
 
 TMP_DIR="/tmp/bins"
 BIN_DIR="$HOME/.local/bin"
@@ -53,17 +60,21 @@ HEXYL_VERSION="0.9.0"
 GH_VERSION="2.6.0"
 LUA_VERSION="5.4.4"
 LUAROCKS_VERSION="3.8.0"
+FORTUNE_VERSION="3.12.0"
 
 IC_DONE="\033[0;32m✓\033[0m"
 IC_INFO="\033[0;2m\033[0m"
+IC_FAIL="\033[0;31m\033[0m"
 
 log_done() { echo -e "$IC_DONE $1"; }
 log_info() { echo -e "$IC_INFO $1"; }
+log_fail() { echo -e "$IC_FAIL $1"; }
 log_text() { echo -e "  $1"; }
 
 # these installs _should_ work for both macos/linux *shrug*
 LUA_BINARY="lua-${LUA_VERSION}"
 LUAROCKS_BINARY="luarocks-${LUAROCKS_VERSION}"
+FORTUNE_BINARY="fortune-mod-${FORTUNE_VERSION}"
 
 case $OS in
   mac)
@@ -253,6 +264,60 @@ else
   ./configure --with-lua-include=/usr/local/include && make && sudo make install
 
   log_done "luarocks installed!"
+fi
+
+if [ -x "$(command -v starfetch)" ]; then
+  log_done "starfetch is already installed!"
+else
+  log_info "Installing starfetch..."
+
+  git clone https://github.com/Haruno19/starfetch "$TMP_DIR/starfetch"
+  cd "$TMP_DIR/starfetch"
+  make
+
+  case $OS in
+    mac) sudo make install_mac;;
+    linux) sudo make install;;
+  esac
+
+  log_done "starfetch installed!"
+fi
+
+if [ -x "$(command -v fortune)" ]; then
+  log_done "fortune is already installed!"
+elif ! [ -x "$(command -v cmake)" ]; then
+  log_fail "cmake is required"
+else
+  log_info "Installing fortune..."
+
+  curl -Lo "$TMP_DIR/fortune.tar.xz" "https://github.com/shlomif/fortune-mod/releases/download/${FORTUNE_BINARY}/${FORTUNE_BINARY}.tar.xz"
+  tar -xzf "$TMP_DIR/fortune.tar.xz" -C "$TMP_DIR"
+  cd "$TMP_DIR/${FORTUNE_BINARY}"
+  mkdir build
+  cd build
+  cmake ..
+  sudo make install
+  ln -s /usr/local/games/fortune "$BIN_DIR/fortune"
+  cd ..
+  sudo rm -rf build
+
+  log_done "fortune installed!"
+fi
+
+if [ -x "$(command -v cowsay)" ]; then
+  log_done "cowsay is already installed!"
+else
+  log_info "Installing cowsay..."
+  npm install -g cowsay
+  log_done "cowsay installed!"
+fi
+
+if [ -x "$(command -v lolcat)" ]; then
+  log_done "lolcat is already installed!"
+else
+  log_info "Installing lolcat..."
+  gem install lolcat
+  log_done "lolcat installed!"
 fi
 
 # ---

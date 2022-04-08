@@ -59,6 +59,7 @@ if !in_vscode
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
   Plug 'APZelos/blamer.nvim'
+  Plug 'rhysd/conflict-marker.vim'
   " Plug 'sindrets/diffview.nvim'
 
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -79,7 +80,7 @@ if !in_vscode
 
   " improved Markdown support (better syntax highlighting/folding)
   Plug 'godlygeek/tabular'
-  Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+  Plug 'preservim/vim-markdown', { 'for': 'markdown' }
   Plug 'iamcco/markdown-preview.nvim', { 'for': 'markdown', 'do': 'cd app && yarn install' }
 
   " styled-components syntax
@@ -366,6 +367,22 @@ let g:blamer_enabled = 1
 let g:blamer_relative_time = 1
 let g:blamer_template = '<committer>, <committer-time> • <summary>'
 
+" disable default highlighting, include text after begin/end markers
+let g:conflict_marker_highlight_group = ''
+let g:conflict_marker_begin = '^<<<<<<< .*$'
+let g:conflict_marker_end = '^>>>>>>> .*$'
+
+" helpful keymaps
+"
+"   ]x, [x   jump to next/previous conflict
+"
+"   ct       commit theirs (pending change)
+"   co       commit ours   (ignore change)
+"   cb       commit both
+"   cB       commit both   (reverse order)
+"   cn       commit none   (ignore both)
+"
+
 " set colorscheme
 runtime colorschemes/tokyonight.vim
 
@@ -423,7 +440,7 @@ nmap <silent> gD <Plug>(coc-type-definition)
 let g:VM_maps = {}
 let g:VM_maps['Undo'] = 'u'
 let g:VM_maps['Redo'] = '<C-r>'
-let g:VM_maps['Add Cursor Down'] = 'm'
+let g:VM_maps['Add Cursor Down'] = '<C-m>'
 
 nnoremap <silent> <Leader>v :CocList outline<CR>
 
@@ -613,6 +630,10 @@ autocmd FileType gitcommit
 
 " configure plug
 autocmd FileType vim-plug
+      \ nmap <buffer> <leader>q :q<CR>
+
+" configure help
+autocmd FileType help
       \ nmap <buffer> <leader>q :q<CR>
 
 " close if NvimTree is the last window open

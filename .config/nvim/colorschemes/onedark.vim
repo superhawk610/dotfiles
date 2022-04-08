@@ -16,6 +16,12 @@ hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=
 hi DiffAdd guifg=none guibg=#39443b
 hi DiffDelete guifg=#49323a guibg=#49323a
 
+hi ConflictMarkerBegin guibg=#29351d guifg=#9ece6a
+hi ConflictMarkerOurs guibg=#29351d
+hi ConflictMarkerTheirs guibg=#2b3a58
+hi ConflictMarkerEnd guibg=#2b3a58 guifg=#7aa2f7
+hi ConflictMarkerCommonAncestorHunk guibg=#5e4a2e
+
 " FIXME:
 " TODO:
 " NOTE:

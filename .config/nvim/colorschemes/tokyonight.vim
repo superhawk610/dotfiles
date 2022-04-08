@@ -24,6 +24,18 @@ hi NvimTreeEndOfBuffer guifg=#232434 guibg=#232434
 
 hi HighlightedyankRegion guifg=#1a1b26 guibg=#7aa2f7
 
+hi ConflictMarkerBegin guibg=#29351d guifg=#9ece6a
+hi ConflictMarkerOurs guibg=#29351d
+hi ConflictMarkerTheirs guibg=#2b3a58
+hi ConflictMarkerEnd guibg=#2b3a58 guifg=#7aa2f7
+hi ConflictMarkerCommonAncestorHunk guibg=#5e4a2e
+
+" lukas-reineke/headlines.nvim
+hi Headline1 guibg=#29351d guifg=#9ece6a
+hi Headline2 guibg=#2b3a58 guifg=#7aa2f7
+hi Headline3 guibg=#5e4a2e guifg=#e0af68
+hi CodeBlock guibg=#232434
+
 " FIXME:
 " TODO:
 " NOTE:

@@ -6,6 +6,7 @@ alias r='source /etc/zprofile && source ~/.zshrc' # source zprofile first to res
 alias R='exec zsh'
 alias cfg='nvim ~/.zshrc'
 alias vcfg='nvim ~/.config/nvim/init.vim'
+alias wd='clear && im_feeling_lucky && wd'
 
 ## tmux
 alias tm='tmux'
@@ -106,6 +107,18 @@ gh_add_origin() {
   else
     echo $repo # should contain usage text
   fi
+}
+
+im_feeling_lucky() {
+  case $((1 + $RANDOM % 10)) in
+    # display a random constellation!
+    1 | 2 | 3 | 4) [ -x "$(command -v starfetch)" ] && starfetch;;
+                5) [ -x "$(command -v starfetch)" ] && starfetch | lolcat;;
+    # say something profound
+    6 | 7 | 8) [ -x "$(command -v fortune)" ] && fortune | cowsay -W65;;
+            9) [ -x "$(command -v fortune)" ] && fortune | cowsay -W65 -r;;
+           10) [ -x "$(command -v fortune)" ] && fortune | cowsay -W65 | lolcat;;
+  esac
 }
 
 # python

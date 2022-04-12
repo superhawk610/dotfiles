@@ -511,7 +511,7 @@ nnoremap <silent> <Leader>n :tabnew<CR>
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader>W :noa w<CR>
 nnoremap <Leader>q :Bclose<CR>
-nnoremap <silent> <Leader>Q :Startify<CR>:call utils#close_all_other_buffers()<CR>
+nnoremap <silent> <Leader>Q :Startify<CR>:call utils#close_all_other_buffers()<CR>:NvimTreeCollapse<CR>
 nnoremap <silent> <Leader><Leader>q :call utils#close_all_other_buffers()<CR>
 
 " reload config

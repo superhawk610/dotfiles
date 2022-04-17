@@ -291,7 +291,7 @@ else
   log_info "Installing fortune..."
 
   curl -Lo "$TMP_DIR/fortune.tar.xz" "https://github.com/shlomif/fortune-mod/releases/download/${FORTUNE_BINARY}/${FORTUNE_BINARY}.tar.xz"
-  tar -xzf "$TMP_DIR/fortune.tar.xz" -C "$TMP_DIR"
+  tar -xf "$TMP_DIR/fortune.tar.xz" -C "$TMP_DIR"
   cd "$TMP_DIR/${FORTUNE_BINARY}"
   mkdir build
   cd build

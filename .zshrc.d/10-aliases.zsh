@@ -6,7 +6,6 @@ alias r='source /etc/zprofile && source ~/.zshrc' # source zprofile first to res
 alias R='exec zsh'
 alias cfg='nvim ~/.zshrc'
 alias vcfg='nvim ~/.config/nvim/init.vim'
-alias wd='clear && im_feeling_lucky && wd'
 
 ## tmux
 alias tm='tmux'

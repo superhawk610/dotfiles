@@ -5,7 +5,6 @@ local C = require('utils').colors()
 M.update_highlights = C.update_highlights
 
 g.nvim_tree_auto_ignore_ft = {'startify'}
-g.nvim_tree_indent_markers = 1
 g.nvim_tree_git_hl = 1
 g.nvim_tree_highlight_opened_files = 0
 g.nvim_tree_add_trailing = 0  -- hide trailing `/` on dirs
@@ -73,8 +72,8 @@ require('nvim-tree').setup {
   open_on_setup = false,
   disable_netrw = true,
   hijack_netrw = false,
-  auto_open = false,
-  follow = true,
+  update_focused_file = { enable = true },
+  renderer = { indent_markers = { enable = true } },
   git = { ignore = true },
   filters = {
     dotfiles = true,

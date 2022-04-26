@@ -115,7 +115,8 @@ Plug 'uiiaoo/java-syntax.vim'
 Plug 'vim-ruby/vim-ruby'
 
 " Elixir
-Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+" pinned to commit until https://github.com/elixir-editors/vim-elixir/issues/562 is resolved
+Plug 'elixir-editors/vim-elixir', { 'for': 'elixir', 'commit': 'ff7a1223dfc5386c41bb582039a90a262d488607' }
 Plug 'kana/vim-textobj-user'
 Plug 'amiralies/vim-textobj-elixir', { 'for': 'elixir' }
 Plug 'mhinz/vim-mix-format', { 'for': 'elixir' }
@@ -407,11 +408,8 @@ nnoremap <silent> # #zz
 vnoremap > >gv
 vnoremap < <gv
 
-" shift indents while inserting with <M-[> and <M-]>
-imap “ <C-d>
-imap ‘ <C-t>
-imap <M-[> <C-d>
-imap <M-]> <C-t>
+" shift indents while inserting with <C-d> and <C-f>
+imap <C-f> <C-t>
 
 nnoremap <silent> t :NvimTreeToggle<CR>
 nnoremap <silent> T :NvimTreeFindFile<CR>

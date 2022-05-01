@@ -17,6 +17,7 @@ set -euo pipefail
 # - starfetch: command line tool that displays constellations
 # - fortune: command for displaying a random quotation
 # - lolcat: rainbows and unicorns!
+# - pastel: command-line tool to generate, analyze, convert and manipulate colors
 #
 # ocaml
 # - opam: package management system for OCaml
@@ -40,6 +41,7 @@ set -euo pipefail
 # [fortune]: https://github.com/shlomif/fortune-mod
 # [cowsay]: https://github.com/piuccio/cowsay
 # [lolcat]: https://github.com/busyloop/lolcat
+# [pastel]: https://github.com/sharkdp/pastel
 
 TMP_DIR="/tmp/bins"
 BIN_DIR="$HOME/.local/bin"
@@ -61,6 +63,7 @@ GH_VERSION="2.6.0"
 LUA_VERSION="5.4.4"
 LUAROCKS_VERSION="3.8.0"
 FORTUNE_VERSION="3.12.0"
+PASTEL_VERSION="0.8.1"
 
 IC_DONE="\033[0;32m✓\033[0m"
 IC_INFO="\033[0;2m\033[0m"
@@ -78,6 +81,8 @@ FORTUNE_BINARY="fortune-mod-${FORTUNE_VERSION}"
 
 case $OS in
   mac)
+    LUA_PLATFORM="macosx"
+
     JQ_BINARY="jq-osx-amd64"
     FQ_BINARY="fq_${FQ_VERSION}_macos_amd64"
     RG_BINARY="ripgrep-${RG_VERSION}-x86_64-apple-darwin"
@@ -87,10 +92,12 @@ case $OS in
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-macos"
     HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-apple-darwin"
     GH_BINARY="gh_${GH_VERSION}_macOS_amd64"
-    LUA_PLATFORM="macosx"
+    PASTEL_BINARY="pastel-v${PASTEL_VERSION}-x86_64-apple-darwin"
     ;;
 
   linux)
+    LUA_PLATFORM="linux"
+
     JQ_BINARY="jq-linux64"
     FQ_BINARY="fq_${FQ_VERSION}_linux_amd64"
     RG_BINARY="ripgrep-${RG_VERSION}-x86_64-unknown-linux-musl"
@@ -100,7 +107,7 @@ case $OS in
     OPAM_BINARY="opam-${OPAM_VERSION}-x86_64-linux"
     HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-unknown-linux-musl"
     GH_BINARY="gh_${GH_VERSION}_linux_amd64"
-    LUA_PLATFORM="linux"
+    PASTEL_BINARY="pastel-v${PASTEL_VERSION}-x86_64-unknown-linux-musl"
     ;;
 
   *)
@@ -318,6 +325,18 @@ else
   log_info "Installing lolcat..."
   gem install lolcat
   log_done "lolcat installed!"
+fi
+
+if [ -x "$(command -v pastel)" ]; then
+  log_done "pastel is already installed!"
+else
+  log_info "Installing pastel..."
+
+  curl -Lo "$TMP_DIR/pastel.tar.gz" "https://github.com/sharkdp/pastel/releases/download/v${PASTEL_VERSION}/${PASTEL_BINARY}.tar.gz"
+  tar -xzf "$TMP_DIR/pastel.tar.gz" -C "$TMP_DIR"
+  mv "$TMP_DIR/${PASTEL_BINARY}/pastel" "$BIN_DIR/pastel"
+
+  log_done "pastel installed!"
 fi
 
 # ---

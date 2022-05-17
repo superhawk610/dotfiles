@@ -621,17 +621,11 @@ autocmd VimEnter * if argc() == 0 && !in_vscode |
 " autocmd BufEnter * if &ft ==# 'NvimTree' | execute 'VimadeBufDisable' | endif
 
 " configure fugitive
-autocmd FileType fugitive
-      \ nmap <buffer> <leader>q :q<CR><C-w><C-w>
 autocmd FileType gitcommit
       \ nmap <buffer> <leader>q :wq<CR>
 
-" configure plug
-autocmd FileType vim-plug
-      \ nmap <buffer> <leader>q :q<CR>
-
-" configure help
-autocmd FileType help
+" configure quick exit
+autocmd FileType fugitive,fugitiveblame,vim-plug,help,qf
       \ nmap <buffer> <leader>q :q<CR>
 
 " close if NvimTree is the last window open

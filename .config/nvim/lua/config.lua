@@ -46,6 +46,14 @@ require('bufferline').setup {
     always_show_bufferline = true,
     close_command = 'Bclose %d',
     show_close_icon = false,
+    custom_filter = function(buf_number, buf_numbers)
+      -- hide quickfix buffer
+      local ft = vim.bo[buf_number].filetype
+      if ft == "qf" or ft == "fugitive" then
+        return false
+      end
+      return true
+    end,
     offsets = {
       {
         filetype = 'NvimTree',

@@ -6,3 +6,7 @@ export PATH=$PATH:~/scripts
 
 # editor
 export EDITOR=nvim
+
+# term
+# needed by `pastel` to avoid a warning
+export COLORTERM=truecolor

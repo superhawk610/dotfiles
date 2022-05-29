@@ -78,6 +78,9 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # lua
 [ -x "$(command -v luarocks)" ] && eval $(luarocks path)
 
+# go
+export PATH=$PATH:/usr/local/go/bin
+
 # starship (prompt)
 eval "$(starship init zsh)"
 

@@ -71,7 +71,7 @@ if !in_vscode
 
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
-  Plug 'psliwka/vim-smoothie' " smooth scrolling
+  Plug 'psliwka/vim-smoothie', { 'commit': '10fd0aa57d176718bc2c570f121ab523c4429a25' } " smooth scrolling
   Plug 'matze/vim-move' " shift lines/blocks up/down
 
   Plug 'folke/zen-mode.nvim'

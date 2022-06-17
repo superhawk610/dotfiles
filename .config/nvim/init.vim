@@ -485,13 +485,17 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " exclude file names from :Rg results
+let s:fzf_preview_opts = {
+      \   'options': '--delimiter : --nth 4..',
+      \   'window': {'width': 0.9, 'height': 0.9}
+      \ }
 command! -bang -nargs=* Rg call fzf#vim#grep(
       \ "rg --column --line-number --no-heading --color=always --smart-case ". shellescape(<q-args>), 1,
-      \ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+      \ fzf#vim#with_preview(s:fzf_preview_opts, 'up'), <bang>0)
 
 command! -bang -nargs=* RgExact call fzf#vim#grep(
       \ "rg --column --line-number --no-heading --color=always --fixed-strings ". shellescape(<q-args>), 1,
-      \ fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}), <bang>0)
+      \ fzf#vim#with_preview(s:fzf_preview_opts, 'up'), <bang>0)
 
 " bind <C-u>/<C-d> to page through FZF results
 let $FZF_DEFAULT_OPTS="--bind ctrl-d:half-page-down,ctrl-u:half-page-up"

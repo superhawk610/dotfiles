@@ -5,6 +5,7 @@ $git_commit\
 $git_state\
 $git_status\
 ${custom.git-wip}\
+$python\
 $cmd_duration\
 $status\
 $line_break\

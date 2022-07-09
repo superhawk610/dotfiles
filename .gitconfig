@@ -6,7 +6,7 @@
 	editor = nvim
 	# to install: `npm install -g git-split-diffs`
 	pager = git-split-diffs --color | less -RFX
-	excludesFile = /Users/a80323765/.gitignore
+	excludesFile = ~/.gitignore
 
 [push]
 	default = simple

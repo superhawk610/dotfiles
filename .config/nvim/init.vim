@@ -89,11 +89,12 @@ if !in_vscode
   " tmux support
   Plug 'christoomey/vim-tmux-navigator'
 
-  " Emmet
-  Plug 'mattn/emmet-vim'
-
   " remove quickfix lines with `dd`
   Plug 'TamaMcGlinn/quickfixdd'
+endif
+
+if !has('win64')
+  Plug 'mattn/emmet-vim'
 endif
 
 " syntax
@@ -722,9 +723,11 @@ let g:vim_markdown_new_list_item_indent = 2
 
 " custom emmet snippets
 " https://docs.emmet.io/customization/snippets/
-let s:emmet_snippets_file = '~/.config/nvim/emmet-snippets.json'
-if !in_vscode
-  let g:user_emmet_settings = webapi#json#decode(join(readfile(expand(s:emmet_snippets_file)), ''))
+if !has('win64')
+  let s:emmet_snippets_file = '~/.config/nvim/emmet-snippets.json'
+  if !in_vscode
+    let g:user_emmet_settings = webapi#json#decode(join(readfile(expand(s:emmet_snippets_file)), ''))
+  endif
 endif
 
 if in_vscode

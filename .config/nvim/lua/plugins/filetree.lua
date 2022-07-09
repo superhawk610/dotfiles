@@ -5,40 +5,6 @@ local C = require('utils').colors()
 M.update_highlights = C.update_highlights
 
 g.nvim_tree_auto_ignore_ft = {'startify'}
-g.nvim_tree_git_hl = 1
-g.nvim_tree_highlight_opened_files = 0
-g.nvim_tree_add_trailing = 0  -- hide trailing `/` on dirs
-g.nvim_tree_group_empty = 1   -- group single-node folders
-g.nvim_tree_root_folder_modifier = ':~' -- ':t'
-
-g.nvim_tree_show_icons = {
-  git = 1,
-  files = 1,
-  folders = 1,
-  folder_arrows = 0,
-}
-
-g.nvim_tree_icons = {
-  default = '',
-  symlink = '',
-  git = {
-    unstaged = 'U',
-    staged = '✓',
-    unmerged = '',
-    renamed = '➜',
-    untracked = '?',
-    deleted = 'D',
-    ignored = '',
-  },
-  folder = {
-    default = '',
-    open = '',
-    empty = '',
-    empty_open = '',
-    symlink = '',
-    symlink_open = '',
-  }
-}
 
 local function local_cb(func)
   return string.format(":lua require('plugins.filetree').%s()<CR>", func)
@@ -73,7 +39,43 @@ require('nvim-tree').setup {
   disable_netrw = true,
   hijack_netrw = false,
   update_focused_file = { enable = true },
-  renderer = { indent_markers = { enable = true } },
+  renderer = {
+    group_empty = true,   -- group single-node folders
+    add_trailing = false, -- hide trailing `/` on dirs
+    highlight_git = true,
+    root_folder_modifier = ':~', -- ':t'
+    highlight_opened_files = 'none',
+    indent_markers = { enable = true },
+    icons = {
+      show = {
+        git = true,
+        file = true,
+        folder = true,
+        folder_arrow = false,
+      },
+      glyphs = {
+        default = '',
+        symlink = '',
+        git = {
+          unstaged = 'U',
+          staged = '✓',
+          unmerged = '',
+          renamed = '➜',
+          untracked = '?',
+          deleted = 'D',
+          ignored = '',
+        },
+        folder = {
+          default = '',
+          open = '',
+          empty = '',
+          empty_open = '',
+          symlink = '',
+          symlink_open = '',
+        },
+      },
+    },
+  },
   git = { ignore = true },
   filters = {
     dotfiles = true,

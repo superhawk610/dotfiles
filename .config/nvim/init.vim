@@ -356,6 +356,7 @@ set splitbelow
 augroup filetypedetect
   autocmd BufRead,BufNewFile .env.local setfiletype sh
   autocmd BufRead,BufNewFile .envrc setfiletype sh
+  autocmd BufRead,BufNewFile *.ndjson setfiletype json
 augroup END
 
 filetype plugin indent on
@@ -448,6 +449,8 @@ nnoremap <silent> gh :call utils#show_documentation()<CR>
 
 " code actions
 nmap <silent> <Leader>a <Plug>(coc-codeaction-cursor)
+nmap <silent> <Leader>= <Plug>(coc-format-selected)
+vmap <silent> <Leader>= <Plug>(coc-format-selected)
 
 " use <C-space> to trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()

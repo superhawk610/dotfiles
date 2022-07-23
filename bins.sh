@@ -18,6 +18,7 @@ set -euo pipefail
 # - fortune: command for displaying a random quotation
 # - lolcat: rainbows and unicorns!
 # - pastel: command-line tool to generate, analyze, convert and manipulate colors
+# - fd: simple, fast and user-friendly alternative to `find`
 #
 # ocaml
 # - opam: package management system for OCaml
@@ -42,6 +43,7 @@ set -euo pipefail
 # [cowsay]: https://github.com/piuccio/cowsay
 # [lolcat]: https://github.com/busyloop/lolcat
 # [pastel]: https://github.com/sharkdp/pastel
+# [fd]: https://github.com/sharkdp/fd
 
 TMP_DIR="/tmp/bins"
 BIN_DIR="$HOME/.local/bin"
@@ -64,6 +66,7 @@ LUA_VERSION="5.4.4"
 LUAROCKS_VERSION="3.8.0"
 FORTUNE_VERSION="3.12.0"
 PASTEL_VERSION="0.9.0"
+FD_VERSION="8.4.0"
 
 IC_DONE="\033[0;32m✓\033[0m"
 IC_INFO="\033[0;2m\033[0m"
@@ -93,6 +96,7 @@ case $OS in
     HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-apple-darwin"
     GH_BINARY="gh_${GH_VERSION}_macOS_amd64"
     PASTEL_BINARY="pastel-v${PASTEL_VERSION}-x86_64-apple-darwin"
+    FD_BINARY="fd-v${FD_VERSION}-x86_64-apple-darwin"
     ;;
 
   linux)
@@ -108,6 +112,7 @@ case $OS in
     HEXYL_BINARY="hexyl-v${HEXYL_VERSION}-x86_64-unknown-linux-musl"
     GH_BINARY="gh_${GH_VERSION}_linux_amd64"
     PASTEL_BINARY="pastel-v${PASTEL_VERSION}-x86_64-unknown-linux-musl"
+    FD_BINARY="fd-v${FD_VERSION}-x86_64-unknown-linux-musl"
     ;;
 
   *)
@@ -157,6 +162,7 @@ else
   tar -xzf "$TMP_DIR/rg.tar.gz" -C "$TMP_DIR"
   mv "$TMP_DIR/${RG_BINARY}/doc/rg.1" "$MN1_DIR"
   mv "$TMP_DIR/${RG_BINARY}/rg" "$BIN_DIR/rg"
+  mv "$TMP_DIR/${RG_BINARY}/complete/_rg" "$CMP_DIR"
   chmod +x "$BIN_DIR/rg"
   log_done "rg installed!"
 fi
@@ -337,6 +343,20 @@ else
   mv "$TMP_DIR/${PASTEL_BINARY}/pastel" "$BIN_DIR/pastel"
 
   log_done "pastel installed!"
+fi
+
+if [ -x "$(command -v fd)" ]; then
+  log_done "fd is already installed!"
+else
+  log_info "Installing fd..."
+
+  curl -Lo "$TMP_DIR/fd.tar.gz" "https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/${FD_BINARY}.tar.gz"
+  tar -xzf "$TMP_DIR/fd.tar.gz" -C "$TMP_DIR"
+  mv "$TMP_DIR/${FD_BINARY}/fd" "$BIN_DIR/fd"
+  mv "$TMP_DIR/${FD_BINARY}/fd.1" "$MN1_DIR"
+  mv "$TMP_DIR/${FD_BINARY}/autocomplete/_fd" "$CMP_DIR"
+
+  log_done "fd installed!"
 fi
 
 # ---

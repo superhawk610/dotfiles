@@ -357,6 +357,9 @@ augroup filetypedetect
   autocmd BufRead,BufNewFile .env.local setfiletype sh
   autocmd BufRead,BufNewFile .envrc setfiletype sh
   autocmd BufRead,BufNewFile *.ndjson setfiletype json
+  autocmd BufRead,BufNewFile Makefile setlocal noexpandtab |
+        \ setlocal tabstop=4 |
+        \ setlocal shiftwidth=4
 augroup END
 
 filetype plugin indent on

@@ -8,6 +8,10 @@ if on_mac; then
 fi
 
 if on_wsl; then
+  # forward GTK windows to windows X server
+  export LIBGL_ALWAYS_INDIRECT=1
+  export DISPLAY=$(ip route  | awk '/default via / {print $3; exit}' 2>/dev/null):0
+
   [[ "$PWD" = "/mnt/c/Users/Aaron Ross" ]] && cd ~
 fi
 

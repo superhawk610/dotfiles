@@ -91,6 +91,9 @@ if !in_vscode
 
   " remove quickfix lines with `dd`
   Plug 'TamaMcGlinn/quickfixdd'
+
+  " prettify ASCII -> UTF-8 boxes
+  Plug 'superhawk610/ascii-blocks.nvim'
 endif
 
 if !has('win64')
@@ -114,6 +117,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'ocaml/vim-ocaml'
 Plug 'uiiaoo/java-syntax.vim'
 Plug 'vim-ruby/vim-ruby'
+Plug 'mechatroner/rainbow_csv'
 
 " Elixir
 " pinned to commit until https://github.com/elixir-editors/vim-elixir/issues/562 is resolved
@@ -142,11 +146,31 @@ Plug 'guns/vim-sexp', { 'for': 'clojure' }
 
 call plug#end()
 
-" when `coc-eslint` is run for the first time, it requires permission;
-" to grant it, run `CocCommand eslint.showOutputChannel` and confirm
+" # coc-eslint
 "
-" coc-solargraph
+" when run for the first time, it requires permission; to grant it, run
+" `CocCommand eslint.showOutputChannel` and confirm
+"
+" # coc-solargraph
+"
 " make sure to run `gem install solargraph` too
+"
+" # coc-elixir
+"
+" when using a newer OTP version than whatever `coc-elixir` was compiled
+" with (OTP 24 as of Jul 18 2022, I believe), you must install and compile
+" `elixir-ls` yourself
+"
+"     git clone https://github.com/elixir-lsp/elixir-ls.git ~/.elixir-ls
+"     cd ~/.elixir-ls
+"     mix deps.get && mix compile && mix elixir_ls.release -o release
+"
+" make sure to update COC config accordingly
+"
+"     {
+"       "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh"
+"     }
+"
 let g:coc_global_extensions = [
       \ 'coc-json',
       \ 'coc-tsserver',
@@ -494,11 +518,18 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " exclude file names from :Rg results
 let s:fzf_preview_opts = {
       \   'options': '--delimiter : --nth 4..',
-      \   'window': {'width': 0.9, 'height': 0.9}
+      \   'window': { 'width': 0.9, 'height': 0.9 }
+      \ }
+let s:fzf_preview_opts_include_filenames = {
+      \   'window': { 'width': 0.9, 'height': 0.9 }
       \ }
 command! -bang -nargs=* Rg call fzf#vim#grep(
       \ "rg --column --line-number --no-heading --color=always --smart-case ". shellescape(<q-args>), 1,
       \ fzf#vim#with_preview(s:fzf_preview_opts, 'up'), <bang>0)
+
+command! -bang -nargs=* RgFilenames call fzf#vim#grep(
+      \ "rg --column --line-number --no-heading --color=always --smart-case ". shellescape(<q-args>), 1,
+      \ fzf#vim#with_preview(s:fzf_preview_opts_include_filenames, 'up'), <bang>0)
 
 command! -bang -nargs=* RgExact call fzf#vim#grep(
       \ "rg --column --line-number --no-heading --color=always --fixed-strings ". shellescape(<q-args>), 1,
@@ -512,7 +543,7 @@ let $FZF_DEFAULT_OPTS="--bind ctrl-d:half-page-down,ctrl-u:half-page-up"
 nnoremap <silent> <Leader>P :Files<CR>
 nnoremap <silent> <Leader>p :GFiles<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
-nnoremap <silent> <Leader>F :Rg <C-r><C-w><CR>
+nnoremap <silent> <Leader>F :RgFilenames <C-r><C-w><CR>
 nnoremap <silent> <Leader>g :CocDiagnostics<CR>
 nnoremap <silent> <Leader>n :tabnew<CR>
 

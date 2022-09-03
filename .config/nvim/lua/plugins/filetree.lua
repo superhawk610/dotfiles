@@ -22,7 +22,7 @@ end
 
 function M.edit_file()
   local lib = require('nvim-tree.lib')
-  local open_file = require('nvim-tree.actions.open-file')
+  local open_file = require('nvim-tree.actions.node.open-file')
 
   local node = lib.get_node_at_cursor()
   if not node then return end

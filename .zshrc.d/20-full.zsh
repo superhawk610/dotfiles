@@ -3,8 +3,11 @@ export PATH=$PATH:~/Library/Python/3.9/bin
 export PATH=$PATH:~/.cargo/bin
 
 if on_mac; then
-  export PATH=$PATH:$(brew --prefix)/bin
-  export PATH=/usr/local/opt/llvm@11/bin:$PATH
+  export PATH="$PATH:$(brew --prefix)/bin"
+  export PATH="$(brew --prefix llvm@11)/bin:$PATH"
+  # use brew's copy of git so we don't have to rely on XCode tools
+  # (at least until I get off cabin WiFi and can download them lol)
+  export PATH="$(brew --prefix git)/bin:$PATH"
 fi
 
 if on_wsl; then

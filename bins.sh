@@ -128,10 +128,24 @@ mkdir -p "$TMP_DIR" "$MN1_DIR" "$MN5_DIR" "$CMP_DIR"
 if [ -x "$(command -v jq)" ]; then
   log_done "jq is already installed!"
 else
-  log_info "Installing jq..."
-  curl -Lo "$TMP_DIR/jq" "https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/${JQ_BINARY}"
-  mv "$TMP_DIR/jq" "$BIN_DIR/jq"
+  # install from release
+  # log_info "Installing jq..."
+  # curl -Lo "$TMP_DIR/jq" "https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/${JQ_BINARY}"
+  # mv "$TMP_DIR/jq" "$BIN_DIR/jq"
+  # chmod +x "$BIN_DIR/jq"
+
+  # latest jq 1.6 truncates large numbers to 64 bit double approx.;
+  # this has been fixed in master, so build from source for now
+  log_info "Building jq from master..."
+  git clone --depth 1 https://github.com/stedolan/jq.git "$TMP_DIR/jq"
+  cd "$TMP_DIR/jq"
+  git submodule update --init
+  autoreconf -fi
+  ./configure --with-oniguruma=builtin --disable-maintainer_mode
+  make LDFLAGS=-all-static -j8
+  mv ./jq "$BIN_DIR/jq"
   chmod +x "$BIN_DIR/jq"
+
   log_done "jq installed!"
 fi
 

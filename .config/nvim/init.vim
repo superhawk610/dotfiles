@@ -312,7 +312,8 @@ let g:coc_global_extensions = [
 " --------------------
 
 " change leader to spacebar
-let mapleader = ' '
+let mapleader = " "
+let maplocalleader = "\\"
 
 " enable mouse click & scrolling
 set mouse=a
@@ -757,6 +758,9 @@ let g:vim_markdown_conceal_code_blocks = 0
 
 " indent markdown lists by 2 spaces
 let g:vim_markdown_new_list_item_indent = 2
+
+" allow creating invalid s-expressions
+let g:sexp_enable_insert_mode_mappings = 0
 
 " custom emmet snippets
 " https://docs.emmet.io/customization/snippets/

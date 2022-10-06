@@ -46,7 +46,7 @@ export DENO_INSTALL="/home/aaron/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # clojure
-# export LEIN_USE_BOOTCLASSPATH=no # fix for ultra
+export LEIN_USE_BOOTCLASSPATH=no # fix for ultra
 
 # java
 if on_mac; then

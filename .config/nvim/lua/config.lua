@@ -41,6 +41,7 @@ require('bufferline').setup {
     },
   },
   options = {
+    mode = 'buffers',
     numbers = 'none',
     separator_style = 'thin',
     always_show_bufferline = true,
@@ -72,6 +73,14 @@ require('bufferline').setup {
       -- },
     }
   }
+}
+
+require('winbar').setup {
+  enabled = true,
+  colors = {
+    path = C.colors.bg_light,
+    file_name = C.colors.white,
+  },
 }
 
 -- configure diffview (https://github.com/sindrets/diffview.nvim)

@@ -24,6 +24,7 @@ if !in_vscode
   " Plug 'edkolev/tmuxline.vim'
 
   Plug 'akinsho/nvim-bufferline.lua'
+  Plug 'fgheng/winbar.nvim'
   Plug 'glepnir/galaxyline.nvim', { 'branch': 'main' }
 
   " colorschemes

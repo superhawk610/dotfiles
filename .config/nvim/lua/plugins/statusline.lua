@@ -200,7 +200,7 @@ gl.section.right[3] = {
     provider = function()
       local current_col = vim.fn.col('.')
       local total_cols = vim.fn.col('$')
-      local suffix = '' .. current_col .. ',' .. total_cols
+      local suffix = ' ' .. current_col .. ':' .. total_cols
 
       local current_line = vim.fn.line('.')
       local total_lines = vim.fn.line('$')

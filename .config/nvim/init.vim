@@ -310,6 +310,12 @@ let g:coc_global_extensions = [
 "
 "  clear register a, then yank all matching lines into it (appending)
 "
+"  --- line endings
+"
+"      :set[local] nofixendofline
+"
+"  make CRLF line endings explicit, don't automatically add trailing newline
+"
 " --------------------
 
 " change leader to spacebar
@@ -365,11 +371,7 @@ set updatetime=300
 set shortmess+=c
 
 " keep sign column visible (prevents layout shift)
-if has("patch-8.1.1564")
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+set signcolumn=yes
 
 " enable tab completion for filenames
 set wildmode=longest,list,full
@@ -585,8 +587,8 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 nnoremap <silent> <Leader><Leader>v :e ~/.config/nvim/init.vim<CR>
 
 " easily copy relative path to current file
-nnoremap <silent> <Leader><Leader>c :let @* = trim(execute('echo @%'))<CR>
-nnoremap <silent> <Leader><Leader>C :echo trim(execute('echo @%'))<CR>
+nnoremap <silent> <Leader><Leader>c :lua vim.api.nvim_exec("exec setreg('*','"..require('utils').current_relative_path().."')",false)<CR>
+nnoremap <silent> <Leader><Leader>C :lua print(require('utils').current_relative_path())<CR>
 
 " format file with prettier using
 nnoremap <silent> <Leader>m :call utils#format_file()<CR>
@@ -669,7 +671,7 @@ autocmd FileType gitcommit
       \ nmap <buffer> <leader>q :wq<CR>
 
 " configure quick exit
-autocmd FileType fugitive,fugitiveblame,vim-plug,help,qf
+autocmd FileType git,fugitive,fugitiveblame,vim-plug,help,qf
       \ nmap <buffer> <leader>q :q<CR>
 
 " close if NvimTree is the last window open

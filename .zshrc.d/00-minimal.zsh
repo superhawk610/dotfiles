@@ -1,8 +1,8 @@
 # minimal ZSH environment (safe to run on a clean install)
 
 # path
-export PATH=$PATH:~/.local/bin
-export PATH=$PATH:~/scripts
+export PATH="~/scripts:$PATH"
+export PATH="~/.local/bin:$PATH"
 
 # editor
 export EDITOR=nvim

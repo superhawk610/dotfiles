@@ -587,7 +587,7 @@ nmap <C-p> <Plug>MarkdownPreviewToggle
 nnoremap <silent> <Leader><Leader>v :e ~/.config/nvim/init.vim<CR>
 
 " easily copy relative path to current file
-nnoremap <silent> <Leader><Leader>c :lua vim.api.nvim_exec("exec setreg('*','"..require('utils').current_relative_path().."')",false)<CR>
+nnoremap <silent> <Leader><Leader>c :lua vim.api.nvim_exec("call setreg('*','"..require('utils').current_relative_path().."')",false)<CR>
 nnoremap <silent> <Leader><Leader>C :lua print(require('utils').current_relative_path())<CR>
 
 " format file with prettier using

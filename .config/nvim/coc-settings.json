@@ -25,6 +25,7 @@
   "prettier.trailingComma": "es5",
   "prettier.arrowParens": "avoid",
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "typescript.autoClosingTags": false,
   "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
   // elixir's formatter can be a bit slow
   "coc.preferences.willSaveHandlerTimeout": 1500,

@@ -52,7 +52,7 @@ if !in_vscode
   Plug 'folke/todo-comments.nvim'
   Plug 'ntpeters/vim-better-whitespace' " display trailing whitespace
 
-  Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
+  " Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 
   Plug 'francoiscabrol/ranger.vim'
   Plug 'rbgrouleff/bclose.vim' " required by ranger.vim
@@ -74,6 +74,7 @@ if !in_vscode
 
   Plug 'psliwka/vim-smoothie', { 'commit': '10fd0aa57d176718bc2c570f121ab523c4429a25' } " smooth scrolling
   Plug 'matze/vim-move' " shift lines/blocks up/down
+  Plug 'rhysd/clever-f.vim'
 
   Plug 'folke/zen-mode.nvim'
 
@@ -120,6 +121,7 @@ Plug 'uiiaoo/java-syntax.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'mechatroner/rainbow_csv'
 Plug 'sudar/vim-arduino-syntax'
+Plug 'charlespascoe/vim-go-syntax'
 
 " Elixir
 " pinned to commit until https://github.com/elixir-editors/vim-elixir/issues/562 is resolved
@@ -186,6 +188,7 @@ let g:coc_global_extensions = [
       \ 'coc-jedi',
       \ 'coc-diagnostic',
       \ 'coc-solargraph',
+      \ 'coc-go',
       \ ]
 
 " --------------------
@@ -317,6 +320,44 @@ let g:coc_global_extensions = [
 "
 "  make CRLF line endings explicit, don't automatically add trailing newline
 "
+"  --- fzf search syntax
+"
+"  fzf starts in extended-search mode (unless -e/--exact is provided)
+"  ref: https://github.com/junegunn/fzf#search-syntax
+"
+"      sbtrkt    fuzzy-match                  items that match `sbtrkt`
+"      'wild     exact-match                  items that include `wild`
+"      ^music    prefix-exact-match           items that start with `music`
+"      .mp3$     suffix-exact-match           items that end with `.mp3`
+"      !fire     inverse-exact-match          items that do not include `fire`
+"      !^music   inverse-prefix-exact-match   items that do not start with `music`
+"      !.mp3$    inverse-suffix-exact-match   items that do not end with `.mp3`
+"
+"  --- pager output in buffer
+"
+"  instead of using the builtin pager, you can view its output in the
+"  current buffer like so:
+"
+"      :put =execute('<cmd>')
+"
+"  --- resize splits
+"
+"      " 80 rows height
+"      :res[ize] 80
+"
+"      " 80 columns width
+"      :vertical res[ize] 80
+"
+"      <C-w> + increase height
+"      <C-w> - decrease height
+"      <C-w> > increase width
+"      <C-w> < decrease width
+"
+"      <C-w> _ set height        10<C-w>_
+"      <C-w> | set width
+"
+"      <C-w> = equalize height/width of all splits
+"
 " --------------------
 
 " change leader to spacebar
@@ -419,7 +460,8 @@ let g:conflict_marker_end = '^>>>>>>> .*$'
 "
 
 " set colorscheme
-runtime colorschemes/tokyonight.vim
+runtime colorschemes/onedark.vim
+colorscheme onedark
 
 " ^ and $ are awkward
 map H ^
@@ -445,8 +487,8 @@ vnoremap < <gv
 " shift indents while inserting with <C-d> and <C-f>
 imap <C-f> <C-t>
 
-nnoremap <silent> t :NvimTreeToggle<CR>
-nnoremap <silent> T :NvimTreeFindFile<CR>
+nnoremap <silent> <Leader>t :NvimTreeToggle<CR>
+nnoremap <silent> <Leader>T :NvimTreeFindFile<CR>
 
 nmap <silent> <Leader>o :Ranger<CR>
 
@@ -521,24 +563,26 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " exclude file names from :Rg results
-let s:fzf_preview_opts = {
-      \   'options': '--delimiter : --nth 4..',
-      \   'window': { 'width': 0.9, 'height': 0.9 }
-      \ }
-let s:fzf_preview_opts_include_filenames = {
-      \   'window': { 'width': 0.9, 'height': 0.9 }
-      \ }
+function! s:fzf_preview_opts(prompt, include_filenames)
+  let opts = {'window': { 'width': 0.9, 'height': 0.9 }}
+  if a:include_filenames == v:true
+    let opts.options = '--prompt "'. a:prompt. '> "'
+  else
+    let opts.options = '--prompt "'. a:prompt. '> " --delimiter : --nth 4..'
+  endif
+  return opts
+endfunction
 command! -bang -nargs=* Rg call fzf#vim#grep(
       \ "rg --column --line-number --no-heading --color=always --smart-case ". shellescape(<q-args>), 1,
-      \ fzf#vim#with_preview(s:fzf_preview_opts, 'up'), <bang>0)
+      \ fzf#vim#with_preview(s:fzf_preview_opts('Rg', v:false), 'up'), <bang>0)
 
 command! -bang -nargs=* RgFilenames call fzf#vim#grep(
       \ "rg --column --line-number --no-heading --color=always --smart-case ". shellescape(<q-args>), 1,
-      \ fzf#vim#with_preview(s:fzf_preview_opts_include_filenames, 'up'), <bang>0)
+      \ fzf#vim#with_preview(s:fzf_preview_opts('Files', v:true), 'up'), <bang>0)
 
 command! -bang -nargs=* RgExact call fzf#vim#grep(
       \ "rg --column --line-number --no-heading --color=always --fixed-strings ". shellescape(<q-args>), 1,
-      \ fzf#vim#with_preview(s:fzf_preview_opts, 'up'), <bang>0)
+      \ fzf#vim#with_preview(s:fzf_preview_opts('Exact', v:false), 'up'), <bang>0)
 
 " bind <C-u>/<C-d> to page through FZF results
 let $FZF_DEFAULT_OPTS="--bind ctrl-d:half-page-down,ctrl-u:half-page-up"
@@ -548,6 +592,7 @@ let $FZF_DEFAULT_OPTS="--bind ctrl-d:half-page-down,ctrl-u:half-page-up"
 nnoremap <silent> <Leader>P :Files<CR>
 nnoremap <silent> <Leader>p :GFiles<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
+nnoremap <silent> <Leader><Leader>f :RgFilenames<CR>
 nnoremap <silent> <Leader>F :RgFilenames <C-r><C-w><CR>
 nnoremap <silent> <Leader>g :CocDiagnostics<CR>
 nnoremap <silent> <Leader>n :tabnew<CR>
@@ -558,6 +603,7 @@ nnoremap <Leader>W :noa w<CR>
 nnoremap <Leader>q :Bclose<CR>
 nnoremap <silent> <Leader>Q :Startify<CR>:call utils#close_all_other_buffers()<CR>:NvimTreeCollapse<CR>
 nnoremap <silent> <Leader><Leader>q :call utils#close_all_other_buffers()<CR>
+nnoremap <silent> <Leader><Leader>Q :conf qa<CR>
 
 " reload config
 noremap <Leader>r :source $MYVIMRC<CR>
@@ -687,6 +733,7 @@ let g:airline#extensions#tmuxline#enabled = 0
 let g:startify_change_to_dir = 0 " disable vim-startify's auto cwd
 let g:rooter_targets = '/,*' " everything, including directories
 let g:rooter_patterns = ['!^apps', 'mix.exs', '.git']
+let g:rooter_buftypes = ['']
 
 " configure ranger
 let g:ranger_map_keys = 0

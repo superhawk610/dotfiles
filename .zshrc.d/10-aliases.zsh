@@ -29,6 +29,7 @@ alias yr='yarn remove'
 ## npm
 # get a list of all failing test suites
 alias npm-test-failing-suites='CI=true npm test 2>&1 | rg FAIL'
+function tz() { node -e 'console.log(`current TZ offset is GMT-${new Date().getTimezoneOffset() / 60}`)' }
 
 ## git
 alias gaa='git add -A'
@@ -52,6 +53,7 @@ alias gs='git status'
 alias gl='git log'
 alias glp='git log --pretty=oneline --abbrev-commit'
 alias gdiff='git diff --no-index'
+alias gsh='git stash'
 
 ### Ignore files (outside of .gitignore)
 alias gil='git update-index --skip-worktree'
@@ -130,6 +132,7 @@ alias py3='python3'
 
 # docker
 alias dc='docker-compose'
+alias dps="docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}' | rg --passthru '0.0.0.0:' -r '' | rg --passthru --pcre2 '(\d{4})->\1' -r '\$1'"
 
 # cat CSV files
 csvcat() {
@@ -138,3 +141,7 @@ csvcat() {
   # ref: https://www.stefaanlippens.net/pretty-csv.html
   column -t -s, "$@" | less -FSXK
 }
+
+## common misspellings, because we're all human after all :)
+alias pob='gpob'
+alias ix='mix'

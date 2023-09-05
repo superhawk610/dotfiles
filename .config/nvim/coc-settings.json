@@ -4,20 +4,10 @@
   // display hover diagnostic everywhere on line, not just at error site
   // "diagnostic.checkCurrentLine": true,
   "coc.preferences.formatOnType": false,
-  "coc.preferences.formatOnSaveFiletypes": [
-    "json",
-    "rust",
-    "elixir",
-    "eelixir",
-    "typescript",
-    "typescriptreact",
-    "javascript",
-    "javascriptreact",
-    "crystal",
-    "python",
-    "ruby"
-  ],
-  "rust-analyzer.inlayHints.enable": true,
+  "[json][rust][elixir][eelixir][typescript][typescriptreact][javascript][javascriptreact][crystal][python][ruby][go]": {
+    "coc.preferences.formatOnSave": true,
+  },
+  "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.inlayHints.chainingHints.enable": true,
   "rust-analyzer.inlayHints.typeHints.enable": true,
   "prettier.semi": true,
@@ -29,6 +19,7 @@
   "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh",
   // elixir's formatter can be a bit slow
   "coc.preferences.willSaveHandlerTimeout": 1500,
+  "coc.preferences.formatOnSaveTimeout": 1500,
   "solargraph.useBundler": true,
   "solargraph.formatting": true,
   "solargraph.diagnostics": true,

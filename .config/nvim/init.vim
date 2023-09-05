@@ -119,6 +119,7 @@ Plug 'ocaml/vim-ocaml'
 Plug 'uiiaoo/java-syntax.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'mechatroner/rainbow_csv'
+Plug 'sudar/vim-arduino-syntax'
 
 " Elixir
 " pinned to commit until https://github.com/elixir-editors/vim-elixir/issues/562 is resolved

@@ -11,8 +11,8 @@ if !in_vscode
 
   Plug 'mhinz/vim-startify'
 
-  Plug 'kyazdani42/nvim-tree.lua'
-  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'nvim-tree/nvim-tree.lua'
+  Plug 'nvim-tree/nvim-web-devicons'
 
   Plug 'lukas-reineke/indent-blankline.nvim'
   Plug 'lukas-reineke/virt-column.nvim'
@@ -658,7 +658,7 @@ autocmd FileType startify
 " configure nvim-tree
 autocmd ColorScheme * lua require('plugins.filetree').update_highlights()
 autocmd VimEnter * if argc() == 0 && !in_vscode |
-      \ exe "lua require('nvim-tree').open()" |
+      \ exe "lua require('nvim-tree.api').tree.open()" |
       \ exe "lua require('plugins.filetree').update_highlights()" |
       \ wincmd p |
       \ endif

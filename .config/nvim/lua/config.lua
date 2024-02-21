@@ -134,8 +134,3 @@ require ('telescope').setup {
     },
   },
 }
-
--- configure mini.nvim
--- disable drawing, just use for indent text objects `ii` and `ai`
-require('mini.indentscope').setup {}
-vim.g.miniindentscope_disable = true

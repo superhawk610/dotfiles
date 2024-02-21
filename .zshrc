@@ -37,15 +37,19 @@ fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/aaron/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/a80323765/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/aaron/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/aaron/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/a80323765/mambaforge/etc/profile.d/conda.sh" ]; then
+        . "/Users/a80323765/mambaforge/etc/profile.d/conda.sh"
     else
-        export PATH="/home/aaron/anaconda3/bin:$PATH"
+        export PATH="/Users/a80323765/mambaforge/bin:$PATH"
     fi
 fi
 unset __conda_setup
+
+if [ -f "/Users/a80323765/mambaforge/etc/profile.d/mamba.sh" ]; then
+    . "/Users/a80323765/mambaforge/etc/profile.d/mamba.sh"
+fi
 # <<< conda initialize <<<

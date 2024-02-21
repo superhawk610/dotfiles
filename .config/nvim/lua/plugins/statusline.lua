@@ -78,7 +78,7 @@ gl.section.left[1] = {
       vim.b.statusline_icon_color = color
       return {colors.bg, color}
     end,
-    provider = function() return "   " end,
+    provider = function() return "  󰀘 " end,
   }
 }
 
@@ -92,7 +92,7 @@ gl.section.left[2] = {
     highlight = {colors.white, colors.bg_light},
     provider = function()
       local dirname = vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-      return ' ' .. dirname .. ' '
+      return '󰉖 ' .. dirname .. ' '
     end,
   }
 }
@@ -142,31 +142,33 @@ gl.section.left[7] = {
   }
 }
 
-gl.section.left[8] = {
-  CocStatus = {
-    condition = condition.hide_in_width,
-    highlight = {colors.gray, colors.bg},
-    provider = function()
-      return vim.fn['coc#status']()
-        -- :gsub('\u{274c}', '\u{f06a}')         -- 
-        -- :gsub('\u{26a0}\u{fe0f}', '\u{f071}') -- 
-        -- :gsub('^W(%d)$', '\u{f071} %1')       --   (ccls)
-    end
-  }
-}
+-- FIXME: language server status
+-- gl.section.left[8] = {
+--   CocStatus = {
+--     condition = condition.hide_in_width,
+--     highlight = {colors.gray, colors.bg},
+--     provider = function()
+--       return vim.fn['coc#status']()
+--         -- :gsub('\u{274c}', '\u{f06a}')         -- 
+--         -- :gsub('\u{26a0}\u{fe0f}', '\u{f071}') -- 
+--         -- :gsub('^W(%d)$', '\u{f071} %1')       --   (ccls)
+--     end
+--   }
+-- }
 
-gl.section.left[9] = {
-  CocFunction = {
-    icon = 'λ ',
-    highlight = {colors.gray, colors.bg},
-    condition = condition.hide_in_width,
-    provider = function()
-      local has_func, func_name = pcall(vim.api.nvim_buf_get_var, 0, 'coc_current_function')
-      if not has_func then return '' end
-      return func_name or ''
-    end,
-  }
-}
+-- FIXME: language server current function
+-- gl.section.left[9] = {
+--   CocFunction = {
+--     icon = 'λ ',
+--     highlight = {colors.gray, colors.bg},
+--     condition = condition.hide_in_width,
+--     provider = function()
+--       local has_func, func_name = pcall(vim.api.nvim_buf_get_var, 0, 'coc_current_function')
+--       if not has_func then return '' end
+--       return func_name or ''
+--     end,
+--   }
+-- }
 
 gl.section.right[1] = {
   FileType = {
@@ -180,7 +182,7 @@ gl.section.right[1] = {
 
 gl.section.right[2] = {
   GitBranch = {
-    icon = ' ',
+    icon = '󰊢 ',
     separator = '  ',
     highlight = {colors.teal, colors.bg},
     provider = 'GitBranch',

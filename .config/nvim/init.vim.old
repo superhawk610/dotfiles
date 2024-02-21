@@ -5,9 +5,8 @@ call plug#begin(plug_dir)
 
 if !in_vscode
   Plug 'nvim-lua/plenary.nvim' " Lua utils for a bunch of stuff
-  Plug 'mattn/webapi-vim' " read from files/web APIs
-
-  Plug 'echasnovski/mini.nvim'
+  Plug 'mattn/webapi-vim'      " read from files/web APIs
+  Plug 'echasnovski/mini.nvim' " utility functionality
 
   Plug 'mhinz/vim-startify'
 
@@ -23,8 +22,8 @@ if !in_vscode
   " Plug 'vim-airline/vim-airline-themes'
   " Plug 'edkolev/tmuxline.vim'
 
-  Plug 'akinsho/nvim-bufferline.lua'
   Plug 'fgheng/winbar.nvim'
+  Plug 'akinsho/nvim-bufferline.lua', { 'tag': '*' }
   Plug 'glepnir/galaxyline.nvim', { 'branch': 'main' }
 
   " colorschemes
@@ -189,6 +188,7 @@ let g:coc_global_extensions = [
       \ 'coc-diagnostic',
       \ 'coc-solargraph',
       \ 'coc-go',
+      \ 'coc-sourcekit',
       \ ]
 
 " --------------------
@@ -461,7 +461,7 @@ let g:conflict_marker_end = '^>>>>>>> .*$'
 
 " set colorscheme
 runtime colorschemes/onedark.vim
-colorscheme onedark
+colorscheme catppuccin-frappe
 
 " ^ and $ are awkward
 map H ^

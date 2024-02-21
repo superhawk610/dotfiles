@@ -25,14 +25,14 @@ read_only_style = "bg:#61afef fg:white bold"
 truncate_to_repo = true
 format = """
 [](bg:none fg:#e5c07b)\
-[ ](bg:#e5c07b fg:black)\
+[󰀘 ](bg:#e5c07b fg:black)\
 [$read_only]($read_only_style)\
 [ $path ](bg:#333333 fg:#a8b1bf)\
 [](bg:none fg:#333333) \
 """
 
 [git_branch]
-symbol = " "
+symbol = "󰊢 "
 style = "#56b6c2"
 format = "[$symbol$branch]($style) "
 
@@ -49,11 +49,11 @@ format = "[$all_status$ahead_behind]($style) "
 ahead = "⇡"
 behind = "⇣"
 diverged = "⇕"
-stashed = " "
+stashed = " "
 conflicted = "✗"
 untracked = " "
 modified = " "
-renamed = " "
+renamed = "󰻂 "
 deleted = " "
 staged = " "
 

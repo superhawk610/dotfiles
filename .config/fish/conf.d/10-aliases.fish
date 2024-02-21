@@ -2,10 +2,6 @@
 
 ## general
 alias c='clear'
-alias r='source /etc/zprofile && source ~/.zshrc' # source zprofile first to reset $PATH
-alias R='exec zsh'
-alias cfg='nvim ~/.zshrc'
-alias vcfg='nvim ~/.config/nvim/init.vim'
 
 ## tmux
 alias tm='tmux'
@@ -109,24 +105,6 @@ alias gcfr='git for-each-ref --format="%(refname:short)" refs/remotes | fzf | se
 #     echo $repo # should contain usage text
 #   fi
 # end
-
-function im_feeling_lucky
-  switch (random 1 10)
-    # display a random constellation!
-    case 1 2 3 4
-      [ -x "$(command -v starfetch)" ] && starfetch
-    case 5
-      [ -x "$(command -v starfetch)" ] && starfetch | lolcat
-
-    # say something profound
-    case 6 7 8
-      [ -x "$(command -v fortune)" ] && fortune | cowsay -W80
-    case 9
-      [ -x "$(command -v fortune)" ] && fortune | cowsay -W80 -r
-    case 10
-      [ -x "$(command -v fortune)" ] && fortune | cowsay -W80 -r | lolcat
-  end
-end
 
 # python
 alias pip='python3 -m pip'

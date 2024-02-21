@@ -69,7 +69,4 @@ if status is-interactive && not set -q fish_one_time_setup
 
   # asdf package manager
   [ -d ~/.asdf ] && source ~/.asdf/asdf.fish
-
-  # print something fun!
-  im_feeling_lucky
 end

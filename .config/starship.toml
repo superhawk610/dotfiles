@@ -30,7 +30,7 @@ format = """
 [󰀘 ](bg:#e5c07b fg:black)\
 [$read_only]($read_only_style)\
 [ $path ](bg:none fg:#a8b1bf)\
-[](bg:none fg:#444444) \
+[/](bg:none fg:#444445) \
 """
 
 [git_branch]

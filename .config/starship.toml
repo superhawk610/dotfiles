@@ -3,11 +3,11 @@ $directory\
 $character"""
 
 right_format = """
-$git_branch\
 $git_commit\
 $git_state\
 $git_status\
 ${custom.git-wip}\
+$git_branch\
 $python\
 $cmd_duration\
 $status\
@@ -52,7 +52,7 @@ ahead = "⇡"
 behind = "⇣"
 diverged = "⇕"
 stashed = " "
-conflicted = "✗"
+conflicted = " "
 untracked = " "
 modified = " "
 renamed = "󰻂 "

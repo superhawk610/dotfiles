@@ -1,5 +1,9 @@
 local M = {}
 
+function M.colorscheme()
+  return 'onedark'
+end
+
 function M.merge(t1, t2)
   for k, v in pairs(t2) do
     t1[k] = v
@@ -9,7 +13,7 @@ function M.merge(t1, t2)
 end
 
 function M.colors()
-  return require('colors.' .. vim.g.colorscheme)
+  return require('colors.' .. M.colorscheme())
 end
 
 local function strip_prefix(str, prefix)

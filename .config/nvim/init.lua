@@ -28,14 +28,101 @@ require("lazy").setup({
   -- utilities & customization
   "mhinz/vim-startify",
   "nvim-tree/nvim-tree.lua",
-  "nvim-tree/nvim-web-devicons",
+  {
+    "nvim-tree/nvim-web-devicons",
+    config = function ()
+      require('nvim-web-devicons').setup {
+        override = {
+          heex = {
+            icon = '',
+            color = '#a074c4',
+            name = 'Heex',
+          },
+          zig = {
+            icon = '',
+            color = '#f69a1b',
+            name = 'Zig',
+          },
+        },
+      }
+    end
+  },
   "lukas-reineke/indent-blankline.nvim",
-  "lukas-reineke/virt-column.nvim",
-  "lukas-reineke/headlines.nvim",
-  "fgheng/winbar.nvim",
-  { "akinsho/nvim-bufferline.lua", version = "*" },
+  {
+    "lukas-reineke/virt-column.nvim",
+    config = function ()
+      require('virt-column').setup()
+    end
+  },
+  {
+    "lukas-reineke/headlines.nvim",
+    config = function ()
+      require('headlines').setup {
+        markdown = {
+          headline_highlights = { 'Headline1', 'Headline2', 'Headline3' }
+        },
+      }
+    end,
+  },
+  {
+    "fgheng/winbar.nvim",
+    config = function ()
+      local C = require('utils').colors()
+
+      require('winbar').setup {
+        enabled = true,
+        colors = {
+          path = C.colors.bg_light,
+          file_name = C.colors.white,
+        },
+      }
+    end,
+  },
+  {
+    "akinsho/nvim-bufferline.lua",
+    version = "*",
+    config = function ()
+      local C = require('utils').colors()
+
+      require('bufferline').setup {
+        highlights = {
+          indicator_selected = {
+            guifg = C.colors.blue,
+          },
+        },
+        options = {
+          mode = 'buffers',
+          numbers = 'none',
+          separator_style = 'thin',
+          always_show_bufferline = true,
+          close_command = 'Bclose %d',
+          show_close_icon = false,
+          custom_filter = function(buf_number, buf_numbers)
+            -- hide quickfix buffer
+            local ft = vim.bo[buf_number].filetype
+            if ft == "qf" or ft == "fugitive" then
+              return false
+            end
+            return true
+          end,
+          offsets = {
+            {
+              filetype = 'NvimTree',
+              text = 'NvimTree',
+              text_align = 'center',
+            },
+          }
+        }
+      }
+    end,
+  },
   { "glepnir/galaxyline.nvim", branch = "main" },
-  "folke/todo-comments.nvim",
+  {
+    "folke/todo-comments.nvim",
+    config = function ()
+      require('todo-comments').setup {}
+    end,
+  },
   "ntpeters/vim-better-whitespace", -- display trailing whitespace
   { "rrethy/vim-hexokinase", build = "make hexokinase" }, -- requires Go
   "rbgrouleff/bclose.vim",
@@ -50,13 +137,31 @@ require("lazy").setup({
         defaults = {
           layout_strategy = "vertical",
         },
+        extensions = {
+          dash = {
+            dash_app_path = '/Applications/Dash.app',
+            debounce = 750,
+            file_type_keywords = {
+              elixir = { 'elixir' },
+            },
+          },
+        },
       }
-    end
+    end,
   },
   "airblade/vim-rooter", -- change CWD to project root when opening file
   { "psliwka/vim-smoothie", commit = "10fd0aa57d176718bc2c570f121ab523c4429a25" }, -- smooth scrolling
   "rhysd/clever-f.vim",
-  "folke/zen-mode.nvim",
+  {
+    "folke/zen-mode.nvim",
+    config = function ()
+      require('zen-mode').setup {
+        window = {
+          backdrop = 0.9,
+        },
+      }
+    end,
+  },
   "godlygeek/tabular", -- improved Markdown support (better syntax highlighting/folding)
   { "preservim/vim-markdown", ft = "markdown" },
   { "iamcco/markdown-preview.nvim", ft = "markdown", build = "cd app && yarn install" },
@@ -233,7 +338,7 @@ vim.cmd([[set termguicolors]])
 vim.cmd([[syntax enable]])
 
 -- set colorscheme
-vim.cmd([[runtime colorschemes/onedark.vim]])
+vim.cmd([[runtime colorschemes/]] .. require("utils").colorscheme() .. [[.vim]])
 vim.cmd([[colorscheme catppuccin-frappe]])
 
 -------------
@@ -475,5 +580,5 @@ vim.cmd([[let g:vim_markdown_conceal_code_blocks = 0]])
 -- indent markdown lists by 2 spaces
 vim.cmd([[let g:vim_markdown_new_list_item_indent = 2]])
 
--- FIXME: move this config into init.lua`
-require("config")
+require('plugins.filetree')
+require('plugins.statusline')

@@ -208,6 +208,9 @@ require("lazy").setup({
             suggestSpecs = true,
           },
           on_attach = function(client, bufnr)
+            -- enable async format on save
+            require("lsp-format").on_attach(client, bufnr)
+
             local opts = { buffer = true, noremap = true, silent = true }
 
             vim.keymap.set("n", "<leader>efp", ":ElixirFromPipe<cr>", opts)
@@ -230,6 +233,12 @@ require("lazy").setup({
 
   -- autocompletion
   "neovim/nvim-lspconfig",
+  {
+    "lukas-reineke/lsp-format.nvim",
+    config = function ()
+      require("lsp-format").setup {}
+    end,
+  },
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
@@ -252,7 +261,7 @@ require("lazy").setup({
           ["<C-e>"] = cmp.mapping.abort(),
           -- Accept currently selected item. Set `select` to `false`
           -- to only confirm explicitly selected items.
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<CR>"] = cmp.mapping.confirm({ select = false }),
           ["<Tab>"] = { i = cmp.mapping.select_next_item({ behavior = types.cmp.SelectBehavior.Select }) },
           ["<S-Tab>"] = { i = cmp.mapping.select_prev_item({ behavior = types.cmp.SelectBehavior.Select }) },
         }),

@@ -48,6 +48,7 @@ if status is-interactive && not set -q fish_one_time_setup
     fisher install jorgebucaran/fisher
     fisher install PatrickF1/fzf.fish
     fisher install fischerling/plugin-wd
+    fisher install h-matsuo/fish-color-scheme-switcher
   end
 
   # bat

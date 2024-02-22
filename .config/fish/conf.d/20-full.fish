@@ -16,7 +16,7 @@ if on_wsl
   export LIBGL_ALWAYS_INDIRECT=1
   export DISPLAY=$(ip route  | awk '/default via / {print $3; exit}' 2>/dev/null):0
 
-  [[ "$PWD" = "/mnt/c/Users/Aaron Ross" ]] && cd ~
+  [ "$PWD" = "/mnt/c/Users/Aaron Ross" ] && cd ~
 end
 
 # alias -----------------------
@@ -43,7 +43,7 @@ if status is-interactive && not set -q fish_one_time_setup
   set -g fish_one_time_setup
 
   # fisher (fish plugin manager)
-  if not fisher -v > /dev/null
+  if not type -q fisher
     curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
     fisher install jorgebucaran/fisher
     fisher install PatrickF1/fzf.fish

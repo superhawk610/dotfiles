@@ -101,6 +101,7 @@
       ]
     }
   },
+  "sourcekit.commandPath": "/usr/bin/sourcekit-lsp",
   "languageserver": {
     // npm i -g graphql-language-service-cli
     "graphql": {

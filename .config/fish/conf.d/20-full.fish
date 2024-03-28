@@ -3,12 +3,15 @@ fish_add_path ~/Library/Python/3.9/bin
 fish_add_path ~/.cargo/bin
 
 if on_mac
+  fish_add_path /opt/homebrew/bin
   fish_add_path "$(brew --prefix)/bin"
   fish_add_path "$(brew --prefix llvm@11)/bin"
 
   # use brew's copy of git so we don't have to rely on XCode tools
   # (at least until I get off cabin WiFi and can download them lol)
   fish_add_path "$(brew --prefix git)/bin"
+
+  source "$(brew --prefix asdf)/libexec/asdf.fish"
 end
 
 if on_wsl
@@ -22,7 +25,7 @@ end
 # alias -----------------------
 
 ## general
-alias ls='exa'
+alias ls='eza'
 alias cat='bat'
 
 ## ultralist
@@ -72,5 +75,5 @@ if status is-interactive && not set -q fish_one_time_setup
   starship init fish | source
 
   # asdf package manager
-  [ -d ~/.asdf ] && source ~/.asdf/asdf.fish
+  # [ -d ~/.asdf ] && source ~/.asdf/asdf.fish
 end

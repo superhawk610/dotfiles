@@ -169,27 +169,31 @@ gl.section.left[7] = {
 --     end,
 --   }
 -- }
+--
+
+vim.api.nvim_command('hi GalaxyViModeReverseCenter guibg=' .. colors.bg)
 
 gl.section.right[1] = {
-  FileType = {
-    highlight = {colors.gray, colors.bg},
-    provider = function()
-      local buf = require('galaxyline.provider_buffer')
-      return string.lower(buf.get_buffer_filetype())
-    end,
-  }
-}
-
-gl.section.right[2] = {
   GitBranch = {
     icon = '󰊢 ',
-    separator = '  ',
     highlight = {colors.teal, colors.bg},
     provider = 'GitBranch',
     condition = combine(
       condition.hide_in_width,
       condition.check_git_workspace
     ),
+  }
+}
+
+gl.section.right[2] = {
+  FileType = {
+    separator = '  ',
+    separator_highlight = 'GalaxyViModeReverseCenter',
+    highlight = {colors.gray, colors.bg},
+    provider = function()
+      local buf = require('galaxyline.provider_buffer')
+      return string.lower(buf.get_buffer_filetype())
+    end,
   }
 }
 

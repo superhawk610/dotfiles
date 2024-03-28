@@ -50,7 +50,7 @@ BIN_DIR="$HOME/.local/bin"
 MAN_DIR="$BIN_DIR/../share/man"
 MN1_DIR="$MAN_DIR/man1"
 MN5_DIR="$MAN_DIR/man5"
-CMP_DIR="$ZSH/completions"
+# CMP_DIR="$ZSH/completions"
 
 JQ_VERSION="1.6"
 FQ_VERSION="0.0.2"
@@ -121,7 +121,8 @@ case $OS in
     ;;
 esac
 
-mkdir -p "$TMP_DIR" "$MN1_DIR" "$MN5_DIR" "$CMP_DIR"
+# mkdir -p "$TMP_DIR" "$MN1_DIR" "$MN5_DIR" "$CMP_DIR"
+mkdir -p "$TMP_DIR" "$MN1_DIR" "$MN5_DIR"
 
 # ---
 
@@ -176,7 +177,7 @@ else
   tar -xzf "$TMP_DIR/rg.tar.gz" -C "$TMP_DIR"
   mv "$TMP_DIR/${RG_BINARY}/doc/rg.1" "$MN1_DIR"
   mv "$TMP_DIR/${RG_BINARY}/rg" "$BIN_DIR/rg"
-  mv "$TMP_DIR/${RG_BINARY}/complete/_rg" "$CMP_DIR"
+  # mv "$TMP_DIR/${RG_BINARY}/complete/_rg" "$CMP_DIR"
   chmod +x "$BIN_DIR/rg"
   log_done "rg installed!"
 fi
@@ -210,7 +211,7 @@ else
   unzip -d "$TMP_DIR/exa" "$TMP_DIR/exa.zip"
   mv "$TMP_DIR/exa/man/exa.1" "$MN1_DIR"
   mv "$TMP_DIR/exa/man/exa_colors.5" "$MN5_DIR"
-  mv "$TMP_DIR/exa/completions/exa.zsh" "$CMP_DIR"
+  # mv "$TMP_DIR/exa/completions/exa.zsh" "$CMP_DIR"
   mv "$TMP_DIR/exa/bin/exa" "$BIN_DIR/exa"
   chmod +x "$BIN_DIR/exa"
   log_done "exa installed!"
@@ -368,7 +369,7 @@ else
   tar -xzf "$TMP_DIR/fd.tar.gz" -C "$TMP_DIR"
   mv "$TMP_DIR/${FD_BINARY}/fd" "$BIN_DIR/fd"
   mv "$TMP_DIR/${FD_BINARY}/fd.1" "$MN1_DIR"
-  mv "$TMP_DIR/${FD_BINARY}/autocomplete/_fd" "$CMP_DIR"
+  # mv "$TMP_DIR/${FD_BINARY}/autocomplete/_fd" "$CMP_DIR"
 
   log_done "fd installed!"
 fi

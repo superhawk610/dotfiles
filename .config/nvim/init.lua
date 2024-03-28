@@ -54,16 +54,16 @@ require("lazy").setup({
       require('virt-column').setup()
     end
   },
-  {
-    "lukas-reineke/headlines.nvim",
-    config = function ()
-      require('headlines').setup {
-        markdown = {
-          headline_highlights = { 'Headline1', 'Headline2', 'Headline3' }
-        },
-      }
-    end,
-  },
+  -- {
+  --   "lukas-reineke/headlines.nvim",
+  --   config = function ()
+  --     require('headlines').setup {
+  --       markdown = {
+  --         headline_highlights = { 'Headline1', 'Headline2', 'Headline3' }
+  --       },
+  --     }
+  --   end,
+  -- },
   {
     "fgheng/winbar.nvim",
     config = function ()
@@ -123,6 +123,7 @@ require("lazy").setup({
       require('todo-comments').setup {}
     end,
   },
+  "folke/trouble.nvim",
   "ntpeters/vim-better-whitespace", -- display trailing whitespace
   { "rrethy/vim-hexokinase", build = "make hexokinase" }, -- requires Go
   "rbgrouleff/bclose.vim",
@@ -183,7 +184,20 @@ require("lazy").setup({
     config = function ()
       local configs = require("nvim-treesitter.configs")
       configs.setup({
-        ensure_installed = { "lua", "vim", "vimdoc", "elixir", "heex", "eex", "javascript", "html" },
+        ensure_installed = {
+          "markdown",
+          "markdown_inline",
+          "lua",
+          "vim",
+          "vimdoc",
+          "elixir",
+          "heex",
+          "eex",
+          "javascript",
+          "typescript",
+          "html",
+          "rust"
+        },
         highlight = { enable = true },
       })
     end
@@ -230,6 +244,49 @@ require("lazy").setup({
       }
     end
   },
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^4",
+    ft = { "rust" },
+    dependencies = {
+      {
+        "lvimuser/lsp-inlayhints.nvim",
+        opts = {},
+      },
+    },
+    config = function ()
+      vim.g.rustaceanvim = {
+        inlay_hints = {
+          highlight = "NonText",
+        },
+        tools = {
+          hover_actions = {
+            auto_focus = true,
+          },
+        },
+        server = {
+          on_attach = function(client, bufnr)
+            -- enable async format on save
+            require("lsp-format").on_attach(client, bufnr)
+            require("lsp-inlayhints").on_attach(client, bufnr)
+
+            local opts = { buffer = true, noremap = true, silent = true }
+
+            code_action = function()
+              vim.cmd.RustLsp('codeAction') -- supports rust-analyzer's grouping
+              -- or vim.lsp.buf.codeAction() if you don't want grouping.
+            end
+
+            vim.keymap.set("n", "<leader>a", code_action, opts)
+            vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+            vim.keymap.set("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+            vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+            vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+          end
+        },
+      }
+    end,
+  },
 
   -- autocompletion
   "neovim/nvim-lspconfig",
@@ -243,6 +300,8 @@ require("lazy").setup({
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-cmdline",
+  "hrsh7th/cmp-vsnip",
+  "hrsh7th/vim-vsnip",
   {
     "hrsh7th/nvim-cmp",
     config = function ()
@@ -250,6 +309,11 @@ require("lazy").setup({
       local types = require("cmp.types")
 
       cmp.setup({
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+          end,
+        },
         window = {
           completion = cmp.config.window.bordered(),
           documentation = cmp.config.window.bordered(),
@@ -383,6 +447,9 @@ vim.cmd([[inoremap <silent> <C-_> <C-o>:nohl<CR>]])
 vim.cmd([[nnoremap <silent> <Leader>t :NvimTreeToggle<CR>]])
 vim.cmd([[nnoremap <silent> <Leader>T :NvimTreeFindFile<CR>]])
 
+-- trouble.nvim (show diagnostics and such)
+vim.cmd([[nnoremap <silent> <Leader>g :TroubleToggle<CR>]])
+
 -- jump between quickfix lines
 vim.cmd([[nnoremap <silent> [q :cprevious<CR>]])
 vim.cmd([[nnoremap <silent> ]q :cnext<CR>]])
@@ -506,7 +573,7 @@ vim.cmd([[
 vim.cmd([[autocmd FileType gitcommit nmap <buffer> <leader>q :wq<CR>]])
 
 -- configure quick exit
-vim.cmd([[autocmd FileType git,fugitive,fugitiveblame,vim-plug,help,qf nmap <buffer> <leader>q :q<CR>]])
+vim.cmd([[autocmd FileType git,fugitive,fugitiveblame,vim-plug,help,qf,Trouble nmap <buffer> <leader>q :q<CR>]])
 
 -- close if NvimTree is the last window open
 vim.cmd([[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]])

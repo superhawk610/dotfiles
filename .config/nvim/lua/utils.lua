@@ -1,7 +1,7 @@
 local M = {}
 
 function M.colorscheme()
-  return 'onedark'
+  return 'catppuccin'
 end
 
 function M.merge(t1, t2)

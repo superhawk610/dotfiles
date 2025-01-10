@@ -2,6 +2,10 @@
 fish_add_path ~/Library/Python/3.9/bin
 fish_add_path ~/.cargo/bin
 
+# deno
+export DENO_INSTALL="/$HOME/.deno"
+fish_add_path "/$HOME/.deno/bin"
+
 if on_mac
   fish_add_path /opt/homebrew/bin
   fish_add_path "$(brew --prefix)/bin"
@@ -75,5 +79,5 @@ if status is-interactive && not set -q fish_one_time_setup
   starship init fish | source
 
   # asdf package manager
-  # [ -d ~/.asdf ] && source ~/.asdf/asdf.fish
+  [ -d ~/.asdf ] && source ~/.asdf/asdf.fish
 end

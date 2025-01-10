@@ -25,6 +25,21 @@ require("lazy").setup({
   "ghifarit53/tokyonight-vim",
   "catppuccin/nvim",
 
+  -- tmux statusline
+  -- "itchyny/lightline.vim",
+  -- "edkolev/tmuxline.vim",
+
+  -- one of:
+  -- crosshair
+  -- full
+  -- minimal
+  -- nightly_fox
+  -- powerline
+  -- righteous
+  -- tmux
+  -- vim.cmd([[let g:tmuxline_preset = 'minimal']])
+  -- vim.cmd([[:Tmuxline lightline]]
+
   -- utilities & customization
   "mhinz/vim-startify",
   "nvim-tree/nvim-tree.lua",
@@ -79,13 +94,53 @@ require("lazy").setup({
     end,
   },
   {
-    "akinsho/nvim-bufferline.lua",
+    "akinsho/bufferline.nvim",
     version = "*",
     config = function ()
       local C = require('utils').colors()
 
       require('bufferline').setup {
         highlights = {
+          fill = {
+            fg = C.colors.black,
+            bg = C.colors.black,
+          },
+          buffer_selected = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
+          buffer_visible = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
+          background = {
+            bg = C.colors.black,
+            fg = C.colors.white,
+          },
+          close_button = {
+            bg = C.colors.black,
+            fg = C.colors.white,
+          },
+          close_button_selected = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
+          close_button_visible = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
+          separator = {
+            bg = C.colors.black,
+            fg = C.colors.black,
+          },
+          separator_selected = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
+          separator_visible = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
           indicator_selected = {
             guifg = C.colors.blue,
           },
@@ -93,10 +148,12 @@ require("lazy").setup({
         options = {
           mode = 'buffers',
           numbers = 'none',
-          separator_style = 'thin',
+          diagnostics = 'none',
+          separator_style = 'slope',
           always_show_bufferline = true,
           close_command = 'Bclose %d',
           show_close_icon = false,
+          show_tab_indicators = false,
           custom_filter = function(buf_number, buf_numbers)
             -- hide quickfix buffer
             local ft = vim.bo[buf_number].filetype
@@ -134,9 +191,30 @@ require("lazy").setup({
   {
     "nvim-telescope/telescope.nvim",
     config = function ()
+      -- taken from https://github.com/nvim-telescope/telescope.nvim/issues/1048#issuecomment-1679797700
+      local select_one_or_multi = function(prompt_bufnr)
+        local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+        local multi = picker:get_multi_selection()
+        if not vim.tbl_isempty(multi) then
+          require('telescope.actions').close(prompt_bufnr)
+          for _, j in pairs(multi) do
+            if j.path ~= nil then
+              vim.cmd(string.format('%s %s', 'edit', j.path))
+            end
+          end
+        else
+          require('telescope.actions').select_default(prompt_bufnr)
+        end
+      end
+
       require("telescope").setup {
         defaults = {
           layout_strategy = "vertical",
+          mappings = {
+            i = {
+              ['<cr>'] = select_one_or_multi,
+            },
+          },
         },
         extensions = {
           dash = {
@@ -288,8 +366,40 @@ require("lazy").setup({
     end,
   },
 
+  {
+    "pmizio/typescript-tools.nvim",
+    config = function ()
+      require("typescript-tools").setup {
+        -- Deno LS recommends disabling this
+        single_file_support = false,
+        root_dir = require("lspconfig").util.root_pattern("package.json"),
+        on_attach = function (client, bufnr)
+          -- enable async format on save
+          require("lsp-format").on_attach(client, bufnr)
+          require("lsp-inlayhints").on_attach(client, bufnr)
+
+          vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+          vim.keymap.set("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+          vim.keymap.set("n", "<leader>a", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+        end
+      }
+    end
+  },
+
   -- autocompletion
-  "neovim/nvim-lspconfig",
+  {
+    "neovim/nvim-lspconfig",
+    config = function ()
+      require("lspconfig").denols.setup {
+        root_dir = require("lspconfig").util.root_pattern("deno.json", "deno.jsonc"),
+        on_attach = function (client, bufnr)
+          -- enable async format on save
+          require("lsp-format").on_attach(client, bufnr)
+          require("lsp-inlayhints").on_attach(client, bufnr)
+        end
+      }
+    end,
+  },
   {
     "lukas-reineke/lsp-format.nvim",
     config = function ()
@@ -349,6 +459,18 @@ require("lazy").setup({
       })
     end
   },
+
+
+  -- lsp diagnostics
+  {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function ()
+      -- disable built-in LSP diagnostic rendering
+      vim.diagnostic.config({ virtual_text = false })
+      require("lsp_lines").setup()
+    end,
+  },
+
 })
 
 ---------------------------
@@ -363,7 +485,7 @@ vim.cmd([[let maplocalleader = "\\"]])
 vim.cmd([[set mouse=a]])
 
 -- use system clipboard
-vim.cmd([[set clipboard+=unnamedplus]])
+-- vim.cmd([[set clipboard+=unnamedplus]])
 
 -- highlight current line
 vim.cmd([[set cursorline]])
@@ -411,8 +533,8 @@ vim.cmd([[set termguicolors]])
 vim.cmd([[syntax enable]])
 
 -- set colorscheme
-vim.cmd([[runtime colorschemes/]] .. require("utils").colorscheme() .. [[.vim]])
 vim.cmd([[colorscheme catppuccin-frappe]])
+vim.cmd([[runtime colorschemes/]] .. require("utils").colorscheme() .. [[.vim]])
 
 -------------
 -- keymaps --
@@ -655,6 +777,24 @@ vim.cmd([[let g:vim_markdown_conceal_code_blocks = 0]])
 
 -- indent markdown lists by 2 spaces
 vim.cmd([[let g:vim_markdown_new_list_item_indent = 2]])
+
+-- disable diagnostics from a given LSP
+-- see: https://github.com/neovim/neovim/issues/20745
+local function filter_diagnostics(diagnostic)
+  if diagnostic.source == "tsserver" then
+    return false
+  end
+
+  return true
+end
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  function(_, result, ctx, config)
+    result.diagnostics = vim.tbl_filter(filter_diagnostics, result.diagnostics)
+    vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+  end,
+  {}
+)
 
 require('plugins.filetree')
 require('plugins.statusline')

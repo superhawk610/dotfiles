@@ -1,13 +1,5 @@
 " set global variable so Lua knows which scheme is active
-let g:colorscheme = 'onedark'
-
-" tweak colors
-let g:onedark_color_overrides = {
-      \ 'purple': { 'gui': '#7c7cff', 'cterm': 105, 'cterm16': 5 }
-      \ }
-
-let g:onedark_hide_endofbuffer = 1 " hide ~ at end of file
-let g:onedark_terminal_italics = 0
+let g:colorscheme = 'catppuccin'
 
 hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235

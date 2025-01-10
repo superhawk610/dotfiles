@@ -6,8 +6,6 @@ let g:tokyonight_enable_italic = 0
 let g:tokyonight_menu_selection_background = 'green' " green / red / blue
 let g:tokyonight_current_word = 'grey background' " bold / underline / italic / grey background
 
-colorscheme tokyonight
-
 hi IndentBlanklineChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 hi IndentBlanklineSpaceChar gui=nocombine guifg=#3B4048 cterm=nocombine ctermfg=237 ctermbg=235
 
@@ -53,6 +51,12 @@ hi TodoSignNOTE guifg=#abb2bf
 hi TodoBgWARN guifg=#1a1b26 guibg=#e0af68
 hi TodoFgWARN guifg=#e0af68
 hi TodoSignWARN guifg=#e0af68
+
+hi DiagnosticVirtualTextOk guibg=none
+hi DiagnosticVirtualTextHint guibg=none
+hi DiagnosticVirtualTextInfo guibg=none
+hi DiagnosticVirtualTextWarn guibg=none
+hi DiagnosticVirtualTextError guibg=none
 
 hi CocHintSign NONE
 hi link CocHintSign Comment

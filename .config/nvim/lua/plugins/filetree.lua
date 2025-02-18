@@ -6,34 +6,6 @@ M.update_highlights = C.update_highlights
 
 g.nvim_tree_auto_ignore_ft = {'startify'}
 
-local function local_cb(func)
-  return string.format(":lua require('plugins.filetree').%s()<CR>", func)
-end
-
-function M.toggle_dir()
-  local lib = require('nvim-tree.lib')
-
-  local node = lib.get_node_at_cursor()
-  if not node then return end
-  if not node.nodes then return end
-
-  lib.expand_or_collapse(node)
-end
-
-function M.edit_file()
-  local lib = require('nvim-tree.lib')
-  local open_file = require('nvim-tree.actions.node.open-file')
-
-  local node = lib.get_node_at_cursor()
-  if not node then return end
-
-  if node.link_to and not node.nodes then
-    open_file.fn('edit', node.link_to)
-  elseif not node.nodes then
-    open_file.fn('edit', node.absolute_path)
-  end
-end
-
 local function on_attach(bufnr)
   local api = require('nvim-tree.api')
 
@@ -49,8 +21,8 @@ local function on_attach(bufnr)
 
   vim.keymap.set('n', '<CR>',          api.node.open.edit,               opts('Edit File'))
   vim.keymap.set('n', 'o',             api.node.open.edit,               opts('Edit File'))
-  vim.keymap.set('n', '<2-LeftMouse>', local_cb('edit_file'),            opts('Edit File'))
-  vim.keymap.set('n', '<LeftRelease>', local_cb('toggle_dir'),           opts('Toggle Directory'))
+  vim.keymap.set('n', '<2-LeftMouse>', api.node.open.edit,               opts('Edit File'))
+  vim.keymap.set('n', '<LeftRelease>', api.node.open.edit,               opts('Toggle Directory'))
   vim.keymap.set('n', 'C',             api.tree.change_root_to_node,     opts('Change Directory'))
   vim.keymap.set('n', '-',             api.tree.change_root_to_parent,   opts('Up'))
   vim.keymap.set('n', 'u',             api.tree.change_root_to_parent,   opts('Up'))

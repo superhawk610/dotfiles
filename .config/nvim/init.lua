@@ -99,6 +99,11 @@ require("lazy").setup({
     config = function ()
       local C = require('utils').colors()
 
+      vim.cmd([[hi BufferLineIcon guifg=]]..C.colors.white..[[ guibg=]]..C.colors.black)
+      vim.cmd([[hi BufferLineIconSelected guifg=]]..C.colors.black..[[ guibg=]]..C.colors.white)
+      vim.cmd([[hi BufferLineIconVisible guifg=]]..C.colors.black..[[ guibg=]]..C.colors.white)
+      vim.cmd([[hi BufferLineIconInactive guifg=]]..C.colors.black..[[ guibg=]]..C.colors.white)
+
       require('bufferline').setup {
         highlights = {
           fill = {
@@ -141,6 +146,34 @@ require("lazy").setup({
             bg = C.colors.white,
             fg = C.colors.black,
           },
+          duplicate = {
+            bg = C.colors.black,
+            fg = C.colors.white,
+          },
+          duplicate_selected = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
+          duplicate_visible = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
+          modified = {
+            bg = C.colors.black,
+            fg = C.colors.white,
+          },
+          modified_selected = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
+          modified_visible = {
+            bg = C.colors.white,
+            fg = C.colors.black,
+          },
+          trunc_marker = {
+            bg = C.colors.black,
+            fg = C.colors.white,
+          },
           indicator_selected = {
             guifg = C.colors.blue,
           },
@@ -154,6 +187,7 @@ require("lazy").setup({
           close_command = 'Bclose %d',
           show_close_icon = false,
           show_tab_indicators = false,
+          color_icons = false,
           custom_filter = function(buf_number, buf_numbers)
             -- hide quickfix buffer
             local ft = vim.bo[buf_number].filetype
@@ -161,6 +195,10 @@ require("lazy").setup({
               return false
             end
             return true
+          end,
+          get_element_icon = function(element)
+            local icon, hl = require('nvim-web-devicons').get_icon_by_filetype(element.filetype, { default = false })
+            return icon, "Icon"
           end,
           offsets = {
             {

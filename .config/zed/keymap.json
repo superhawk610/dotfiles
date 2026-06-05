@@ -1,0 +1,143 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      // "j k": "vim::NormalBefore"
+    },
+  },
+  {
+    "bindings": {
+      "ctrl-j": "workspace::ActivatePaneDown"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-k": "workspace::ActivatePaneUp"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "space w": "workspace::Save"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "shift-h": "vim::FirstNonWhitespace"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "shift-l": "vim::EndOfLine"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "space q": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "space space q": "pane::CloseOtherItems"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "g b": "pane::ActivateNextItem"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "g shift-b": "pane::ActivatePreviousItem"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "shift-y": "vim::YankToEndOfLine"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+      "bindings": {
+      "space space c": "workspace::CopyRelativePath"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "space shift-f": "editor::FindAllReferences"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "space f": "pane::DeploySearch"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-j": "terminal::Clear"
+    }
+  },
+  {
+    "context": "Terminal",
+    "unbind": {
+      "cmd-k": "terminal::Clear"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "space shift-w": "workspace::SaveWithoutFormat"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "space n": "workspace::NewFile"
+    }
+  },
+  {
+    "context": "VimControl && vim_mode == normal",
+    "bindings": {
+      "space shift-q": "pane::CloseAllItems"
+    }
+  },
+  {
+    "context": "Editor && edit_prediction && edit_prediction_mode == eager",
+    "bindings": {
+      "tab": "editor::AcceptEditPrediction"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  }
+]
